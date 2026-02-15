@@ -1,0 +1,205 @@
+"use client"
+
+import { useEffect, useState } from "react"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Progress } from "@/components/ui/progress"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { DollarSign, Clock, Users, TrendingUp, Play, Plus } from "lucide-react"
+import Link from "next/link"
+import { format } from "date-fns"
+
+interface DashboardData {
+  mrr: number
+  totalCommittedHours: number
+  totalHoursUsed: number
+  totalHoursRemaining: number
+  projectedOverage: number
+  activeClients: number
+  clientSummaries: Array<{
+    id: string
+    name: string
+    email: string
+    hoursUsed: number
+    monthlyHours: number
+    percentUsed: number
+    monthlyFee: number
+    status: string
+  }>
+  recentEntries: Array<{
+    id: string
+    date: string
+    hours: number
+    description: string
+    clients: { name: string }
+  }>
+}
+
+export default function DashboardPage() {
+  const [data, setData] = useState<DashboardData | null>(null)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    fetch("/api/dashboard")
+      .then((r) => r.json())
+      .then((d) => { setData(d); setLoading(false) })
+      .catch(() => setLoading(false))
+  }, [])
+
+  if (loading) {
+    return (
+      <div className="space-y-6">
+        <h1 className="text-2xl font-bold">Dashboard</h1>
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+          {[...Array(4)].map((_, i) => (
+            <Card key={i}><CardContent className="p-6"><div className="h-16 animate-pulse bg-muted rounded" /></CardContent></Card>
+          ))}
+        </div>
+      </div>
+    )
+  }
+
+  if (!data) return null
+
+  return (
+    <div className="space-y-6">
+      <div className="flex items-center justify-between">
+        <h1 className="text-2xl font-bold">Dashboard</h1>
+        <div className="flex gap-2">
+          <Link href="/dashboard/time">
+            <Button size="sm">
+              <Play className="mr-2 h-4 w-4" /> Start Timer
+            </Button>
+          </Link>
+          <Link href="/dashboard/clients">
+            <Button size="sm" variant="outline">
+              <Plus className="mr-2 h-4 w-4" /> Add Client
+            </Button>
+          </Link>
+        </div>
+      </div>
+
+      {/* Stats Cards */}
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Monthly Revenue</CardTitle>
+            <DollarSign className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">${data.mrr.toLocaleString()}</div>
+            <p className="text-xs text-muted-foreground">From {data.activeClients} active clients</p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Hours Used</CardTitle>
+            <Clock className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{data.totalHoursUsed}h</div>
+            <p className="text-xs text-muted-foreground">of {data.totalCommittedHours}h committed</p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Hours Remaining</CardTitle>
+            <Users className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{data.totalHoursRemaining}h</div>
+            <p className="text-xs text-muted-foreground">Across all clients</p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Projected Overage</CardTitle>
+            <TrendingUp className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">${data.projectedOverage.toLocaleString()}</div>
+            <p className="text-xs text-muted-foreground">Additional revenue this month</p>
+          </CardContent>
+        </Card>
+      </div>
+
+      <div className="grid gap-6 lg:grid-cols-2">
+        {/* Client Status */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Client Retainers</CardTitle>
+            <CardDescription>Hours used this month per client</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            {data.clientSummaries.length === 0 ? (
+              <p className="text-sm text-muted-foreground text-center py-4">
+                No active clients yet.{" "}
+                <Link href="/dashboard/clients" className="text-primary underline">Add your first client</Link>
+              </p>
+            ) : (
+              data.clientSummaries.map((client) => (
+                <div key={client.id} className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <span className="font-medium text-sm">{client.name}</span>
+                      <Badge
+                        variant={
+                          client.status === "exceeded" ? "destructive" :
+                          client.status === "warning" ? "secondary" : "outline"
+                        }
+                        className="text-xs"
+                      >
+                        {client.status === "exceeded" ? "Over limit" :
+                         client.status === "warning" ? "Near limit" : "On track"}
+                      </Badge>
+                    </div>
+                    <span className="text-sm text-muted-foreground">
+                      {client.hoursUsed}h / {client.monthlyHours}h
+                    </span>
+                  </div>
+                  <Progress
+                    value={Math.min(client.percentUsed, 100)}
+                    className={
+                      client.status === "exceeded" ? "[&>div]:bg-destructive" :
+                      client.status === "warning" ? "[&>div]:bg-yellow-500" : ""
+                    }
+                  />
+                </div>
+              ))
+            )}
+          </CardContent>
+        </Card>
+
+        {/* Recent Time Entries */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Recent Time Entries</CardTitle>
+            <CardDescription>Your latest logged time</CardDescription>
+          </CardHeader>
+          <CardContent>
+            {data.recentEntries.length === 0 ? (
+              <p className="text-sm text-muted-foreground text-center py-4">
+                No time entries yet.{" "}
+                <Link href="/dashboard/time" className="text-primary underline">Start tracking</Link>
+              </p>
+            ) : (
+              <div className="space-y-3">
+                {data.recentEntries.slice(0, 8).map((entry) => (
+                  <div key={entry.id} className="flex items-center justify-between text-sm">
+                    <div className="flex-1 min-w-0">
+                      <p className="font-medium truncate">{entry.description || "No description"}</p>
+                      <p className="text-xs text-muted-foreground">
+                        {entry.clients?.name} &middot; {format(new Date(entry.date), "MMM d")}
+                      </p>
+                    </div>
+                    <span className="font-medium ml-2">{entry.hours}h</span>
+                  </div>
+                ))}
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+  )
+}

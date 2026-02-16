@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/dialog"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
-import { FileText, Plus, CheckCircle, Download } from "lucide-react"
+import { FileText, Plus, CheckCircle, Download, Mail } from "lucide-react"
 import { toast } from "sonner"
 import { format } from "date-fns"
 
@@ -43,6 +43,8 @@ export default function InvoicesPage() {
   const [genClientId, setGenClientId] = useState("")
   const [genPeriod, setGenPeriod] = useState(format(new Date(), "yyyy-MM"))
   const [filterStatus, setFilterStatus] = useState("all")
+  const [filterClientId, setFilterClientId] = useState("all")
+  const [sendingId, setSendingId] = useState<string | null>(null)
 
   const fetchInvoices = async () => {
     const res = await fetch("/api/invoices")
@@ -92,15 +94,47 @@ export default function InvoicesPage() {
     fetchInvoices()
   }
 
-  const filtered = filterStatus === "all"
-    ? invoices
-    : invoices.filter((i) => i.status === filterStatus)
+  const markAsUnpaid = async (id: string) => {
+    await fetch(`/api/invoices/${id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ status: "unpaid" }),
+    })
+    toast.success("Invoice marked as unpaid")
+    fetchInvoices()
+  }
+
+  const sendEmail = async (id: string) => {
+    setSendingId(id)
+    const res = await fetch(`/api/invoices/${id}/send-email`, { method: "POST" })
+    const data = await res.json().catch(() => ({}))
+    setSendingId(null)
+    if (!res.ok) {
+      toast.error(data.error || "Failed to send email")
+      return
+    }
+    toast.success("Invoice sent by email to client")
+  }
+
+  let filtered = filterStatus === "all" ? invoices : invoices.filter((i) => i.status === filterStatus)
+  if (filterClientId !== "all") {
+    filtered = filtered.filter((i) => i.client_id === filterClientId)
+  }
 
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold">Invoices</h1>
         <div className="flex items-center gap-2">
+          <Select value={filterClientId} onValueChange={setFilterClientId}>
+            <SelectTrigger className="w-40"><SelectValue placeholder="All clients" /></SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All clients</SelectItem>
+              {clients.map((c) => (
+                <SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
           <Select value={filterStatus} onValueChange={setFilterStatus}>
             <SelectTrigger className="w-32"><SelectValue /></SelectTrigger>
             <SelectContent>
@@ -175,12 +209,25 @@ export default function InvoicesPage() {
                 </div>
                 <div className="flex items-center gap-2 ml-4">
                   <span className="text-lg font-bold">${invoice.total_amount}</span>
-                  {invoice.status === "unpaid" && (
+                  {invoice.status === "unpaid" ? (
                     <Button size="sm" variant="outline" onClick={() => markAsPaid(invoice.id)}>
                       <CheckCircle className="mr-1 h-4 w-4" /> Mark Paid
                     </Button>
+                  ) : (
+                    <Button size="sm" variant="ghost" onClick={() => markAsUnpaid(invoice.id)}>
+                      Mark Unpaid
+                    </Button>
                   )}
-                  <Button size="sm" variant="ghost" onClick={() => window.open(`/api/invoices/${invoice.id}/pdf`, "_blank")}>
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    onClick={() => sendEmail(invoice.id)}
+                    disabled={sendingId === invoice.id}
+                    title="Send to client by email"
+                  >
+                    <Mail className="h-4 w-4" />
+                  </Button>
+                  <Button size="sm" variant="ghost" onClick={() => window.open(`/api/invoices/${invoice.id}/pdf`, "_blank")} title="Download">
                     <Download className="h-4 w-4" />
                   </Button>
                 </div>

@@ -34,8 +34,8 @@ export async function middleware(request: NextRequest) {
   } = await supabase.auth.getUser()
 
   // Allow public routes
-  const publicPaths = ['/', '/login', '/signup', '/auth/callback', '/portal', '/api/stripe/webhook']
-  const isPublicPath = publicPaths.some(path => 
+  const publicPaths = ['/', '/login', '/signup', '/forgot-password', '/reset-password', '/auth/callback', '/portal', '/api/stripe/webhook', '/api/cron/generate-invoices']
+  const isPublicPath = publicPaths.some(path =>
     request.nextUrl.pathname === path || request.nextUrl.pathname.startsWith('/portal/')
   )
 
@@ -45,7 +45,7 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(url)
   }
 
-  if (user && (request.nextUrl.pathname === '/login' || request.nextUrl.pathname === '/signup')) {
+  if (user && ['/login', '/signup', '/forgot-password'].includes(request.nextUrl.pathname)) {
     const url = request.nextUrl.clone()
     url.pathname = '/dashboard'
     return NextResponse.redirect(url)

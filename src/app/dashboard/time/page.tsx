@@ -8,7 +8,10 @@ import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
-import { Play, Square, Plus, Trash2 } from "lucide-react"
+import {
+  Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle,
+} from "@/components/ui/dialog"
+import { Play, Square, Plus, Trash2, Pencil } from "lucide-react"
 import { toast } from "sonner"
 import { format } from "date-fns"
 
@@ -47,6 +50,11 @@ export default function TimeTrackingPage() {
   const [manualDate, setManualDate] = useState(format(new Date(), "yyyy-MM-dd"))
   const [manualHours, setManualHours] = useState("")
   const [manualDescription, setManualDescription] = useState("")
+
+  // Edit entry state
+  const [editOpen, setEditOpen] = useState(false)
+  const [editEntry, setEditEntry] = useState<TimeEntry | null>(null)
+  const [editForm, setEditForm] = useState({ date: "", client_id: "", hours: "", description: "" })
 
   const fetchData = useCallback(async () => {
     const [clientsRes, entriesRes] = await Promise.all([
@@ -185,6 +193,44 @@ export default function TimeTrackingPage() {
     fetchData()
   }
 
+  const openEdit = (entry: TimeEntry) => {
+    setEditEntry(entry)
+    setEditForm({
+      date: entry.date,
+      client_id: entry.client_id,
+      hours: String(entry.hours),
+      description: entry.description || "",
+    })
+    setEditOpen(true)
+  }
+
+  const handleEditSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!editEntry || !editForm.client_id || !editForm.hours) return
+
+    const res = await fetch(`/api/time-entries/${editEntry.id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        date: editForm.date,
+        client_id: editForm.client_id,
+        hours: parseFloat(editForm.hours),
+        description: editForm.description || "",
+      }),
+    })
+
+    if (!res.ok) {
+      const err = await res.json()
+      toast.error(err.error || "Failed to update")
+      return
+    }
+
+    toast.success("Entry updated")
+    setEditOpen(false)
+    setEditEntry(null)
+    fetchData()
+  }
+
   if (loading) {
     return <div className="space-y-6"><h1 className="text-2xl font-bold">Time Tracking</h1><Card><CardContent className="p-6"><div className="h-32 animate-pulse bg-muted rounded" /></CardContent></Card></div>
   }
@@ -258,7 +304,7 @@ export default function TimeTrackingPage() {
             </div>
             <div className="grid gap-2">
               <Label>Hours</Label>
-              <Input type="number" step="0.25" min="0.01" placeholder="1.5" value={manualHours} onChange={(e) => setManualHours(e.target.value)} required />
+              <Input type="number" step="0.01" min="0.01" placeholder="e.g. 1 or 1.5" value={manualHours} onChange={(e) => setManualHours(e.target.value)} required />
             </div>
             <div className="grid gap-2">
               <Label>Description</Label>
@@ -294,9 +340,12 @@ export default function TimeTrackingPage() {
                       <span>{format(new Date(entry.date), "MMM d, yyyy")}</span>
                     </div>
                   </div>
-                  <div className="flex items-center gap-2 ml-2">
+                  <div className="flex items-center gap-1 ml-2">
                     <span className="font-medium text-sm">{entry.hours}h</span>
-                    <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => deleteEntry(entry.id)}>
+                    <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => openEdit(entry)} aria-label="Edit">
+                      <Pencil className="h-4 w-4 text-muted-foreground" />
+                    </Button>
+                    <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => deleteEntry(entry.id)} aria-label="Delete">
                       <Trash2 className="h-4 w-4 text-muted-foreground" />
                     </Button>
                   </div>
@@ -306,6 +355,63 @@ export default function TimeTrackingPage() {
           )}
         </CardContent>
       </Card>
+
+      <Dialog open={editOpen} onOpenChange={setEditOpen}>
+        <DialogContent>
+          <form onSubmit={handleEditSubmit}>
+            <DialogHeader>
+              <DialogTitle>Edit time entry</DialogTitle>
+              <DialogDescription>Update date, client, hours, or description.</DialogDescription>
+            </DialogHeader>
+            <div className="grid gap-4 py-4">
+              <div className="grid gap-2">
+                <Label>Client</Label>
+                <Select value={editForm.client_id} onValueChange={(v) => setEditForm((f) => ({ ...f, client_id: v }))}>
+                  <SelectTrigger><SelectValue placeholder="Client" /></SelectTrigger>
+                  <SelectContent>
+                    {clients.map((c) => (
+                      <SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="grid gap-2">
+                <Label>Date</Label>
+                <Input
+                  type="date"
+                  value={editForm.date}
+                  onChange={(e) => setEditForm((f) => ({ ...f, date: e.target.value }))}
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label>Hours</Label>
+                <Input
+                  type="number"
+                  step="0.01"
+                  min="0.01"
+                  value={editForm.hours}
+                  onChange={(e) => setEditForm((f) => ({ ...f, hours: e.target.value }))}
+                  required
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label>Description</Label>
+                <Input
+                  placeholder="Task description"
+                  value={editForm.description}
+                  onChange={(e) => setEditForm((f) => ({ ...f, description: e.target.value }))}
+                />
+              </div>
+            </div>
+            <DialogFooter>
+              <Button type="button" variant="outline" onClick={() => setEditOpen(false)}>
+                Cancel
+              </Button>
+              <Button type="submit">Save changes</Button>
+            </DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }

@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { useRouter, useSearchParams } from "next/navigation"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -13,7 +14,11 @@ import {
 import {
   DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Plus, MoreHorizontal, Pencil, Archive, ExternalLink, Copy } from "lucide-react"
+import {
+  AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
+  AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
+} from "@/components/ui/alert-dialog"
+import { Plus, MoreHorizontal, Pencil, Archive, ExternalLink, Copy, Trash2 } from "lucide-react"
 import { toast } from "sonner"
 
 interface Client {
@@ -35,11 +40,15 @@ interface ClientWithHours extends Client {
 }
 
 export default function ClientsPage() {
+  const router = useRouter()
+  const searchParams = useSearchParams()
   const [clients, setClients] = useState<ClientWithHours[]>([])
   const [loading, setLoading] = useState(true)
   const [dialogOpen, setDialogOpen] = useState(false)
   const [editingClient, setEditingClient] = useState<Client | null>(null)
   const [showArchived, setShowArchived] = useState(false)
+  const [deleteConfirm, setDeleteConfirm] = useState<Client | null>(null)
+  const [deleting, setDeleting] = useState(false)
   const [form, setForm] = useState({
     name: "", email: "", monthly_hours: "", monthly_fee: "", overage_rate: "", billing_day: "1",
   })
@@ -70,6 +79,17 @@ export default function ClientsPage() {
   }
 
   useEffect(() => { fetchClients() }, [])
+
+  useEffect(() => {
+    const shouldOpen = searchParams.get("new") === "1"
+    if (shouldOpen) {
+      setEditingClient(null)
+      setForm({ name: "", email: "", monthly_hours: "", monthly_fee: "", overage_rate: "", billing_day: "1" })
+      setDialogOpen(true)
+      // Remove the query param so refresh doesn't reopen the dialog
+      router.replace("/dashboard/clients")
+    }
+  }, [searchParams, router])
 
   const resetForm = () => {
     setForm({ name: "", email: "", monthly_hours: "", monthly_fee: "", overage_rate: "", billing_day: "1" })
@@ -109,6 +129,21 @@ export default function ClientsPage() {
     if (res.ok) {
       toast.success(newStatus === "archived" ? "Client archived" : "Client reactivated")
       fetchClients()
+    }
+  }
+
+  const handleDelete = async () => {
+    if (!deleteConfirm) return
+    setDeleting(true)
+    const res = await fetch(`/api/clients/${deleteConfirm.id}`, { method: "DELETE" })
+    setDeleteConfirm(null)
+    setDeleting(false)
+    if (res.ok) {
+      toast.success("Client deleted")
+      fetchClients()
+    } else {
+      const data = await res.json().catch(() => ({}))
+      toast.error(data.error || "Failed to delete client")
     }
   }
 
@@ -238,6 +273,15 @@ export default function ClientsPage() {
                       <Archive className="mr-2 h-4 w-4" />
                       {client.status === "active" ? "Archive" : "Reactivate"}
                     </DropdownMenuItem>
+                    {client.status === "archived" && (
+                      <DropdownMenuItem
+                        className="text-destructive focus:text-destructive"
+                        onClick={() => setDeleteConfirm(client)}
+                      >
+                        <Trash2 className="mr-2 h-4 w-4" />
+                        Delete permanently
+                      </DropdownMenuItem>
+                    )}
                   </DropdownMenuContent>
                 </DropdownMenu>
               </CardHeader>
@@ -264,6 +308,27 @@ export default function ClientsPage() {
           ))}
         </div>
       )}
+
+      <AlertDialog open={!!deleteConfirm} onOpenChange={(open) => !open && setDeleteConfirm(null)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Delete client permanently?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This will delete &quot;{deleteConfirm?.name}&quot; and all their time entries and invoices. This cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel disabled={deleting}>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={(e) => { e.preventDefault(); handleDelete() }}
+              disabled={deleting}
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+            >
+              {deleting ? "Deleting..." : "Delete"}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   )
 }

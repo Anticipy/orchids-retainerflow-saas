@@ -51,8 +51,8 @@ function BillingSuccessContent() {
     <div className="flex items-center justify-center min-h-[400px]">
       <Card className="max-w-md w-full">
         <CardHeader className="text-center">
-          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
-            <CheckCircle className="h-8 w-8 text-green-600" />
+          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[#22c55e]/20">
+            <CheckCircle className="h-8 w-8 text-[#22c55e]" />
           </div>
           <CardTitle className="text-2xl">Subscription Active!</CardTitle>
         </CardHeader>

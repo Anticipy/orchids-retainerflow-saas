@@ -3,6 +3,7 @@ import { createClient } from "@/lib/supabase/server"
 import { stripe, PLANS } from "@/lib/stripe"
 
 async function getOrCreatePrice(tier: "pro" | "business") {
+  if (!stripe) throw new Error("Stripe not configured")
   const plan = PLANS[tier]
 
   const existing = await stripe.prices.list({
@@ -31,6 +32,7 @@ async function getOrCreatePrice(tier: "pro" | "business") {
 }
 
 async function getOrCreateCustomer(userId: string, email: string, stripeCustomerId?: string | null) {
+  if (!stripe) throw new Error("Stripe not configured")
   if (stripeCustomerId) {
     try {
       await stripe.customers.retrieve(stripeCustomerId)
@@ -49,6 +51,13 @@ async function getOrCreateCustomer(userId: string, email: string, stripeCustomer
 }
 
 export async function POST(request: NextRequest) {
+  if (!stripe) {
+    return NextResponse.json(
+      { error: "Payments are not configured yet. They will be available soon." },
+      { status: 503 }
+    )
+  }
+
   try {
     const supabase = await createClient()
     const { data: { user } } = await supabase.auth.getUser()
@@ -63,11 +72,35 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Invalid tier. Must be 'pro' or 'business'" }, { status: 400 })
     }
 
-    const { data: profile } = await supabase
+    let { data: profile } = await supabase
       .from("users")
       .select("stripe_customer_id, email, subscription_tier")
       .eq("id", user.id)
       .single()
+
+    if (!profile) {
+      const { error: upsertError } = await supabase
+        .from("users")
+        .upsert(
+          {
+            id: user.id,
+            email: user.email ?? "",
+            name: user.user_metadata?.full_name ?? user.email?.split("@")[0] ?? "",
+            updated_at: new Date().toISOString(),
+          },
+          { onConflict: "id" }
+        )
+      if (upsertError) {
+        console.error("Checkout: failed to upsert user", upsertError.message)
+        return NextResponse.json({ error: "User profile not found" }, { status: 404 })
+      }
+      const { data: refetched } = await supabase
+        .from("users")
+        .select("stripe_customer_id, email, subscription_tier")
+        .eq("id", user.id)
+        .single()
+      profile = refetched
+    }
 
     if (!profile) {
       return NextResponse.json({ error: "User profile not found" }, { status: 404 })
@@ -99,7 +132,7 @@ export async function POST(request: NextRequest) {
       customer: customerId,
       client_reference_id: user.id,
       line_items: [{ price: priceId, quantity: 1 }],
-      success_url: `${origin}/dashboard/settings/billing-success?session_id={CHECKOUT_SESSION_ID}`,
+      success_url: `${origin}/dashboard/settings?billing=success&session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${origin}/dashboard/settings`,
       subscription_data: {
         metadata: {

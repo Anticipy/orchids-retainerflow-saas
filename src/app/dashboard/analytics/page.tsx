@@ -22,6 +22,15 @@ interface DashboardData {
   }>
 }
 
+interface PerClientStats {
+  id: string
+  name: string
+  monthlyHours: number
+  avgHoursLast3Months: number
+  overageMonthsCount: number
+  totalRevenue: number
+}
+
 const COLORS = ["#2563eb", "#7c3aed", "#db2777", "#ea580c", "#16a34a", "#ca8a04", "#0891b2", "#6366f1"]
 
 export default function AnalyticsPage() {
@@ -29,13 +38,15 @@ export default function AnalyticsPage() {
   const [invoiceStats, setInvoiceStats] = useState<{ total: number; paid: number; unpaid: number; totalRevenue: number }>({
     total: 0, paid: 0, unpaid: 0, totalRevenue: 0,
   })
+  const [perClient, setPerClient] = useState<PerClientStats[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     Promise.all([
       fetch("/api/dashboard").then((r) => r.json()),
       fetch("/api/invoices").then((r) => r.json()),
-    ]).then(([dashData, invoices]) => {
+      fetch("/api/analytics/clients").then((r) => r.json()),
+    ]).then(([dashData, invoices, analytics]) => {
       setData(dashData)
       const inv = invoices as Array<{ status: string; total_amount: number }>
       setInvoiceStats({
@@ -46,6 +57,7 @@ export default function AnalyticsPage() {
           .filter((i) => i.status === "paid")
           .reduce((sum, i) => sum + Number(i.total_amount), 0),
       })
+      setPerClient((analytics as { perClient: PerClientStats[] }).perClient || [])
       setLoading(false)
     })
   }, [])
@@ -129,13 +141,19 @@ export default function AnalyticsPage() {
               <p className="text-sm text-muted-foreground text-center py-8">No data yet</p>
             ) : (
               <ResponsiveContainer width="100%" height={300}>
-                <BarChart data={hoursChartData}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="name" fontSize={12} />
-                  <YAxis fontSize={12} />
-                  <Tooltip />
-                  <Bar dataKey="included" fill="#e2e8f0" name="Included" />
-                  <Bar dataKey="used" fill="#2563eb" name="Used" />
+                <BarChart data={hoursChartData} margin={{ bottom: hoursChartData.length > 4 ? 60 : 24 }} barCategoryGap="20%">
+                  <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                  <XAxis
+                    dataKey="name"
+                    tick={{ fontSize: 11, fill: "#94a3b8" }}
+                    interval={0}
+                    angle={hoursChartData.length > 4 ? -35 : 0}
+                    textAnchor={hoursChartData.length > 4 ? "end" : "middle"}
+                  />
+                  <YAxis tick={{ fontSize: 11, fill: "#94a3b8" }} />
+                  <Tooltip contentStyle={{ background: "hsl(var(--card))", border: "1px solid hsl(var(--border))" }} />
+                  <Bar dataKey="included" fill="#64748b" name="Included" radius={[2, 2, 0, 0]} />
+                  <Bar dataKey="used" fill="#2563eb" name="Used" radius={[2, 2, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
             )}
@@ -172,6 +190,39 @@ export default function AnalyticsPage() {
           </CardContent>
         </Card>
       </div>
+
+      {perClient.length > 0 && (
+        <Card>
+          <CardHeader>
+            <CardTitle>Per-client insights</CardTitle>
+            <CardDescription>Average hours (last 3 months), overage frequency, total revenue</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b">
+                    <th className="text-left py-2 font-medium">Client</th>
+                    <th className="text-right py-2 font-medium">Avg hours (3 mo)</th>
+                    <th className="text-right py-2 font-medium">Overage months</th>
+                    <th className="text-right py-2 font-medium">Total revenue</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {perClient.map((c) => (
+                    <tr key={c.id} className="border-b last:border-0">
+                      <td className="py-2 font-medium">{c.name}</td>
+                      <td className="text-right py-2 tabular-nums">{c.avgHoursLast3Months}h</td>
+                      <td className="text-right py-2 tabular-nums">{c.overageMonthsCount} of 3</td>
+                      <td className="text-right py-2 tabular-nums">${c.totalRevenue.toLocaleString()}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </CardContent>
+        </Card>
+      )}
     </div>
   )
 }

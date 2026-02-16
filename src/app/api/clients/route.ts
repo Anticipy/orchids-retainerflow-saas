@@ -28,6 +28,16 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Missing required fields" }, { status: 400 })
   }
 
+  const hours = parseFloat(monthly_hours)
+  const fee = parseFloat(monthly_fee)
+  const rate = parseFloat(overage_rate)
+  if (isNaN(hours) || hours <= 0 || isNaN(fee) || fee < 0 || isNaN(rate) || rate < 0) {
+    return NextResponse.json(
+      { error: "monthly_hours must be > 0; monthly_fee and overage_rate must be >= 0" },
+      { status: 400 }
+    )
+  }
+
   // Check subscription limits
   const { data: profile } = await supabase
     .from("users")
@@ -52,16 +62,20 @@ export async function POST(request: NextRequest) {
     )
   }
 
+  const portal_uuid = crypto.randomUUID()
+
   const { data, error } = await supabase
     .from("clients")
     .insert({
       user_id: user.id,
       name,
       email,
-      monthly_hours: parseFloat(monthly_hours),
-      monthly_fee: parseFloat(monthly_fee),
-      overage_rate: parseFloat(overage_rate),
-      billing_day: parseInt(billing_day) || 1,
+      monthly_hours: hours,
+      monthly_fee: fee,
+      overage_rate: rate,
+      billing_day: Math.min(28, Math.max(1, parseInt(billing_day) || 1)),
+      portal_uuid,
+      status: "active",
     })
     .select()
     .single()

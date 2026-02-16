@@ -46,6 +46,13 @@ export default function DashboardPage() {
       .catch(() => setLoading(false))
   }, [])
 
+  useEffect(() => {
+    const t = setTimeout(() => {
+      fetch("/api/notifications/check", { method: "POST" }).catch(() => {})
+    }, 500)
+    return () => clearTimeout(t)
+  }, [])
+
   if (loading) {
     return (
       <div className="space-y-6">
@@ -62,7 +69,7 @@ export default function DashboardPage() {
   if (!data) return null
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 w-full">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold">Dashboard</h1>
         <div className="flex gap-2">
@@ -71,7 +78,7 @@ export default function DashboardPage() {
               <Play className="mr-2 h-4 w-4" /> Start Timer
             </Button>
           </Link>
-          <Link href="/dashboard/clients">
+          <Link href="/dashboard/clients?new=1">
             <Button size="sm" variant="outline">
               <Plus className="mr-2 h-4 w-4" /> Add Client
             </Button>
@@ -79,62 +86,62 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      {/* Stats Cards */}
+      {/* Stats Cards - slightly larger on xl screens */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Monthly Revenue</CardTitle>
-            <DollarSign className="h-4 w-4 text-muted-foreground" />
+        <Card className="xl:p-1">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 xl:pb-3">
+            <CardTitle className="text-sm font-medium xl:text-base">Monthly Revenue</CardTitle>
+            <DollarSign className="h-4 w-4 text-muted-foreground xl:h-5 xl:w-5" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">${data.mrr.toLocaleString()}</div>
-            <p className="text-xs text-muted-foreground">From {data.activeClients} active clients</p>
+            <div className="text-2xl font-bold xl:text-3xl">${data.mrr.toLocaleString()}</div>
+            <p className="text-xs text-muted-foreground xl:text-sm">From {data.activeClients} active clients</p>
           </CardContent>
         </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Hours Used</CardTitle>
-            <Clock className="h-4 w-4 text-muted-foreground" />
+        <Card className="xl:p-1">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 xl:pb-3">
+            <CardTitle className="text-sm font-medium xl:text-base">Hours Used</CardTitle>
+            <Clock className="h-4 w-4 text-muted-foreground xl:h-5 xl:w-5" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{data.totalHoursUsed}h</div>
-            <p className="text-xs text-muted-foreground">of {data.totalCommittedHours}h committed</p>
+            <div className="text-2xl font-bold xl:text-3xl">{data.totalHoursUsed}h</div>
+            <p className="text-xs text-muted-foreground xl:text-sm">of {data.totalCommittedHours}h committed</p>
           </CardContent>
         </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Hours Remaining</CardTitle>
-            <Users className="h-4 w-4 text-muted-foreground" />
+        <Card className="xl:p-1">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 xl:pb-3">
+            <CardTitle className="text-sm font-medium xl:text-base">Hours Remaining</CardTitle>
+            <Users className="h-4 w-4 text-muted-foreground xl:h-5 xl:w-5" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{data.totalHoursRemaining}h</div>
-            <p className="text-xs text-muted-foreground">Across all clients</p>
+            <div className="text-2xl font-bold xl:text-3xl">{data.totalHoursRemaining}h</div>
+            <p className="text-xs text-muted-foreground xl:text-sm">Across all clients</p>
           </CardContent>
         </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Projected Overage</CardTitle>
-            <TrendingUp className="h-4 w-4 text-muted-foreground" />
+        <Card className="xl:p-1">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 xl:pb-3">
+            <CardTitle className="text-sm font-medium xl:text-base">Projected Overage</CardTitle>
+            <TrendingUp className="h-4 w-4 text-muted-foreground xl:h-5 xl:w-5" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">${data.projectedOverage.toLocaleString()}</div>
-            <p className="text-xs text-muted-foreground">Additional revenue this month</p>
+            <div className="text-2xl font-bold xl:text-3xl">${data.projectedOverage.toLocaleString()}</div>
+            <p className="text-xs text-muted-foreground xl:text-sm">Additional revenue this month</p>
           </CardContent>
         </Card>
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-2">
+      <div className="grid gap-6 lg:grid-cols-2 xl:gap-8">
         {/* Client Status */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Client Retainers</CardTitle>
-            <CardDescription>Hours used this month per client</CardDescription>
+        <Card className="xl:p-1">
+          <CardHeader className="xl:pb-3">
+            <CardTitle className="xl:text-lg">Client Retainers</CardTitle>
+            <CardDescription className="xl:text-sm">Hours used this month per client</CardDescription>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-4 xl:space-y-5">
             {data.clientSummaries.length === 0 ? (
               <p className="text-sm text-muted-foreground text-center py-4">
                 No active clients yet.{" "}
-                <Link href="/dashboard/clients" className="text-primary underline">Add your first client</Link>
+                <Link href="/dashboard/clients?new=1" className="text-primary underline">Add your first client</Link>
               </p>
             ) : (
               data.clientSummaries.map((client) => (
@@ -171,10 +178,10 @@ export default function DashboardPage() {
         </Card>
 
         {/* Recent Time Entries */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Recent Time Entries</CardTitle>
-            <CardDescription>Your latest logged time</CardDescription>
+        <Card className="xl:p-1">
+          <CardHeader className="xl:pb-3">
+            <CardTitle className="xl:text-lg">Recent Time Entries</CardTitle>
+            <CardDescription className="xl:text-sm">Your latest logged time</CardDescription>
           </CardHeader>
           <CardContent>
             {data.recentEntries.length === 0 ? (

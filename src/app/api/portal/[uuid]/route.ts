@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/supabase/server"
+import { createAdminClient } from "@/lib/supabase/admin"
 import { NextRequest, NextResponse } from "next/server"
 
 export async function GET(
@@ -6,7 +6,7 @@ export async function GET(
   { params }: { params: Promise<{ uuid: string }> }
 ) {
   const { uuid } = await params
-  const supabase = await createClient()
+  const supabase = createAdminClient()
 
   // Use service role-like query (portal is public, no auth needed)
   const { data: client, error } = await supabase

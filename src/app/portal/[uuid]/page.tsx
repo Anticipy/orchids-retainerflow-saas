@@ -63,10 +63,10 @@ export default function ClientPortalPage({ params }: { params: Promise<{ uuid: s
 
   return (
     <div className="min-h-screen bg-background">
-      <header className="border-b">
+      <header className="border-b border-white/10">
         <div className="container mx-auto flex h-14 items-center gap-2 px-4">
           <Clock className="h-5 w-5 text-primary" />
-          <span className="font-bold">RetainerFlow</span>
+          <span className="font-bold">Tempo</span>
           <span className="text-muted-foreground">|</span>
           <span className="text-sm text-muted-foreground">Client Portal</span>
         </div>
@@ -149,20 +149,28 @@ export default function ClientPortalPage({ params }: { params: Promise<{ uuid: s
             ) : (
               <div className="space-y-2">
                 {data.invoices.map((invoice) => (
-                  <div key={invoice.id} className="flex items-center justify-between py-2 border-b last:border-0">
-                    <div>
-                      <p className="text-sm font-medium">Period: {invoice.billing_period}</p>
-                      <p className="text-xs text-muted-foreground">
-                        {format(new Date(invoice.created_at), "MMM d, yyyy")}
-                      </p>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <span className="font-medium">${invoice.total_amount}</span>
-                      <Badge variant={invoice.status === "paid" ? "default" : "secondary"}>
-                        {invoice.status}
-                      </Badge>
-                    </div>
+                <div key={invoice.id} className="flex items-center justify-between py-2 border-b last:border-0">
+                  <div>
+                    <p className="text-sm font-medium">Period: {invoice.billing_period}</p>
+                    <p className="text-xs text-muted-foreground">
+                      {format(new Date(invoice.created_at), "MMM d, yyyy")}
+                    </p>
                   </div>
+                  <div className="flex items-center gap-2">
+                    <span className="font-medium">${invoice.total_amount}</span>
+                    <Badge variant={invoice.status === "paid" ? "default" : "secondary"}>
+                      {invoice.status}
+                    </Badge>
+                    <a
+                      href={`/api/portal/${uuid}/invoices/${invoice.id}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-xs text-primary hover:underline"
+                    >
+                      View / Download
+                    </a>
+                  </div>
+                </div>
                 ))}
               </div>
             )}
@@ -170,7 +178,7 @@ export default function ClientPortalPage({ params }: { params: Promise<{ uuid: s
         </Card>
 
         <p className="text-xs text-center text-muted-foreground">
-          Powered by RetainerFlow
+          Powered by Tempo
         </p>
       </main>
     </div>

@@ -51,3 +51,40 @@ export async function PATCH(
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
   return NextResponse.json(data)
 }
+
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const { id } = await params
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+
+  const { data: client, error: fetchError } = await supabase
+    .from("clients")
+    .select("id, status")
+    .eq("id", id)
+    .eq("user_id", user.id)
+    .single()
+
+  if (fetchError || !client) {
+    return NextResponse.json({ error: "Client not found" }, { status: 404 })
+  }
+
+  if (client.status !== "archived") {
+    return NextResponse.json(
+      { error: "Only archived clients can be deleted. Archive the client first." },
+      { status: 400 }
+    )
+  }
+
+  const { error: deleteError } = await supabase
+    .from("clients")
+    .delete()
+    .eq("id", id)
+    .eq("user_id", user.id)
+
+  if (deleteError) return NextResponse.json({ error: deleteError.message }, { status: 500 })
+  return NextResponse.json({ deleted: true })
+}

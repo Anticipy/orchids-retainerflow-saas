@@ -1,0 +1,103 @@
+import { createClient } from "@/lib/supabase/server"
+import { NextRequest, NextResponse } from "next/server"
+import { Resend } from "resend"
+
+const resend = new Resend(process.env.RESEND_API_KEY)
+
+export async function POST(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const { id } = await params
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+
+  if (!process.env.RESEND_API_KEY) {
+    return NextResponse.json({ error: "Email is not configured (RESEND_API_KEY)" }, { status: 503 })
+  }
+
+  const { data: invoice } = await supabase
+    .from("invoices")
+    .select("*, clients(name, email, monthly_hours, overage_rate), invoice_line_items(*)")
+    .eq("id", id)
+    .eq("user_id", user.id)
+    .single()
+
+  if (!invoice) return NextResponse.json({ error: "Not found" }, { status: 404 })
+
+  const { data: profile } = await supabase
+    .from("users")
+    .select("name, email")
+    .eq("id", user.id)
+    .single()
+
+  const toEmail = invoice.clients?.email
+  if (!toEmail) return NextResponse.json({ error: "Client has no email" }, { status: 400 })
+
+  const lineItems = (invoice.invoice_line_items || [])
+    .map((li: { date: string; description: string; hours: number }) =>
+      `<tr><td style="padding:8px;border-bottom:1px solid #eee">${li.date}</td><td style="padding:8px;border-bottom:1px solid #eee">${li.description || "-"}</td><td style="padding:8px;border-bottom:1px solid #eee;text-align:right">${li.hours}h</td></tr>`
+    )
+    .join("")
+
+  const html = `
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><title>Invoice ${invoice.billing_period}</title></head>
+<body style="font-family:system-ui,-apple-system,sans-serif;max-width:700px;margin:0 auto;padding:40px;color:#1a1a1a">
+  <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:40px">
+    <div>
+      <h1 style="margin:0;font-size:28px">INVOICE</h1>
+      <p style="color:#666;margin:4px 0">Period: ${invoice.billing_period}</p>
+      <p style="color:#666;margin:4px 0">Status: ${invoice.status.toUpperCase()}</p>
+    </div>
+    <div style="text-align:right">
+      <p style="font-weight:600;margin:0">${profile?.name || "Tempo User"}</p>
+      <p style="color:#666;margin:4px 0">${profile?.email || ""}</p>
+    </div>
+  </div>
+
+  <div style="background:#f8f9fa;padding:20px;border-radius:8px;margin-bottom:30px">
+    <p style="margin:0"><strong>Bill To:</strong></p>
+    <p style="margin:4px 0">${invoice.clients.name}</p>
+    <p style="margin:4px 0;color:#666">${invoice.clients.email}</p>
+    ${invoice.due_date ? `<p style="margin:8px 0 0"><strong>Due Date:</strong> ${invoice.due_date}</p>` : ""}
+  </div>
+
+  <h3 style="margin-bottom:12px">Summary</h3>
+  <table style="width:100%;border-collapse:collapse;margin-bottom:30px">
+    <tr style="border-bottom:2px solid #eee"><td style="padding:8px">Base Retainer Fee</td><td style="padding:8px;text-align:right;font-weight:600">$${Number(invoice.base_fee).toFixed(2)}</td></tr>
+    ${Number(invoice.overage_hours) > 0 ? `<tr style="border-bottom:1px solid #eee"><td style="padding:8px">Overage: ${invoice.overage_hours}h × $${Number(invoice.clients.overage_rate).toFixed(2)}/hr</td><td style="padding:8px;text-align:right;font-weight:600">$${Number(invoice.overage_amount).toFixed(2)}</td></tr>` : ""}
+    <tr style="background:#f0f0f0"><td style="padding:12px;font-weight:700;font-size:16px">Total Due</td><td style="padding:12px;text-align:right;font-weight:700;font-size:16px">$${Number(invoice.total_amount).toFixed(2)}</td></tr>
+  </table>
+
+  ${lineItems ? `
+  <h3 style="margin-bottom:12px">Time Entry Details</h3>
+  <table style="width:100%;border-collapse:collapse;margin-bottom:30px">
+    <thead><tr style="border-bottom:2px solid #ddd"><th style="padding:8px;text-align:left">Date</th><th style="padding:8px;text-align:left">Description</th><th style="padding:8px;text-align:right">Hours</th></tr></thead>
+    <tbody>${lineItems}</tbody>
+  </table>
+  ` : ""}
+
+  <div style="text-align:center;color:#999;font-size:12px;margin-top:40px;border-top:1px solid #eee;padding-top:20px">
+    Sent via Tempo
+  </div>
+</body>
+</html>`
+
+  const from = process.env.RESEND_FROM || "Tempo <onboarding@resend.dev>"
+
+  const { data, error } = await resend.emails.send({
+    from,
+    to: toEmail,
+    subject: `Invoice ${invoice.billing_period} from ${profile?.name || "Tempo"}`,
+    html,
+  })
+
+  if (error) {
+    return NextResponse.json({ error: error.message }, { status: 500 })
+  }
+
+  return NextResponse.json({ success: true, id: data?.id })
+}

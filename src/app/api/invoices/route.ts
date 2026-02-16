@@ -36,13 +36,18 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "client_id and billing_period are required" }, { status: 400 })
   }
 
+  // Validate billing_period format (YYYY-MM)
+  if (!/^\d{4}-\d{2}$/.test(billing_period)) {
+    return NextResponse.json({ error: "billing_period must be YYYY-MM" }, { status: 400 })
+  }
+
   // Check for duplicate
   const { data: existing } = await supabase
     .from("invoices")
     .select("id")
     .eq("client_id", client_id)
     .eq("billing_period", billing_period)
-    .single()
+    .maybeSingle()
 
   if (existing) {
     return NextResponse.json({ error: "Invoice already exists for this period" }, { status: 409 })
@@ -88,7 +93,8 @@ export async function POST(request: NextRequest) {
       overage_hours: overageHours,
       overage_amount: overageAmount,
       total_amount: totalAmount,
-      due_date: new Date(year, month - 1, client.billing_day + 14).toISOString().split("T")[0],
+      due_date: new Date(year, month - 1, client.billing_day).toISOString().split("T")[0],
+      status: "unpaid",
     })
     .select()
     .single()
@@ -106,6 +112,17 @@ export async function POST(request: NextRequest) {
 
     await supabase.from("invoice_line_items").insert(lineItems)
   }
+
+  // In-app notification
+  await supabase.from("notifications").insert({
+    user_id: user.id,
+    type: "invoice_generated",
+    title: "Invoice generated",
+    body: `Invoice for ${client.name} (${billing_period}) — $${totalAmount.toFixed(2)}`,
+    link: "/dashboard/invoices",
+    client_id: client.id,
+    invoice_id: invoice.id,
+  })
 
   return NextResponse.json(invoice, { status: 201 })
 }

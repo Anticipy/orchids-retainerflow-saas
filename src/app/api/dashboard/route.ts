@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server"
 import { NextResponse } from "next/server"
+import { clientStatusFromPercent } from "@/lib/notification-rules"
 
 export async function GET() {
   const supabase = await createClient()
@@ -63,7 +64,7 @@ export async function GET() {
       monthlyHours,
       percentUsed: Math.round(percentUsed),
       monthlyFee: parseFloat(client.monthly_fee),
-      status: percentUsed >= 100 ? "exceeded" : percentUsed >= 80 ? "warning" : "good",
+      status: clientStatusFromPercent(percentUsed),
     }
   })
 

@@ -22,9 +22,21 @@ export const metadata: Metadata = {
   title: "Retallio - Manage Retainer Clients",
   description: "Stop stressing about retainer hours, billing, and client questions. Retallio tracks time, generates invoices, and gives your clients full transparency.",
   icons: {
-    icon: "/icon.png",
-    apple: "/apple-icon.png",
+    icon: [
+      { url: '/favicon.ico' },
+      { url: '/favicon-96x96.png', sizes: '96x96', type: 'image/png' },
+    ],
+    shortcut: '/favicon.ico',
+    apple: '/apple-touch-icon.png',
+    other: [
+      {
+        rel: 'icon',
+        type: 'image/svg+xml',
+        url: '/favicon.svg',
+      },
+    ],
   },
+  manifest: '/site.webmanifest',
 };
 
 export default function RootLayout({

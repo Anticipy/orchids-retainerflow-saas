@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
-import { Clock, BarChart3, Receipt, MessageCircle, ArrowRight, Check } from "lucide-react";
+import { BarChart3, Receipt, MessageCircle, ArrowRight, Check } from "lucide-react";
 import { HeroProductDemo } from "@/components/landing/hero-product-demo";
 import { FeatureTimerDemo } from "@/components/landing/feature-timer-demo";
 import { FeatureInvoiceDemo } from "@/components/landing/feature-invoice-demo";
@@ -51,7 +52,9 @@ export default function LandingPage() {
             }}
             className="flex items-center gap-2 hover:opacity-90 transition-opacity"
           >
-            <Clock className="h-5 w-5 text-[#6366f1]" />
+            <div className="relative h-8 w-8 overflow-hidden">
+              <Image src="/logo.png" alt="Retallio" width={32} height={32} className="h-8 w-8 object-left object-contain" style={{ objectPosition: "left center" }} />
+            </div>
             <span className="font-bold text-lg tracking-tight">Retallio</span>
           </Link>
           <div className="flex items-center gap-3">

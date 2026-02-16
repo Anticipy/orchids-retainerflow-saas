@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
 import { usePathname, useRouter } from "next/navigation"
 import { useAuth } from "@/components/auth-provider"
 import { cn } from "@/lib/utils"
@@ -14,7 +15,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import {
-  Clock,
   LayoutDashboard,
   Users,
   Timer,
@@ -66,7 +66,9 @@ export function AppSidebar({ children }: { children: React.ReactNode }) {
         )}
       >
         <Link href="/dashboard" className="flex h-14 items-center gap-2 border-b border-white/10 px-4 hover:opacity-90">
-          <Clock className="h-5 w-5 text-primary" />
+          <div className="relative h-8 w-8 overflow-hidden">
+            <Image src="/logo.png" alt="Retallio" width={32} height={32} className="h-8 w-8 object-left object-contain" style={{ objectPosition: "left center" }} />
+          </div>
           <span className="font-bold text-lg tracking-tight">Retallio</span>
         </Link>
 

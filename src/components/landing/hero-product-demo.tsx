@@ -66,7 +66,7 @@ export function HeroProductDemo() {
         }}
       >
         {/* Window chrome */}
-        <div className="flex items-center gap-2 px-4 py-3 border-b border-white/10 bg-white/5">
+        <div className="flex items-center gap-2 px-2.5 py-1.5 md:px-4 md:py-3 short:px-2 short:py-1 border-b border-white/10 bg-white/5">
           <div className="flex gap-1.5">
             <div className="w-2.5 h-2.5 rounded-full bg-white/20" />
             <div className="w-2.5 h-2.5 rounded-full bg-white/20" />
@@ -77,9 +77,9 @@ export function HeroProductDemo() {
           </span>
         </div>
 
-        <div className="p-4 space-y-4 min-h-[200px]">
+        <div className="p-2.5 md:p-4 space-y-2.5 md:space-y-4 min-h-[160px] md:min-h-[200px] short:p-2 short:space-y-2 short:min-h-[140px]">
           {/* Timer card */}
-          <div className="rounded-lg bg-white/5 border border-white/10 p-3">
+          <div className="rounded-lg bg-white/5 border border-white/10 p-2 md:p-3 short:p-1.5">
             <div className="flex items-center justify-between mb-2">
               <span className="text-xs font-medium text-white/60">Active timer</span>
               <div className="flex items-center gap-1">
@@ -115,9 +115,9 @@ export function HeroProductDemo() {
           </div>
 
           {/* Hours summary */}
-          <div className="flex gap-3">
-            <div className="flex-1 rounded-lg bg-white/5 border border-white/10 p-3 flex items-center gap-2">
-              <Clock className="w-4 h-4 text-[#6366f1]" />
+          <div className="flex gap-2 md:gap-3">
+            <div className="flex-1 rounded-lg bg-white/5 border border-white/10 p-2 md:p-3 short:p-1.5 flex items-center gap-2">
+              <Clock className="w-4 h-4 text-[#6366f1] short:w-3.5 short:h-3.5" />
               <div>
                 <p className="text-[10px] text-white/50 uppercase tracking-wider">This month</p>
                 <p className="text-lg font-semibold text-white tabular-nums">
@@ -125,8 +125,8 @@ export function HeroProductDemo() {
                 </p>
               </div>
             </div>
-            <div className="flex-1 rounded-lg bg-white/5 border border-white/10 p-3 flex items-center gap-2">
-              <FileText className="w-4 h-4 text-[#6366f1]" />
+            <div className="flex-1 rounded-lg bg-white/5 border border-white/10 p-2 md:p-3 short:p-1.5 flex items-center gap-2">
+              <FileText className="w-4 h-4 text-[#6366f1] short:w-3.5 short:h-3.5" />
               <div>
                 <p className="text-[10px] text-white/50 uppercase tracking-wider">Invoices</p>
                 <p className="text-lg font-semibold text-white">3 sent</p>
@@ -135,7 +135,7 @@ export function HeroProductDemo() {
           </div>
 
           {/* Invoice preview - fades in periodically; fixed height to prevent layout shift */}
-          <div className="min-h-[100px] rounded-lg border border-white/10 overflow-hidden">
+          <div className="min-h-[72px] md:min-h-[100px] short:min-h-[60px] rounded-lg border border-white/10 overflow-hidden">
             <motion.div
               className="rounded-lg bg-white/[0.07]"
               initial={false}

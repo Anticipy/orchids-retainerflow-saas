@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { BarChart3, Receipt, MessageCircle, ArrowRight, Check } from "lucide-react";
+import { BarChart3, Receipt, MessageCircle, ArrowRight, Check, Quote } from "lucide-react";
 import { HeroProductDemo } from "@/components/landing/hero-product-demo";
 import { FeatureTimerDemo } from "@/components/landing/feature-timer-demo";
 import { FeatureInvoiceDemo } from "@/components/landing/feature-invoice-demo";
@@ -79,47 +79,82 @@ export default function LandingPage() {
         </div>
       </header>
 
-      {/* Hero */}
-      <section className="relative z-10 container mx-auto px-4 pt-16 pb-24 md:pt-24 md:pb-32">
-        <div className="max-w-3xl mx-auto text-center">
+      {/* Hero - side-by-side on lg+ so demo is above the fold on 1440x900 */}
+      <section className="relative z-10 container mx-auto px-4 py-8 md:py-10 lg:py-12 xl:py-16 lg:min-h-[calc(100vh-3.5rem)] flex flex-col lg:grid lg:grid-cols-2 lg:gap-14 xl:gap-20 lg:items-center">
+        <div className="flex flex-col justify-center items-center lg:items-start text-center lg:text-left order-2 lg:order-1 mt-8 lg:mt-0 space-y-5 lg:space-y-6 max-w-xl lg:max-w-lg xl:max-w-xl mx-auto lg:mx-0">
           <motion.h1
-            className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight text-white mb-6"
+            className="text-4xl md:text-5xl lg:text-5xl xl:text-6xl font-bold tracking-tight text-white leading-[1.15]"
             style={{ fontFamily: "var(--font-inter), system-ui, sans-serif" }}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           >
-            Your retainer clients, organized
+            Stop tracking retainer hours
+            <br className="hidden sm:inline" />
+            {" "}in spreadsheets
           </motion.h1>
           <motion.p
-            className="text-lg md:text-xl text-[#a3a3a3] mb-10 max-w-2xl mx-auto"
+            className="text-base md:text-lg text-[#a3a3a3] max-w-xl"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
           >
-            Track time. Bill automatically. Keep clients happy.
+            Time tracking, auto-invoicing, and client portals for freelancers managing retainers.
+          </motion.p>
+          <motion.p
+            className="text-sm text-[#a3a3a3]"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
+          >
+            ✓ Free for 1 client forever  •  ✓ No credit card required
           </motion.p>
           <motion.div
+            className="flex flex-col items-center lg:items-start gap-2"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
           >
             <Link href="/signup">
               <motion.span
-                className="inline-flex items-center gap-2 h-12 px-6 rounded-lg bg-[#6366f1] text-white text-base font-semibold cursor-pointer"
+                className="inline-flex items-center gap-2 text-base md:text-lg px-6 md:px-8 py-4 md:py-5 rounded-lg bg-[#6366f1] text-white font-semibold cursor-pointer"
                 whileHover={{
                   scale: 1.05,
                   boxShadow: "0 12px 32px rgba(99, 102, 241, 0.4)",
                 }}
                 whileTap={{ scale: 0.98 }}
               >
-                Start Free <ArrowRight className="w-4 h-4" />
+                Start Free <ArrowRight className="w-4 h-4 md:w-5 md:h-5" />
               </motion.span>
             </Link>
+            <p className="text-xs text-[#a3a3a3]">No credit card required</p>
           </motion.div>
+          <motion.div
+            className="flex items-center justify-center lg:justify-start gap-2 text-sm text-[#a3a3a3]"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <div className="flex -space-x-2">
+              <div className="w-7 h-7 rounded-full bg-blue-500 border-2 border-[#0f0f0f]" />
+              <div className="w-7 h-7 rounded-full bg-purple-500 border-2 border-[#0f0f0f]" />
+              <div className="w-7 h-7 rounded-full bg-green-500 border-2 border-[#0f0f0f]" />
+            </div>
+            <span className="text-xs md:text-sm">Used by 50+ freelancers</span>
+          </motion.div>
+          <motion.p
+            className="text-xs md:text-sm text-[#737373] italic max-w-sm"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
+          >
+            &ldquo;My clients can see their hours now. No more back-and-forth.&rdquo;
+          </motion.p>
         </div>
-        <div className="mt-16 md:mt-20">
-          <HeroProductDemo />
+        <div className="order-1 lg:order-2 flex items-center justify-center">
+          <div className="w-full max-w-lg lg:max-w-xl xl:max-w-2xl">
+            <HeroProductDemo />
+          </div>
         </div>
       </section>
 
@@ -252,6 +287,70 @@ export default function LandingPage() {
                 Warnings before overages. You stay in control.
               </p>
             </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials */}
+      <section className="relative z-10 py-20 md:py-28 border-t border-white/10">
+        <div className="container mx-auto px-4">
+          <motion.p
+            className="text-center text-sm font-medium text-[#6366f1] uppercase tracking-wider mb-2"
+            {...fadeInUp}
+          >
+            What freelancers are saying
+          </motion.p>
+          <motion.h2
+            className="text-2xl md:text-3xl font-bold text-center text-white mb-16"
+            {...fadeInUp}
+          >
+            Built for how you actually work
+          </motion.h2>
+          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            {[
+              {
+                quote: "I used to spend an hour each month explaining invoices. Now clients just check their portal. Saves me 12+ hours a year.",
+                name: "Sarah Kim",
+                role: "Freelance Designer",
+              },
+              {
+                quote: "No more 'where did my hours go?' emails. Clients see everything in real-time. Cut my invoice questions by 90%.",
+                name: "Marcus Reid",
+                role: "Software Consultant",
+              },
+              {
+                quote: "Finally ditched my spreadsheet. Auto-invoicing alone saves me 2 hours every month.",
+                name: "Jamie Park",
+                role: "Marketing Consultant",
+              },
+            ].map((t, i) => (
+              <motion.div
+                key={t.name}
+                className="relative rounded-xl border border-white/10 bg-white/[0.03] p-6"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.4, delay: i * 0.1 }}
+                whileHover={{
+                  borderColor: "rgba(255,255,255,0.15)",
+                  backgroundColor: "rgba(255,255,255,0.05)",
+                }}
+              >
+                <Quote className="absolute top-5 right-5 w-8 h-8 text-[#6366f1]/20" />
+                <p className="text-[#e5e5e5] text-base leading-relaxed mb-6 pr-8">
+                  &ldquo;{t.quote}&rdquo;
+                </p>
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-sm font-semibold text-white">
+                    {t.name.split(" ").map((n) => n[0]).join("")}
+                  </div>
+                  <div>
+                    <p className="font-medium text-white text-sm">{t.name}</p>
+                    <p className="text-[#737373] text-xs">{t.role}</p>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>

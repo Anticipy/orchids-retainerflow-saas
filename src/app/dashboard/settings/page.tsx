@@ -11,7 +11,7 @@ import { Separator } from "@/components/ui/separator"
 import { Switch } from "@/components/ui/switch"
 import { createClient } from "@/lib/supabase/client"
 import { toast } from "sonner"
-import { User, CreditCard, Bell, Loader2, Lock } from "lucide-react"
+import { User, CreditCard, Bell, Loader2, Lock, CheckCircle2 } from "lucide-react"
 
 export default function SettingsPage() {
   const { user, profile, refreshProfile } = useAuth()
@@ -90,6 +90,7 @@ export default function SettingsPage() {
   const [newPassword, setNewPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
   const [savingPassword, setSavingPassword] = useState(false)
+  const [emailConfig, setEmailConfig] = useState<{ fullyConfigured?: boolean } | null>(null)
 
   useEffect(() => {
     const nextName = profile?.name ?? user?.user_metadata?.full_name ?? user?.email?.split("@")[0] ?? ""
@@ -101,6 +102,13 @@ export default function SettingsPage() {
       setNotifyInvoice(profile.notify_email_invoice ?? true)
     }
   }, [profile, user])
+
+  useEffect(() => {
+    fetch("/api/email-config")
+      .then((r) => r.ok ? r.json() : null)
+      .then(setEmailConfig)
+      .catch(() => setEmailConfig(null))
+  }, [])
 
   const handleSaveNotificationPrefs = async () => {
     if (!profile) return
@@ -303,20 +311,7 @@ export default function SettingsPage() {
         </CardContent>
       </Card>
 
-      {/* Email sending (Resend / domain) */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-base">Sending invoices by email</CardTitle>
-          <CardDescription>Using the Mail button on Invoices</CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-2">
-          <p className="text-sm text-muted-foreground">
-            Right now you can only send test emails to your own address. To send invoices to clients (any email), verify your domain at{" "}
-            <a href="https://resend.com/domains" target="_blank" rel="noopener noreferrer" className="text-primary underline">resend.com/domains</a>
-            {" "}and set <code className="text-xs bg-muted px-1 rounded">RESEND_FROM</code> in your env to an address on that domain (e.g. <code className="text-xs bg-muted px-1 rounded">invoices@yourdomain.com</code>).
-          </p>
-        </CardContent>
-      </Card>
+     
     </div>
   )
 }

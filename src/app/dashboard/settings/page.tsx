@@ -68,7 +68,7 @@ export default function SettingsPage() {
         return
       }
       if (data.url) {
-        window.parent.postMessage({ type: "OPEN_EXTERNAL_URL", data: { url: data.url } }, "*")
+        window.location.href = data.url
       }
     } catch {
       toast.error("Something went wrong. Please try again.")

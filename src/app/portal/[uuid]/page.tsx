@@ -66,7 +66,7 @@ export default function ClientPortalPage({ params }: { params: Promise<{ uuid: s
       <header className="border-b border-white/10">
         <div className="container mx-auto flex h-14 items-center gap-2 px-4">
           <Clock className="h-5 w-5 text-primary" />
-          <span className="font-bold">Tempo</span>
+          <span className="font-bold">Retallio</span>
           <span className="text-muted-foreground">|</span>
           <span className="text-sm text-muted-foreground">Client Portal</span>
         </div>
@@ -178,7 +178,7 @@ export default function ClientPortalPage({ params }: { params: Promise<{ uuid: s
         </Card>
 
         <p className="text-xs text-center text-muted-foreground">
-          Powered by Tempo
+          Powered by Retallio
         </p>
       </main>
     </div>

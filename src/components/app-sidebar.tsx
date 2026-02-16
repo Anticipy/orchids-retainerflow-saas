@@ -67,7 +67,7 @@ export function AppSidebar({ children }: { children: React.ReactNode }) {
       >
         <Link href="/dashboard" className="flex h-14 items-center gap-2 border-b border-white/10 px-4 hover:opacity-90">
           <Clock className="h-5 w-5 text-primary" />
-          <span className="font-bold text-lg tracking-tight">Tempo</span>
+          <span className="font-bold text-lg tracking-tight">Retallio</span>
         </Link>
 
         <nav className="flex-1 overflow-y-auto p-3 space-y-1">

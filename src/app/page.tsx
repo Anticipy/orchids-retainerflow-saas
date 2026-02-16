@@ -52,7 +52,7 @@ export default function LandingPage() {
             className="flex items-center gap-2 hover:opacity-90 transition-opacity"
           >
             <Clock className="h-5 w-5 text-[#6366f1]" />
-            <span className="font-bold text-lg tracking-tight">Tempo</span>
+            <span className="font-bold text-lg tracking-tight">Retallio</span>
           </Link>
           <div className="flex items-center gap-3">
             <Link href="/login">
@@ -393,7 +393,7 @@ export default function LandingPage() {
       {/* Footer */}
       <footer className="relative z-10 border-t border-white/10 py-8">
         <div className="container mx-auto px-4 text-center text-sm text-[#a3a3a3]">
-          <p>&copy; {new Date().getFullYear()} Tempo. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Retallio. All rights reserved.</p>
         </div>
       </footer>
     </div>

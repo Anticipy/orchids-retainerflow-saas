@@ -53,7 +53,7 @@ export async function POST(
       <p style="color:#666;margin:4px 0">Status: ${invoice.status.toUpperCase()}</p>
     </div>
     <div style="text-align:right">
-      <p style="font-weight:600;margin:0">${profile?.name || "Tempo User"}</p>
+      <p style="font-weight:600;margin:0">${profile?.name || "Retallio User"}</p>
       <p style="color:#666;margin:4px 0">${profile?.email || ""}</p>
     </div>
   </div>
@@ -81,17 +81,17 @@ export async function POST(
   ` : ""}
 
   <div style="text-align:center;color:#999;font-size:12px;margin-top:40px;border-top:1px solid #eee;padding-top:20px">
-    Sent via Tempo
+    Sent via Retallio
   </div>
 </body>
 </html>`
 
-  const from = process.env.RESEND_FROM || "Tempo <onboarding@resend.dev>"
+  const from = process.env.RESEND_FROM || "Retallio <onboarding@resend.dev>"
 
   const { data, error } = await resend.emails.send({
     from,
     to: toEmail,
-    subject: `Invoice ${invoice.billing_period} from ${profile?.name || "Tempo"}`,
+    subject: `Invoice ${invoice.billing_period} from ${profile?.name || "Retallio"}`,
     html,
   })
 

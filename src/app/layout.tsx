@@ -19,8 +19,12 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "RetainerFlow - Manage Retainer Clients",
-  description: "Stop stressing about retainer hours, billing, and client questions. RetainerFlow tracks time, generates invoices, and gives your clients full transparency.",
+  title: "Retallio - Manage Retainer Clients",
+  description: "Stop stressing about retainer hours, billing, and client questions. Retallio tracks time, generates invoices, and gives your clients full transparency.",
+  icons: {
+    icon: "/icon.png",
+    apple: "/apple-icon.png",
+  },
 };
 
 export default function RootLayout({

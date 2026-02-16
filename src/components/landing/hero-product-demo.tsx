@@ -73,7 +73,7 @@ export function HeroProductDemo() {
             <div className="w-2.5 h-2.5 rounded-full bg-white/20" />
           </div>
           <span className="text-[11px] text-white/40 font-medium flex-1 text-center">
-            Tempo — Dashboard
+            Retallio — Dashboard
           </span>
         </div>
 

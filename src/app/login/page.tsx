@@ -55,7 +55,7 @@ export default function LoginPage() {
         <CardHeader className="text-center space-y-2">
           <Link href="/" className="flex items-center justify-center gap-2 mb-2 text-foreground hover:opacity-90">
             <Clock className="h-6 w-6 text-primary" />
-            <span className="text-xl font-bold tracking-tight">Tempo</span>
+            <span className="text-xl font-bold tracking-tight">Retallio</span>
           </Link>
           <CardTitle className="text-2xl font-bold">Welcome back</CardTitle>
           <CardDescription className="text-muted-foreground">Sign in to manage your retainer clients</CardDescription>

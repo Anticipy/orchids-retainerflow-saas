@@ -86,7 +86,8 @@ export async function POST(
 </body>
 </html>`
 
-  const from = process.env.RESEND_FROM || "Retallio <onboarding@resend.dev>"
+  let from = process.env.RESEND_FROM || "Retallio <onboarding@resend.dev>"
+  from = from.replace(/^["']|["']$/g, "").trim()
 
   const { data, error } = await resend.emails.send({
     from,

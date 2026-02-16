@@ -7,7 +7,7 @@ export async function GET() {
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
 
   const hasApiKey = !!process.env.RESEND_API_KEY
-  const from = process.env.RESEND_FROM || ""
+  let from = (process.env.RESEND_FROM || "").replace(/^["']|["']$/g, "").trim()
   const isCustomDomain = !!from && !from.includes("onboarding@resend.dev")
   const fullyConfigured = hasApiKey && isCustomDomain
 

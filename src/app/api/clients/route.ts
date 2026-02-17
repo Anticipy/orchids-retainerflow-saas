@@ -1,5 +1,8 @@
 import { createClient } from "@/lib/supabase/server"
 import { NextRequest, NextResponse } from "next/server"
+import { Resend } from "resend"
+
+const resend = new Resend(process.env.RESEND_API_KEY)
 
 export async function GET() {
   const supabase = await createClient()
@@ -38,10 +41,10 @@ export async function POST(request: NextRequest) {
     )
   }
 
-  // Check subscription limits
+  // Check subscription limits and get name for portal email
   const { data: profile } = await supabase
     .from("users")
-    .select("subscription_tier")
+    .select("subscription_tier, name")
     .eq("id", user.id)
     .single()
 
@@ -64,7 +67,7 @@ export async function POST(request: NextRequest) {
 
   const portal_uuid = crypto.randomUUID()
 
-  const { data, error } = await supabase
+  const { data: inserted, error } = await supabase
     .from("clients")
     .insert({
       user_id: user.id,
@@ -81,5 +84,26 @@ export async function POST(request: NextRequest) {
     .single()
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
-  return NextResponse.json(data, { status: 201 })
+
+  // Auto-send portal link if Resend is configured
+  if (process.env.RESEND_API_KEY && inserted) {
+    const origin = request.nextUrl.origin
+    const portalUrl = `${origin}/portal/${portal_uuid}`
+    const freelancerName = profile?.name || "Your freelancer"
+    const from = (process.env.RESEND_FROM || "Retallio <onboarding@resend.dev>").replace(/^["']|["']$/g, "").trim()
+    await resend.emails.send({
+      from,
+      to: email,
+      subject: `${freelancerName} invited you to their client portal`,
+      html: `
+        <p>Hi ${name},</p>
+        <p>${freelancerName} has set up a client portal for you. You can view your retainer usage and invoices in real time.</p>
+        <p><a href="${portalUrl}" style="display:inline-block;margin:12px 0;padding:12px 24px;background:#18181b;color:#fff;text-decoration:none;border-radius:6px">Open portal</a></p>
+        <p style="color:#666;font-size:14px">Or copy this link: ${portalUrl}</p>
+        <p style="color:#999;font-size:12px;margin-top:24px">Sent via Retallio</p>
+      `,
+    }).catch(() => { /* Don't fail create if email fails */ })
+  }
+
+  return NextResponse.json(inserted, { status: 201 })
 }

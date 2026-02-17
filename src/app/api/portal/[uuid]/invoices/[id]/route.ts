@@ -31,7 +31,7 @@ export async function GET(
 
   const { data: profile } = await supabase
     .from("users")
-    .select("name, email")
+    .select("name, email, logo_url")
     .eq("id", client.user_id)
     .single()
 
@@ -41,14 +41,31 @@ export async function GET(
     )
     .join("")
 
+  const logoHtml = profile?.logo_url
+    ? `<img src="${profile.logo_url}" alt="" style="max-height:48px;max-width:160px;object-fit:contain;display:block" />`
+    : ""
   const html = `
 <!DOCTYPE html>
 <html>
-<head><meta charset="utf-8"><title>Invoice ${invoice.billing_period}</title></head>
+<head>
+  <meta charset="utf-8">
+  <title>Invoice ${invoice.billing_period}</title>
+  <style>
+    @media print {
+      body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .no-print { display: none !important; }
+    }
+    .print-btn { margin-bottom:16px; }
+  </style>
+</head>
 <body style="font-family:system-ui,-apple-system,sans-serif;max-width:700px;margin:0 auto;padding:40px;color:#1a1a1a">
-  <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:40px">
+  <div class="no-print print-btn">
+    <button onclick="window.print()" style="padding:8px 16px;background:#18181b;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:14px">Print / Save as PDF</button>
+  </div>
+  <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:40px;flex-wrap:wrap;gap:24px">
     <div>
-      <h1 style="margin:0;font-size:28px">INVOICE</h1>
+      ${logoHtml}
+      <h1 style="margin:${logoHtml ? "12px 0 0" : "0"};font-size:28px">INVOICE</h1>
       <p style="color:#666;margin:4px 0">Period: ${invoice.billing_period}</p>
       <p style="color:#666;margin:4px 0">Status: ${invoice.status.toUpperCase()}</p>
     </div>

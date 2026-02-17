@@ -11,17 +11,85 @@ import { Separator } from "@/components/ui/separator"
 import { Switch } from "@/components/ui/switch"
 import { createClient } from "@/lib/supabase/client"
 import { toast } from "sonner"
-import { User, CreditCard, Bell, Loader2, Lock, CheckCircle2 } from "lucide-react"
-
+import { User, CreditCard, Bell, Loader2, Lock, Upload, X } from "lucide-react"
+import Image from "next/image"
 export default function SettingsPage() {
   const { user, profile, refreshProfile } = useAuth()
   const displayName = profile?.name ?? user?.user_metadata?.full_name ?? user?.email?.split("@")[0] ?? ""
   const displayEmail = profile?.email ?? user?.email ?? ""
+  const displayLogoUrl = (profile as { logo_url?: string } | null)?.logo_url ?? ""
   const [name, setName] = useState(displayName)
+  const [logoUrl, setLogoUrl] = useState(displayLogoUrl)
   const [saving, setSaving] = useState(false)
+  const [uploadingLogo, setUploadingLogo] = useState(false)
   const [upgradingTier, setUpgradingTier] = useState<string | null>(null)
   const supabase = createClient()
 
+  const handleLogoUpload = async (file: File) => {
+    if (!user) return
+    if (!file.type.startsWith("image/")) {
+      toast.error("Please upload an image file")
+      return
+    }
+    if (file.size > 2 * 1024 * 1024) {
+      toast.error("Image must be under 2MB")
+      return
+    }
+  
+    setUploadingLogo(true)
+    try {
+      const ext = file.name.split(".").pop() ?? "png"
+      const path = `${user.id}/logo.${ext}`
+  
+      const { error: uploadError } = await supabase.storage
+        .from("logos")
+        .upload(path, file, { upsert: true })
+  
+      if (uploadError) {
+        toast.error("Failed to upload logo")
+        return
+      }
+  
+      const { data: { publicUrl } } = supabase.storage
+        .from("logos")
+        .getPublicUrl(path)
+  
+      // Save to DB immediately
+      const { error: dbError } = await supabase
+        .from("users")
+        .update({ logo_url: publicUrl, updated_at: new Date().toISOString() })
+        .eq("id", user.id)
+  
+      if (dbError) {
+        toast.error("Failed to save logo")
+        return
+      }
+  
+      setLogoUrl(publicUrl)
+      await refreshProfile()
+      toast.success("Logo uploaded!")
+    } catch {
+      toast.error("Something went wrong")
+    } finally {
+      setUploadingLogo(false)
+    }
+  }
+  
+  const handleLogoRemove = async () => {
+    if (!user) return
+    const { error } = await supabase
+      .from("users")
+      .update({ logo_url: null, updated_at: new Date().toISOString() })
+      .eq("id", user.id)
+    if (error) {
+      toast.error("Failed to remove logo")
+      return
+    }
+    setLogoUrl("")
+    await refreshProfile()
+    toast.success("Logo removed")
+  }
+  
   const handleSaveProfile = async () => {
     if (!user) return
     setSaving(true)
@@ -95,7 +163,9 @@ export default function SettingsPage() {
   useEffect(() => {
     const nextName = profile?.name ?? user?.user_metadata?.full_name ?? user?.email?.split("@")[0] ?? ""
     const nextEmail = profile?.email ?? user?.email ?? ""
+    const nextLogoUrl = (profile as { logo_url?: string } | null)?.logo_url ?? ""
     setName(nextName)
+    setLogoUrl(nextLogoUrl)
     if (profile) {
       setNotify80(profile.notify_email_80 ?? true)
       setNotify100(profile.notify_email_100 ?? true)
@@ -174,6 +244,61 @@ export default function SettingsPage() {
             <Label>Email</Label>
             <Input value={displayEmail} disabled />
             <p className="text-xs text-muted-foreground">Email cannot be changed</p>
+          </div>
+          <div className="grid gap-2">
+            <Label>Logo (for client portal)</Label>
+            
+            {/* Preview */}
+            <div className="flex items-center gap-4">
+              <div className="h-16 w-16 rounded-lg border bg-muted flex items-center justify-center overflow-hidden shrink-0">
+                <Image
+                  src={logoUrl || "/logo.png"}
+                  alt="Logo preview"
+                  width={64}
+                  height={64}
+                  className="object-contain"
+                  onError={(e) => {
+                    e.currentTarget.src = "/logo.png"
+                  }}
+                />
+              </div>
+              <div className="flex flex-col gap-2">
+                <label
+                  htmlFor="logo-upload"
+                  className={`inline-flex items-center gap-2 px-3 py-2 rounded-md border text-sm font-medium cursor-pointer transition-colors hover:bg-accent ${uploadingLogo ? "opacity-50 pointer-events-none" : ""}`}
+                >
+                  {uploadingLogo ? (
+                    <><Loader2 className="h-4 w-4 animate-spin" /> Uploading...</>
+                  ) : (
+                    <><Upload className="h-4 w-4" /> Upload Logo</>
+                  )}
+                  <input
+                    id="logo-upload"
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    disabled={uploadingLogo}
+                    onChange={(e) => {
+                      const file = e.target.files?.[0]
+                      if (file) handleLogoUpload(file)
+                      e.target.value = ""
+                    }}
+                  />
+                </label>
+                {logoUrl && (
+                  <button
+                    type="button"
+                    onClick={handleLogoRemove}
+                    className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-destructive transition-colors"
+                  >
+                    <X className="h-3 w-3" /> Remove logo
+                  </button>
+                )}
+              </div>
+            </div>
+            <p className="text-xs text-muted-foreground">
+              Shows in your client portal header. Max 2MB. If none uploaded, your Retallio logo shows by default.
+            </p>
           </div>
           <Button onClick={handleSaveProfile} disabled={saving}>
             {saving ? "Saving..." : "Save Changes"}

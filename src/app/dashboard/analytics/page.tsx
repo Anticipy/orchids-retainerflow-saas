@@ -151,9 +151,23 @@ export default function AnalyticsPage() {
                     textAnchor={hoursChartData.length > 4 ? "end" : "middle"}
                   />
                   <YAxis tick={{ fontSize: 11, fill: "#94a3b8" }} />
-                  <Tooltip contentStyle={{ background: "hsl(var(--card))", border: "1px solid hsl(var(--border))" }} />
-                  <Bar dataKey="included" fill="#64748b" name="Included" radius={[2, 2, 0, 0]} />
-                  <Bar dataKey="used" fill="#2563eb" name="Used" radius={[2, 2, 0, 0]} />
+                  <Tooltip
+                    contentStyle={{
+                      backgroundColor: "#1e1e2e",
+                      border: "1px solid #374151",
+                      borderRadius: "8px",
+                      color: "#f9fafb",
+                    }}
+                    labelStyle={{
+                      color: "#f9fafb",
+                      fontWeight: 600,
+                      marginBottom: "4px",
+                    }}
+                    itemStyle={{ color: "#d1d5db" }}
+                    cursor={{ fill: "rgba(255,255,255,0.05)" }}
+                />
+                <Bar dataKey="included" fill="#a78bfa" name="Included" radius={[2, 2, 0, 0]} />
+                <Bar dataKey="used" fill="#6366f1" name="Used" radius={[2, 2, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
             )}
@@ -183,7 +197,16 @@ export default function AnalyticsPage() {
                       <Cell key={index} fill={COLORS[index % COLORS.length]} />
                     ))}
                   </Pie>
-                  <Tooltip />
+                  <Tooltip 
+                    contentStyle={{
+                      backgroundColor: "#1e1e2e",
+                      border: "1px solid #374151",
+                      borderRadius: "8px",
+                      color: "#f9fafb",
+                    }}
+                    itemStyle={{ color: "#d1d5db" }}
+                    formatter={(value: number) => [`$${value.toLocaleString()}`, "Monthly Fee"]}
+                    />
                 </PieChart>
               </ResponsiveContainer>
             )}

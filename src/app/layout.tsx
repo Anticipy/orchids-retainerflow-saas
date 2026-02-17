@@ -21,7 +21,7 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: "Retallio - Manage Retainer Clients",
-  description: "Stop stressing about retainer hours, billing, and client questions. Retallio tracks time, generates invoices, and gives your clients full transparency.",
+  description: "The only retainer tool built for both you and your clients. Everyone sees the same numbers in real time. No more 'where did my hours go?' emails.",
   icons: {
     icon: [
       { url: '/favicon.ico' },

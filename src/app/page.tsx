@@ -89,9 +89,9 @@ export default function LandingPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           >
-            Stop tracking retainer hours
+            Your clients finally see what
             <br className="hidden sm:inline" />
-            {" "}in spreadsheets
+            {" "}they&apos;re paying for
           </motion.h1>
           <motion.p
             className="text-base md:text-lg text-[#a3a3a3] max-w-xl"
@@ -99,7 +99,7 @@ export default function LandingPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
           >
-            Time tracking, auto-invoicing, and client portals for freelancers managing retainers.
+            Stop answering &quot;where did my hours go?&quot; Give clients a real-time portal. Invoices generate themselves.
           </motion.p>
           <motion.p
             className="text-sm text-[#a3a3a3]"
@@ -140,7 +140,7 @@ export default function LandingPage() {
               <div className="w-7 h-7 rounded-full bg-purple-500 border-2 border-[#0f0f0f]" />
               <div className="w-7 h-7 rounded-full bg-green-500 border-2 border-[#0f0f0f]" />
             </div>
-            <span className="text-xs md:text-sm">Used by 50+ freelancers</span>
+            <span className="text-xs md:text-sm">The only retainer tool built for both you and your clients</span>
           </motion.div>
           <motion.p
             className="text-xs md:text-sm text-[#737373] italic max-w-sm"
@@ -148,7 +148,7 @@ export default function LandingPage() {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
           >
-            &ldquo;My clients can see their hours now. No more back-and-forth.&rdquo;
+            &ldquo;No more invoice disputes. They see everything before the invoice even arrives.&rdquo;
           </motion.p>
         </div>
         <div className="order-1 lg:order-2 flex items-center justify-center">
@@ -158,31 +158,43 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Problem */}
+      {/* Problem - The Gap */}
       <section className="relative z-10 py-20 md:py-28 border-t border-white/10">
         <div className="container mx-auto px-4">
-          <motion.h2
-            className="text-2xl md:text-3xl font-bold text-center text-white mb-12"
+          <motion.p
+            className="text-center text-sm font-medium text-[#6366f1] uppercase tracking-wider mb-2"
             {...fadeInUp}
           >
-            Retainers shouldn&apos;t feel like chaos
+            The gap
+          </motion.p>
+          <motion.h2
+            className="text-2xl md:text-3xl font-bold text-center text-white mb-4 max-w-2xl mx-auto"
+            {...fadeInUp}
+          >
+            Every tool serves only you. Your client is in the dark.
           </motion.h2>
+          <motion.p
+            className="text-[#a3a3a3] text-center mb-12 max-w-xl mx-auto"
+            {...fadeInUp}
+          >
+            Time trackers and invoicing tools serve you. Your client stays in the dark until the invoice arrives.
+          </motion.p>
           <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
             {[
               {
                 icon: BarChart3,
-                title: "Spreadsheet hell",
-                desc: "Hours scattered across tabs",
+                title: "Time trackers",
+                desc: "You track ✓ • Client sees nothing ✗",
               },
               {
                 icon: Receipt,
-                title: "Billing confusion",
-                desc: "Manual invoices every month",
+                title: "Invoicing tools",
+                desc: "You invoice ✓ • Client doesn't know why ✗",
               },
               {
                 icon: MessageCircle,
-                title: "Client questions",
-                desc: '"Where did my hours go?"',
+                title: "Spreadsheets",
+                desc: "You track ✓ • Client never sees it ✗",
               },
             ].map((item, i) => (
               <motion.div
@@ -207,64 +219,65 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Feature 1: Time Tracking */}
+      {/* Feature 1: Client Portal - THE differentiator */}
       <section className="relative z-10 py-20 md:py-28 border-t border-white/10">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-12 lg:gap-16 xl:gap-20 items-center max-w-6xl xl:max-w-7xl mx-auto">
             <motion.div className="order-2 md:order-1" {...fadeInUp}>
+              <p className="text-sm font-medium text-[#6366f1] uppercase tracking-wider mb-2">The transparency layer</p>
               <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4">
-                Time Tracking That Actually Works
+                Both sides see the same numbers. In real time.
               </h2>
               <p className="text-[#a3a3a3] text-base md:text-lg leading-relaxed">
-                Start a timer. Log hours. See totals instantly.
+                Your client gets a portal. Hours used. Hours left. Every task logged.
                 <br />
-                Every minute tracked against the right retainer.
-              </p>
-            </motion.div>
-            <motion.div className="order-1 md:order-2 flex justify-center md:justify-end" {...fadeInUp}>
-              <FeatureTimerDemo />
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Feature 2: Invoices */}
-      <section className="relative z-10 py-20 md:py-28 border-t border-white/10">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-2 gap-12 lg:gap-16 xl:gap-20 items-center max-w-6xl xl:max-w-7xl mx-auto">
-            <motion.div className="flex justify-center md:justify-start" {...fadeInUp}>
-              <FeatureInvoiceDemo />
-            </motion.div>
-            <motion.div {...fadeInUp}>
-              <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4">
-                Invoices on Autopilot
-              </h2>
-              <p className="text-[#a3a3a3] text-base md:text-lg leading-relaxed">
-                Billing day hits. Invoice generates automatically.
-                <br />
-                Base retainer + overages. Sent to your client. Done.
-              </p>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Feature 3: Client Portal */}
-      <section className="relative z-10 py-20 md:py-28 border-t border-white/10">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-2 gap-12 lg:gap-16 xl:gap-20 items-center max-w-6xl xl:max-w-7xl mx-auto">
-            <motion.div className="order-2 md:order-1" {...fadeInUp}>
-              <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4">
-                Clients See Everything
-              </h2>
-              <p className="text-[#a3a3a3] text-base md:text-lg leading-relaxed">
-                Give clients a portal. They see hours used, tasks completed, invoices.
-                <br />
-                No more &quot;where did my hours go?&quot; emails.
+                <span className="text-white/90">No more &quot;where did my hours go?&quot; No more invoice surprises.</span>
               </p>
             </motion.div>
             <motion.div className="order-1 md:order-2 flex justify-center md:justify-end" {...fadeInUp}>
               <FeaturePortalDemo />
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Feature 2: Time Tracking */}
+      <section className="relative z-10 py-20 md:py-28 border-t border-white/10">
+        <div className="container mx-auto px-4">
+          <div className="grid md:grid-cols-2 gap-12 lg:gap-16 xl:gap-20 items-center max-w-6xl xl:max-w-7xl mx-auto">
+            <motion.div className="flex justify-center md:justify-start" {...fadeInUp}>
+              <FeatureTimerDemo />
+            </motion.div>
+            <motion.div {...fadeInUp}>
+              <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4">
+                You track. Client sees it live.
+              </h2>
+              <p className="text-[#a3a3a3] text-base md:text-lg leading-relaxed">
+                Start a timer. Log hours. Every minute flows straight into their portal.
+                <br />
+                <span className="text-white/90">You work. They see. Zero back-and-forth.</span>
+              </p>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Feature 3: Invoices */}
+      <section className="relative z-10 py-20 md:py-28 border-t border-white/10">
+        <div className="container mx-auto px-4">
+          <div className="grid md:grid-cols-2 gap-12 lg:gap-16 xl:gap-20 items-center max-w-6xl xl:max-w-7xl mx-auto">
+            <motion.div className="order-2 md:order-1" {...fadeInUp}>
+              <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4">
+                Invoices they already knew were coming
+              </h2>
+              <p className="text-[#a3a3a3] text-base md:text-lg leading-relaxed">
+                Billing day hits. Invoice auto-generates. Base + overages.
+                <br />
+                <span className="text-white/90">They saw the numbers all month. No surprises. No disputes.</span>
+              </p>
+            </motion.div>
+            <motion.div className="order-1 md:order-2 flex justify-center md:justify-end" {...fadeInUp}>
+              <FeatureInvoiceDemo />
             </motion.div>
           </div>
         </div>
@@ -279,12 +292,12 @@ export default function LandingPage() {
             </motion.div>
             <motion.div {...fadeInUp}>
               <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4">
-                Never Miss a Beat
+                Prevent problems before they happen
               </h2>
               <p className="text-[#a3a3a3] text-base md:text-lg leading-relaxed">
-                Alerts when clients hit 80% of hours.
+                Alerts at 80% usage. Warnings before overages.
                 <br />
-                Warnings before overages. You stay in control.
+                <span className="text-white/90">Both sides stay ahead. No awkward month-end conversations.</span>
               </p>
             </motion.div>
           </div>
@@ -298,13 +311,13 @@ export default function LandingPage() {
             className="text-center text-sm font-medium text-[#6366f1] uppercase tracking-wider mb-2"
             {...fadeInUp}
           >
-            What freelancers are saying
+            What freelancers say
           </motion.p>
           <motion.h2
             className="text-2xl md:text-3xl font-bold text-center text-white mb-16"
             {...fadeInUp}
           >
-            Built for how you actually work
+            Both sides win
           </motion.h2>
           <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             {[
@@ -386,7 +399,7 @@ export default function LandingPage() {
                 price: "$19",
                 period: "/mo",
                 desc: "10 clients",
-                features: ["Up to 10 clients", "Client portal", "Auto-invoicing", "PDF invoices", "Email notifications"],
+                features: ["Up to 10 clients", "Client portal — both sides see everything", "Auto-invoicing", "PDF invoices", "Email notifications"],
                 cta: "Start Pro",
                 popular: true,
               },
@@ -464,16 +477,16 @@ export default function LandingPage() {
       <section className="relative z-10 py-20 md:py-28 border-t border-white/10">
         <div className="container mx-auto px-4 text-center">
           <motion.h2
-            className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4"
+            className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4 max-w-2xl mx-auto"
             {...fadeInUp}
           >
-            Stop stressing about retainers
+            The shared dashboard both you and your clients use
           </motion.h2>
           <motion.p
-            className="text-[#a3a3a3] mb-8"
+            className="text-[#a3a3a3] mb-8 max-w-lg mx-auto"
             {...fadeInUp}
           >
-            No credit card required. 1 client free forever.
+            Everyone sees the same numbers. All month long. No credit card required.
           </motion.p>
           <motion.div {...fadeInUp}>
             <Link href="/signup">

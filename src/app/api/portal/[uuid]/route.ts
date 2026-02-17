@@ -8,10 +8,9 @@ export async function GET(
   const { uuid } = await params
   const supabase = createAdminClient()
 
-  // Use service role-like query (portal is public, no auth needed)
   const { data: client, error } = await supabase
     .from("clients")
-    .select("id, name, monthly_hours, billing_day, status, portal_uuid")
+    .select("id, name, monthly_hours, monthly_fee, overage_rate, billing_day, status, portal_uuid, user_id")
     .eq("portal_uuid", uuid)
     .single()
 
@@ -19,9 +18,26 @@ export async function GET(
     return NextResponse.json({ error: "Portal not found" }, { status: 404 })
   }
 
-  const now = new Date()
-  const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1).toISOString().split("T")[0]
-  const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0).toISOString().split("T")[0]
+  const { data: user } = await supabase
+    .from("users")
+    .select("name, logo_url")
+    .eq("id", client.user_id)
+    .single()
+
+  const monthParam = request.nextUrl.searchParams.get("month") // YYYY-MM
+  let year: number
+  let month: number
+  if (/^\d{4}-\d{2}$/.test(monthParam || "")) {
+    const [y, m] = monthParam!.split("-").map(Number)
+    year = y
+    month = m - 1 // 0-indexed
+  } else {
+    const now = new Date()
+    year = now.getFullYear()
+    month = now.getMonth()
+  }
+  const startOfMonth = new Date(year, month, 1).toISOString().split("T")[0]
+  const endOfMonth = new Date(year, month + 1, 0).toISOString().split("T")[0]
 
   // Get time entries for current month (only date, description, hours - no sensitive data)
   const { data: entries } = await supabase
@@ -33,7 +49,19 @@ export async function GET(
     .eq("is_running", false)
     .order("date", { ascending: false })
 
-  const totalHoursUsed = (entries || []).reduce((sum, e) => sum + parseFloat(e.hours), 0)
+  const totalHoursUsed = Math.round(
+    (entries || []).reduce((sum, e) => sum + parseFloat(String(e.hours)), 0) * 100
+  ) / 100
+
+  const monthlyHours = parseFloat(client.monthly_hours as unknown as string)
+  const monthlyFee = parseFloat(client.monthly_fee as unknown as string)
+  const overageRate = parseFloat(client.overage_rate as unknown as string)
+  const hoursRemaining = Math.max(0, monthlyHours - totalHoursUsed)
+  const overageHours = Math.max(0, totalHoursUsed - monthlyHours)
+
+  const projectedBase = monthlyFee
+  const projectedOverage = overageHours * overageRate
+  const projectedTotal = projectedBase + projectedOverage
 
   // Get invoices
   const { data: invoices } = await supabase
@@ -43,12 +71,23 @@ export async function GET(
     .order("created_at", { ascending: false })
 
   return NextResponse.json({
+    month: `${year}-${String(month + 1).padStart(2, "0")}`,
     client: {
       name: client.name,
-      monthlyHours: parseFloat(client.monthly_hours as unknown as string),
+      monthlyHours,
+      monthlyFee,
+      overageRate,
       billingDay: client.billing_day,
     },
-    hoursUsed: Math.round(totalHoursUsed * 100) / 100,
+    hoursUsed: totalHoursUsed,
+    hoursRemaining,
+    freelancerName: user?.name || null,
+    freelancerLogoUrl: user?.logo_url || null,
+    projectedInvoice: {
+      base: projectedBase,
+      overage: projectedOverage,
+      total: projectedTotal,
+    },
     entries: entries || [],
     invoices: invoices || [],
   })

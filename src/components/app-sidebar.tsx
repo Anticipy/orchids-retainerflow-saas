@@ -76,11 +76,16 @@ export function AppSidebar({ children }: { children: React.ReactNode }) {
           {navItems.map((item) => {
             const isActive =
               pathname === item.href || (item.href !== "/dashboard" && pathname.startsWith(item.href))
+            // Map href to tour ID
+            const tourId = item.href === "/dashboard" 
+              ? "main-dashboard"
+              : item.href.replace("/dashboard/", "")
             return (
               <Link
                 key={item.href}
                 href={item.href}
                 onClick={() => setMobileOpen(false)}
+                data-tour={tourId}
                 className={cn(
                   "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
                   isActive

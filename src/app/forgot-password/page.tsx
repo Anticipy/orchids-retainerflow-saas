@@ -43,7 +43,13 @@ export default function ForgotPasswordPage() {
       <Card className="w-full max-w-md relative border-white/10 bg-white/5 shadow-xl backdrop-blur-sm">
         <CardHeader className="text-center space-y-2">
           <Link href="/" className="flex items-center justify-center gap-2 mb-2 text-foreground hover:opacity-90">
-            <Clock className="h-6 w-6 text-primary" />
+            <img
+              src="/logo.png"
+              alt="Retallio"
+              width={24}
+              height={24}
+              className="w-6 h-6"
+            />
             <span className="text-xl font-bold tracking-tight">Retallio</span>
           </Link>
           <CardTitle className="text-2xl font-bold">Reset password</CardTitle>

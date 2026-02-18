@@ -36,12 +36,17 @@ export function NotificationsDropdown() {
     setUnreadCount(data.unreadCount ?? 0)
   }
 
-  useEffect(() => {
-    if (open) {
-      setLoading(true)
-      fetchNotifications().finally(() => setLoading(false))
-    }
-  }, [open])
+// Fetch count on mount so bell shows badge immediately
+useEffect(() => {
+  fetchNotifications()
+}, [])
+
+useEffect(() => {
+  if (open) {
+    setLoading(true)
+    fetchNotifications().finally(() => setLoading(false))
+  }
+}, [open])
 
   const markRead = async (id: string) => {
     await fetch(`/api/notifications/${id}`, { method: "PATCH" })

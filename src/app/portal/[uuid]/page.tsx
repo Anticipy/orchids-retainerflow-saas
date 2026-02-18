@@ -145,8 +145,8 @@ export default function ClientPortalPage({ params }: { params: Promise<{ uuid: s
             </p>
             <div className="flex items-end justify-between gap-4">
               <div>
-                <span className="text-4xl font-bold tracking-tight">{data.hoursRemaining}</span>
-                <span className="text-muted-foreground text-xl ml-1">/ {data.client.monthlyHours} hrs</span>
+                <span className="text-4xl font-bold tracking-tight">{Number(data.hoursRemaining).toFixed(2)}</span>
+                <span className="text-muted-foreground text-xl ml-1">/ {Number(data.client.monthlyHours).toFixed(2)} hrs</span>
               </div>
               <Badge
                 variant={status === "exceeded" ? "destructive" : status === "warning" ? "secondary" : "outline"}

@@ -8,6 +8,8 @@ import { Button } from "@/components/ui/button"
 import { DollarSign, Clock, Users, TrendingUp, Play, Plus } from "lucide-react"
 import Link from "next/link"
 import { format } from "date-fns"
+import { toast } from "sonner"
+
 
 interface DashboardData {
   mrr: number
@@ -47,9 +49,28 @@ export default function DashboardPage() {
   }, [])
 
   useEffect(() => {
-    const t = setTimeout(() => {
-      fetch("/api/notifications/check", { method: "POST" }).catch(() => {})
-    }, 500)
+    const t = setTimeout(async () => {
+      try {
+        await fetch("/api/notifications/check", { method: "POST" })
+        
+        // Check for unread notifications and show toast
+        const res = await fetch("/api/notifications?limit=5")
+        if (res.ok) {
+          const data = await res.json()
+          const unread = (data.notifications ?? []).filter(
+            (n: { read_at: string | null }) => !n.read_at
+          )
+          if (unread.length > 0) {
+            toast.warning(unread[0].title, {
+              description: unread[0].body ?? undefined,
+              duration: 5000,
+            })
+          }
+        }
+      } catch {
+        // silent fail
+      }
+    }, 1000)
     return () => clearTimeout(t)
   }, [])
 
@@ -89,41 +110,41 @@ export default function DashboardPage() {
       {/* Stats Cards - slightly larger on xl screens */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <Card className="xl:p-1">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 xl:pb-3">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-1.5 xl:pb-2">  {/* ← Reduced from pb-2 */}
             <CardTitle className="text-sm font-medium xl:text-base">Monthly Revenue</CardTitle>
             <DollarSign className="h-4 w-4 text-muted-foreground xl:h-5 xl:w-5" />
           </CardHeader>
-          <CardContent>
+          <CardContent className="pt-0">  {/* ← Add pt-0 */}
             <div className="text-2xl font-bold xl:text-3xl">${data.mrr.toLocaleString()}</div>
             <p className="text-xs text-muted-foreground xl:text-sm">From {data.activeClients} active clients</p>
           </CardContent>
         </Card>
         <Card className="xl:p-1">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 xl:pb-3">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-1.5 xl:pb-2">  {/* ← Reduced from pb-2 */}
             <CardTitle className="text-sm font-medium xl:text-base">Hours Used</CardTitle>
-            <Clock className="h-4 w-4 text-muted-foreground xl:h-5 xl:w-5" />
+            <Clock className="h-4 w-4 text-muted-foreground xl:h-5 xl:w-5" />  {/* ← Was DollarSign */}
           </CardHeader>
-          <CardContent>
+          <CardContent className="pt-0">  {/* ← Add pt-0 */}
             <div className="text-2xl font-bold xl:text-3xl">{data.totalHoursUsed}h</div>
             <p className="text-xs text-muted-foreground xl:text-sm">of {data.totalCommittedHours}h committed</p>
           </CardContent>
         </Card>
         <Card className="xl:p-1">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 xl:pb-3">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-1.5 xl:pb-2">  {/* ← Reduced from pb-2 */}
             <CardTitle className="text-sm font-medium xl:text-base">Hours Remaining</CardTitle>
-            <Users className="h-4 w-4 text-muted-foreground xl:h-5 xl:w-5" />
+            <Users className="h-4 w-4 text-muted-foreground xl:h-5 xl:w-5" />  {/* ← Was DollarSign */}
           </CardHeader>
-          <CardContent>
+          <CardContent className="pt-0">  {/* ← Add pt-0 */}
             <div className="text-2xl font-bold xl:text-3xl">{data.totalHoursRemaining}h</div>
             <p className="text-xs text-muted-foreground xl:text-sm">Across all clients</p>
           </CardContent>
         </Card>
         <Card className="xl:p-1">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 xl:pb-3">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-1.5 xl:pb-2">
             <CardTitle className="text-sm font-medium xl:text-base">Projected Overage</CardTitle>
-            <TrendingUp className="h-4 w-4 text-muted-foreground xl:h-5 xl:w-5" />
+            <TrendingUp className="h-4 w-4 text-muted-foreground xl:h-5 xl:w-5" />  {/* ← Fixed */}
           </CardHeader>
-          <CardContent>
+          <CardContent className="pt-0">  {/* ← Add pt-0 */}
             <div className="text-2xl font-bold xl:text-3xl">${data.projectedOverage.toLocaleString()}</div>
             <p className="text-xs text-muted-foreground xl:text-sm">Additional revenue this month</p>
           </CardContent>
@@ -133,11 +154,11 @@ export default function DashboardPage() {
       <div className="grid gap-6 lg:grid-cols-2 xl:gap-8">
         {/* Client Status */}
         <Card className="xl:p-1">
-          <CardHeader className="xl:pb-3">
+          <CardHeader className="xl:pb-3 pb-3 pt-5">  {/* ← Added pt-5 */}
             <CardTitle className="xl:text-lg">Client Retainers</CardTitle>
             <CardDescription className="xl:text-sm">Hours used this month per client</CardDescription>
           </CardHeader>
-          <CardContent className="space-y-4 xl:space-y-5">
+          <CardContent className="space-y-4 xl:space-y-5 pb-6">  {/* ← Changed to pb-6 */}
             {data.clientSummaries.length === 0 ? (
               <p className="text-sm text-muted-foreground text-center py-4">
                 No active clients yet.{" "}
@@ -179,11 +200,11 @@ export default function DashboardPage() {
 
         {/* Recent Time Entries */}
         <Card className="xl:p-1">
-          <CardHeader className="xl:pb-3">
+          <CardHeader className="xl:pb-3 pb-3 pt-5">  {/* ← Added pt-5 */}
             <CardTitle className="xl:text-lg">Recent Time Entries</CardTitle>
             <CardDescription className="xl:text-sm">Your latest logged time</CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="pb-6">  {/* ← Added pb-6 */}
             {data.recentEntries.length === 0 ? (
               <p className="text-sm text-muted-foreground text-center py-4">
                 No time entries yet.{" "}

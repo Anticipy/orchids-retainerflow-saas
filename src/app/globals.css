@@ -143,6 +143,210 @@
   background-size: 64px 64px;
 }
 
+/* ========================================
+   Driver.js Tour - DARK THEME (FORCED)
+   ======================================== */
+
+.driver-popover,
+div[class*="driver-popover"],
+[role="dialog"][class*="driver"] {
+  background: #18181b !important;
+  background-color: #18181b !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8) !important;
+  backdrop-filter: blur(20px) !important;
+  min-width: 360px !important;  /* ← Was 320px */
+  max-width: 480px !important;  /* ← Was 420px */
+  padding: 24px !important;  /* ← Add more internal padding */
+}
+
+/* Title - WHITE */
+.driver-popover-title,
+.driver-popover .driver-popover-title,
+div[class*="driver-popover-title"] {
+  font-size: 20px !important;  /* ← Was 19px */
+  font-weight: 700 !important;
+  color: #ffffff !important;
+  margin-bottom: 10px !important;  /* ← Was 8px */
+}
+
+/* Description - remove background box, add spacing */
+.driver-popover-description,
+.driver-popover .driver-popover-description,
+div[class*="driver-popover-description"] {
+  font-size: 16px !important;
+  line-height: 1.6 !important;
+  color: #a3a3a3 !important;
+  background: none !important;  /* ← Remove box */
+  border: none !important;  /* ← Remove border */
+  border-radius: 0 !important;  /* ← Remove rounded corners */
+  padding: 0 !important;  /* ← Remove padding */
+  margin-top: 8px !important;  /* ← Add spacing from title */
+}
+
+/* Progress text */
+.driver-popover-progress-text,
+div[class*="driver-popover-progress"] {
+  color: #737373 !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+}
+
+/* Next button - PURPLE */
+.driver-popover-next-btn,
+.driver-popover button[aria-label*="Next"],
+button[class*="driver-popover-next"] {
+  background: #6366f1 !important;
+  background-color: #6366f1 !important;
+  color: #ffffff !important;
+  border: none !important;
+  padding: 10px 20px !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+  font-size: 14px !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  cursor: pointer !important;
+}
+
+.driver-popover-next-btn:hover,
+button[class*="driver-popover-next"]:hover {
+  background: #5558e3 !important;
+  background-color: #5558e3 !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4) !important;
+}
+
+/* Previous button */
+.driver-popover-prev-btn,
+.driver-popover button[aria-label*="Previous"],
+button[class*="driver-popover-prev"] {
+  color: #ffffff !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  padding: 10px 20px !important;
+  border-radius: 8px !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  cursor: pointer !important;
+}
+
+.driver-popover-prev-btn:hover,
+button[class*="driver-popover-prev"]:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(255, 255, 255, 0.25) !important;
+}
+
+/* Close button */
+.driver-popover-close-btn,
+button[class*="driver-popover-close"],
+.driver-popover button[aria-label*="Close"] {
+  color: #737373 !important;
+  transition: color 0.2s ease !important;
+  font-size: 24px !important;
+  width: 32px !important;
+  height: 32px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 6px !important;
+  cursor: pointer !important;
+  background: transparent !important;
+  border: none !important;
+}
+
+.driver-popover-close-btn:hover,
+button[class*="driver-popover-close"]:hover {
+  color: #ffffff !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+/* Hide the arrow completely */
+.driver-popover-arrow,
+.driver-popover .driver-popover-arrow,
+div[class*="driver-popover-arrow"],
+.driver-popover-arrow-side-left,
+.driver-popover-arrow-side-right,
+.driver-popover-arrow-side-top,
+.driver-popover-arrow-side-bottom {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+}
+
+/* Arrow */
+.driver-popover-arrow,
+.driver-popover .driver-popover-arrow,
+div[class*="driver-popover-arrow"] {
+  border-color: #18181b !important;
+}
+
+.driver-popover-arrow-side-left {
+  border-left-color: #18181b !important;
+}
+
+.driver-popover-arrow-side-right {
+  border-right-color: #18181b !important;
+}
+
+.driver-popover-arrow-side-top {
+  border-top-color: #18181b !important;
+}
+
+.driver-popover-arrow-side-bottom {
+  border-bottom-color: #18181b !important;
+}
+
+/* Smooth fade-in animation */
+.driver-popover {
+  animation: driverSlideIn 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+@keyframes driverSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Overlay - light blur */
+.driver-overlay,
+div[class*="driver-overlay"] {
+  background: rgba(0, 0, 0, 0.4) !important;
+  backdrop-filter: blur(0.5px) !important;
+  transition: all 0.3s ease !important;
+}
+
+/* Highlighted element - purple glow */
+.driver-highlighted-element,
+[class*="driver-highlighted"] {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.3) !important;
+  border-radius: 8px !important;
+}
+
+/* Pulsing glow on highlighted elements */
+.driver-highlighted-element {
+  animation: driverPulse 2s ease-in-out infinite !important;
+}
+
+@keyframes driverPulse {
+  0%, 100% {
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.3) !important;
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(99, 102, 241, 0.5) !important;
+  }
+}
+
+
 /* Hide Next.js error overlay portal */
 nextjs-portal {
   display: none !important;

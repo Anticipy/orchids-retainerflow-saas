@@ -249,7 +249,7 @@ export default function TimeTrackingPage() {
           <div className="flex items-center justify-center">
             <span className="text-5xl font-mono font-bold tabular-nums">{formatTime(timerSeconds)}</span>
           </div>
-          <div className="grid gap-4 md:grid-cols-3">
+          <div className="grid gap-3 md:grid-cols-3">  {/* ← Was gap-4 */}
             <Select value={timerClientId} onValueChange={setTimerClientId} disabled={timerRunning}>
               <SelectTrigger><SelectValue placeholder="Select client" /></SelectTrigger>
               <SelectContent>
@@ -286,7 +286,7 @@ export default function TimeTrackingPage() {
           <CardDescription>Add a time entry manually</CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleManualEntry} className="grid gap-4 md:grid-cols-5">
+          <form onSubmit={handleManualEntry} className="grid gap-3 md:grid-cols-5">  {/* ← Was gap-4 */}
             <div className="grid gap-2">
               <Label>Client</Label>
               <Select value={manualClientId} onValueChange={setManualClientId}>

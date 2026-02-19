@@ -499,6 +499,14 @@ export default function LandingPage() {
       <footer className="relative z-10 border-t border-white/10 py-8">
         <div className="container mx-auto px-4 text-center text-sm text-[#a3a3a3]">
           <p>&copy; {new Date().getFullYear()} Retallio. All rights reserved.</p>
+          <div className="flex items-center gap-6">
+            <Link href="/privacy" className="hover:text-white transition-colors">
+              Privacy Policy
+            </Link>
+            <Link href="/terms" className="hover:text-white transition-colors">
+              Terms of Service
+            </Link>
+          </div>
         </div>
       </footer>
     </div>

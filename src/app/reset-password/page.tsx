@@ -8,7 +8,8 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Clock, AlertCircle, CheckCircle } from "lucide-react"
+import { AlertCircle, CheckCircle } from "lucide-react"
+import Image from "next/image"
 
 export default function ResetPasswordPage() {
   const [password, setPassword] = useState("")
@@ -21,130 +22,105 @@ export default function ResetPasswordPage() {
   const supabase = createClient()
 
   useEffect(() => {
-    const check = () => {
-      supabase.auth.getSession().then(({ data: { session } }) => {
-        if (session) {
-          setReady(true)
-          setError("")
-          return
-        }
-        setError("Invalid or expired link. Please request a new password reset.")
-        setReady(true)
-      })
-    }
-    check()
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session) { setReady(true); setError(""); return }
+      setError("Invalid or expired link. Please request a new password reset.")
+      setReady(true)
+    })
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (session) {
-        setReady(true)
-        setError("")
-      }
+      if (session) { setReady(true); setError("") }
     })
     return () => subscription.unsubscribe()
   }, [])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (password !== confirm) {
-      setError("Passwords do not match")
-      return
-    }
-    if (password.length < 6) {
-      setError("Password must be at least 6 characters")
-      return
-    }
+    if (password !== confirm) { setError("Passwords do not match"); return }
+    if (password.length < 6) { setError("Password must be at least 6 characters"); return }
     setLoading(true)
     setError("")
-
     const { error } = await supabase.auth.updateUser({ password })
-
-    if (error) {
-      setError(error.message)
-      setLoading(false)
-      return
-    }
-
+    if (error) { setError(error.message); setLoading(false); return }
     setSuccess(true)
     setLoading(false)
     setTimeout(() => router.push("/dashboard"), 2000)
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background px-4 relative">
-      <div className="absolute inset-0 app-grid-bg pointer-events-none" />
-      <div className="absolute inset-0 bg-gradient-to-b from-[#6366f1]/10 via-transparent to-transparent pointer-events-none" />
+    <div className="min-h-screen flex items-center justify-center px-4 relative overflow-hidden">
+      <div
+        className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] pointer-events-none"
+        style={{ background: "radial-gradient(ellipse at 50% 0%, rgba(99,102,241,0.2) 0%, transparent 70%)" }}
+      />
 
-      <Card className="w-full max-w-md relative border-white/10 bg-white/5 shadow-xl backdrop-blur-sm">
-        <CardHeader className="text-center space-y-2">
-          <Link href="/" className="flex items-center justify-center gap-2 mb-2 text-foreground hover:opacity-90">
-            <img
-              src="/logo.png"
-              alt="Retallio"
-              width={24}
-              height={24}
-              className="w-6 h-6"
-            />
-            <span className="text-xl font-bold tracking-tight">Retallio</span>
+      <Card className="w-full max-w-md relative z-10" style={{
+        background: "rgba(255,255,255,0.03)",
+        borderColor: "rgba(255,255,255,0.08)",
+        boxShadow: "0 24px 64px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.05)",
+        backdropFilter: "blur(16px)",
+      }}>
+        <CardHeader className="text-center space-y-2 pb-6">
+          <Link href="/" className="flex items-center justify-center gap-2.5 mb-3 hover:opacity-80 transition-opacity">
+            <Image src="/logo.png" alt="Retallio" width={28} height={28} className="w-7 h-7 object-contain" />
+            <span className="text-xl font-bold tracking-tight text-white">Retallio</span>
           </Link>
-          <CardTitle className="text-2xl font-bold">Set new password</CardTitle>
-          <CardDescription className="text-muted-foreground">
+          <CardTitle className="text-2xl font-bold text-white">Set new password</CardTitle>
+          <CardDescription className="text-white/40">
             Choose a new password for your account.
           </CardDescription>
         </CardHeader>
+
         <CardContent>
           {!ready ? (
-            <div className="py-4 text-center text-muted-foreground text-sm">
-              Checking your reset link...
-            </div>
+            <div className="py-6 text-center text-white/30 text-sm">Checking your reset link...</div>
           ) : success ? (
-            <div className="flex flex-col items-center gap-3 py-4 text-center">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#22c55e]/20">
-                <CheckCircle className="h-6 w-6 text-[#22c55e]" />
+            <div className="flex flex-col items-center gap-4 py-6 text-center">
+              <div className="flex h-14 w-14 items-center justify-center rounded-full bg-emerald-500/10 border border-emerald-500/20">
+                <CheckCircle className="h-7 w-7 text-emerald-400" />
               </div>
-              <p className="text-sm text-muted-foreground">Password updated. Redirecting to dashboard...</p>
+              <p className="text-sm text-white/50">Password updated. Redirecting to dashboard...</p>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-4">
               {error && (
-                <div className="flex items-center gap-2 text-sm text-destructive bg-destructive/10 border border-destructive/20 p-3 rounded-lg">
+                <div className="flex items-center gap-2 text-sm text-red-400 bg-red-500/10 border border-red-500/20 p-3 rounded-xl">
                   <AlertCircle className="h-4 w-4 shrink-0" />
                   {error}
                 </div>
               )}
-              <div className="space-y-2">
-                <Label htmlFor="password" className="text-foreground">New password</Label>
+              <div className="space-y-1.5">
+                <Label htmlFor="password" className="text-white/60 text-sm">New password</Label>
                 <Input
-                  id="password"
-                  type="password"
-                  placeholder="At least 6 characters"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="border-white/20 bg-white/5 focus-visible:ring-primary"
-                  required
-                  minLength={6}
+                  id="password" type="password" placeholder="At least 6 characters"
+                  value={password} onChange={(e) => setPassword(e.target.value)}
+                  className="h-11 border-white/10 bg-white/[0.04] text-white placeholder:text-white/20 focus-visible:ring-indigo-500"
+                  required minLength={6}
                 />
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="confirm" className="text-foreground">Confirm password</Label>
+              <div className="space-y-1.5">
+                <Label htmlFor="confirm" className="text-white/60 text-sm">Confirm password</Label>
                 <Input
-                  id="confirm"
-                  type="password"
-                  placeholder="Confirm new password"
-                  value={confirm}
-                  onChange={(e) => setConfirm(e.target.value)}
-                  className="border-white/20 bg-white/5 focus-visible:ring-primary"
-                  required
-                  minLength={6}
+                  id="confirm" type="password" placeholder="Confirm new password"
+                  value={confirm} onChange={(e) => setConfirm(e.target.value)}
+                  className="h-11 border-white/10 bg-white/[0.04] text-white placeholder:text-white/20 focus-visible:ring-indigo-500"
+                  required minLength={6}
                 />
               </div>
-              <Button type="submit" className="w-full bg-primary hover:bg-primary/90" disabled={loading}>
+              <Button
+                type="submit"
+                className="w-full h-11 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold"
+                style={{ boxShadow: "0 0 24px rgba(99,102,241,0.3)" }}
+                disabled={loading}
+              >
                 {loading ? "Updating..." : "Update password"}
               </Button>
             </form>
           )}
         </CardContent>
+
         {ready && !success && (
-          <CardFooter className="justify-center border-t border-white/10">
-            <Link href="/login" className="text-sm text-muted-foreground hover:text-foreground">
+          <CardFooter className="justify-center border-t border-white/[0.06] pt-4">
+            <Link href="/login" className="text-sm text-white/30 hover:text-white/60 transition-colors">
               Back to sign in
             </Link>
           </CardFooter>

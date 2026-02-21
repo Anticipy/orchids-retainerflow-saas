@@ -9,7 +9,8 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
-import { Clock, AlertCircle } from "lucide-react"
+import { AlertCircle } from "lucide-react"
+import Image from "next/image"
 
 export default function SignupPage() {
   const [name, setName] = useState("")
@@ -26,35 +27,17 @@ export default function SignupPage() {
     setError("")
 
     const { data, error: signUpError } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        data: { full_name: name },
-        emailRedirectTo: `${window.location.origin}/auth/callback`,
-      },
+      email, password,
+      options: { data: { full_name: name }, emailRedirectTo: `${window.location.origin}/auth/callback` },
     })
 
-    if (signUpError) {
-      setError(signUpError.message)
-      setLoading(false)
-      return
-    }
+    if (signUpError) { setError(signUpError.message); setLoading(false); return }
 
     if (data.user) {
-      const { error: insertError } = await supabase
-        .from("users")
-        .upsert(
-          {
-            id: data.user.id,
-            email: data.user.email!,
-            name: name,
-          },
-          { onConflict: "id" }
-        )
-
-      if (insertError) {
-        console.error("Error creating user record:", insertError)
-      }
+      await supabase.from("users").upsert(
+        { id: data.user.id, email: data.user.email!, name },
+        { onConflict: "id" }
+      )
     }
 
     router.push("/verify-email")
@@ -63,37 +46,40 @@ export default function SignupPage() {
   const handleGoogleLogin = async () => {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
-      options: {
-        redirectTo: `${window.location.origin}/auth/callback`,
-      },
+      options: { redirectTo: `${window.location.origin}/auth/callback` },
     })
     if (error) setError(error.message)
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background px-4 relative">
-      <div className="absolute inset-0 app-grid-bg pointer-events-none" />
-      <div className="absolute inset-0 bg-gradient-to-b from-[#6366f1]/10 via-transparent to-transparent pointer-events-none" />
+    <div className="min-h-screen flex items-center justify-center px-4 relative overflow-hidden">
+      {/* Top indigo glow */}
+      <div
+        className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] pointer-events-none"
+        style={{ background: "radial-gradient(ellipse at 50% 0%, rgba(99,102,241,0.2) 0%, transparent 70%)" }}
+      />
 
-      <Card className="w-full max-w-md relative border-white/10 bg-white/5 shadow-xl backdrop-blur-sm">
-        <CardHeader className="text-center space-y-2">
-        <Link href="/" className="flex items-center justify-center gap-2 mb-2 text-foreground hover:opacity-90">
-            <img
-              src="/logo.png"
-              alt="Retallio"
-              width={24}
-              height={24}
-              className="w-6 h-6"
-            />
-            <span className="text-xl font-bold tracking-tight">Retallio</span>
+      <Card className="w-full max-w-md relative z-10" style={{
+        background: "rgba(255,255,255,0.03)",
+        borderColor: "rgba(255,255,255,0.08)",
+        boxShadow: "0 24px 64px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.05)",
+        backdropFilter: "blur(16px)",
+      }}>
+        <CardHeader className="text-center space-y-2 pb-6">
+          <Link href="/" className="flex items-center justify-center gap-2.5 mb-3 hover:opacity-80 transition-opacity">
+            <Image src="/logo.png" alt="Retallio" width={28} height={28} className="w-7 h-7 object-contain" />
+            <span className="text-xl font-bold tracking-tight text-white">Retallio</span>
           </Link>
-          <CardTitle className="text-2xl font-bold">Create your account</CardTitle>
-          <CardDescription className="text-muted-foreground">Start managing retainer clients effortlessly</CardDescription>
+          <CardTitle className="text-2xl font-bold text-white">Create your account</CardTitle>
+          <CardDescription className="text-white/40">
+            Start managing retainer clients effortlessly
+          </CardDescription>
         </CardHeader>
+
         <CardContent className="space-y-4">
           <Button
             variant="outline"
-            className="w-full border-white/20 bg-white/5 hover:bg-white/10 text-foreground"
+            className="w-full h-11 border-white/10 bg-white/[0.04] hover:bg-white/[0.08] text-white/80 hover:text-white transition-all"
             onClick={handleGoogleLogin}
           >
             <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24">
@@ -107,66 +93,62 @@ export default function SignupPage() {
 
           <div className="relative">
             <div className="absolute inset-0 flex items-center">
-              <Separator className="w-full bg-white/10" />
+              <Separator className="w-full bg-white/[0.06]" />
             </div>
             <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-card px-2 text-muted-foreground">Or continue with email</span>
+              <span className="px-3 text-white/25" style={{ background: "rgba(13,13,26,0.8)" }}>or continue with email</span>
             </div>
           </div>
 
           <form onSubmit={handleSignup} className="space-y-4">
             {error && (
-              <div className="flex items-center gap-2 text-sm text-destructive bg-destructive/10 border border-destructive/20 p-3 rounded-lg">
+              <div className="flex items-center gap-2 text-sm text-red-400 bg-red-500/10 border border-red-500/20 p-3 rounded-xl">
                 <AlertCircle className="h-4 w-4 shrink-0" />
                 {error}
               </div>
             )}
-            <div className="space-y-2">
-              <Label htmlFor="name" className="text-foreground">Full name</Label>
+            <div className="space-y-1.5">
+              <Label htmlFor="name" className="text-white/60 text-sm">Full name</Label>
               <Input
-                id="name"
-                type="text"
-                placeholder="John Doe"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                className="border-white/20 bg-white/5 focus-visible:ring-primary"
+                id="name" type="text" placeholder="John Doe"
+                value={name} onChange={(e) => setName(e.target.value)}
+                className="h-11 border-white/10 bg-white/[0.04] text-white placeholder:text-white/20 focus-visible:ring-indigo-500"
                 required
               />
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="email" className="text-foreground">Email</Label>
+            <div className="space-y-1.5">
+              <Label htmlFor="email" className="text-white/60 text-sm">Email</Label>
               <Input
-                id="email"
-                type="email"
-                placeholder="you@example.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="border-white/20 bg-white/5 focus-visible:ring-primary"
+                id="email" type="email" placeholder="you@example.com"
+                value={email} onChange={(e) => setEmail(e.target.value)}
+                className="h-11 border-white/10 bg-white/[0.04] text-white placeholder:text-white/20 focus-visible:ring-indigo-500"
                 required
               />
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="password" className="text-foreground">Password</Label>
+            <div className="space-y-1.5">
+              <Label htmlFor="password" className="text-white/60 text-sm">Password</Label>
               <Input
-                id="password"
-                type="password"
-                placeholder="At least 6 characters"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="border-white/20 bg-white/5 focus-visible:ring-primary"
-                required
-                minLength={6}
+                id="password" type="password" placeholder="At least 6 characters"
+                value={password} onChange={(e) => setPassword(e.target.value)}
+                className="h-11 border-white/10 bg-white/[0.04] text-white placeholder:text-white/20 focus-visible:ring-indigo-500"
+                required minLength={6}
               />
             </div>
-            <Button type="submit" className="w-full bg-primary hover:bg-primary/90" disabled={loading}>
+            <Button
+              type="submit"
+              className="w-full h-11 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold transition-all"
+              style={{ boxShadow: loading ? "none" : "0 0 24px rgba(99,102,241,0.3)" }}
+              disabled={loading}
+            >
               {loading ? "Creating account..." : "Create account"}
             </Button>
           </form>
         </CardContent>
-        <CardFooter className="justify-center border-t border-white/10">
-          <p className="text-sm text-muted-foreground">
+
+        <CardFooter className="justify-center border-t border-white/[0.06] pt-4">
+          <p className="text-sm text-white/30">
             Already have an account?{" "}
-            <Link href="/login" className="text-primary font-medium hover:underline">
+            <Link href="/login" className="text-indigo-400 font-medium hover:text-indigo-300 transition-colors">
               Sign in
             </Link>
           </p>

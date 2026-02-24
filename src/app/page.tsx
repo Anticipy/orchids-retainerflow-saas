@@ -15,7 +15,7 @@ import { useRef, useEffect, useState } from "react";
 /* ══════════════════════════════════════════════════════════════════════
    HERO BLOOM — Raycast-faithful approach
 ══════════════════════════════════════════════════════════════════════ */
-function HeroBloom({ heroRef }: { heroRef: React.RefObject<HTMLElement> }) {
+function HeroBloom({ heroRef }: { heroRef: React.RefObject<HTMLElement | null> }) {
   const [bloomKey, setBloomKey] = useState(0);
 
   useEffect(() => {

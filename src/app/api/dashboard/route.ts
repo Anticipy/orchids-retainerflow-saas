@@ -11,29 +11,33 @@ export async function GET() {
   const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1).toISOString().split("T")[0]
   const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0).toISOString().split("T")[0]
 
-  // Get active clients
+  // ── Active clients only ──────────────────────────────────────────
   const { data: clients } = await supabase
     .from("clients")
     .select("*")
     .eq("user_id", user.id)
     .eq("status", "active")
 
-  // Get time entries for current month
-  const { data: entries } = await supabase
-    .from("time_entries")
-    .select("*")
-    .eq("user_id", user.id)
-    .gte("date", startOfMonth)
-    .lte("date", endOfMonth)
-    .eq("is_running", false)
+  const activeClientIds = (clients || []).map((c) => c.id)
 
-  // Calculate MRR
+  // ── Time entries: current month AND active clients only ──────────
+  // FIX 1: added .in("client_id", activeClientIds) so archived client
+  // entries (e.g. Ionut's 65h) are never counted in the stat cards.
+  const { data: entries } = activeClientIds.length > 0
+    ? await supabase
+        .from("time_entries")
+        .select("*")
+        .eq("user_id", user.id)
+        .in("client_id", activeClientIds)
+        .gte("date", startOfMonth)
+        .lte("date", endOfMonth)
+        .eq("is_running", false)
+    : { data: [] }
+
+  // ── Aggregations ─────────────────────────────────────────────────
   const mrr = (clients || []).reduce((sum, c) => sum + parseFloat(c.monthly_fee), 0)
-
-  // Calculate total committed hours
   const totalCommittedHours = (clients || []).reduce((sum, c) => sum + parseFloat(c.monthly_hours), 0)
 
-  // Calculate hours by client
   const hoursByClient: Record<string, number> = {}
   for (const entry of entries || []) {
     hoursByClient[entry.client_id] = (hoursByClient[entry.client_id] || 0) + parseFloat(entry.hours)
@@ -42,7 +46,6 @@ export async function GET() {
   const totalHoursUsed = Object.values(hoursByClient).reduce((sum, h) => sum + h, 0)
   const totalHoursRemaining = Math.max(0, totalCommittedHours - totalHoursUsed)
 
-  // Calculate projected overage
   let projectedOverage = 0
   for (const client of clients || []) {
     const used = hoursByClient[client.id] || 0
@@ -50,7 +53,7 @@ export async function GET() {
     projectedOverage += overage * parseFloat(client.overage_rate)
   }
 
-  // Client summaries with hours
+  // ── Client summaries ─────────────────────────────────────────────
   const clientSummaries = (clients || []).map((client) => {
     const hoursUsed = hoursByClient[client.id] || 0
     const monthlyHours = parseFloat(client.monthly_hours)
@@ -65,17 +68,25 @@ export async function GET() {
       percentUsed: Math.round(percentUsed),
       monthlyFee: parseFloat(client.monthly_fee),
       status: clientStatusFromPercent(percentUsed),
+      billingDay: client.billing_day ?? null,
     }
   })
 
-  // Recent time entries
-  const { data: recentEntries } = await supabase
-    .from("time_entries")
-    .select("*, clients(name)")
-    .eq("user_id", user.id)
-    .eq("is_running", false)
-    .order("date", { ascending: false })
-    .limit(10)
+  // ── Recent entries: current month + active clients only ──────────
+  // FIX 2: was fetching ALL entries across ALL time from ALL clients.
+  // Now scoped to current month and active client IDs only.
+  const { data: recentEntries } = activeClientIds.length > 0
+    ? await supabase
+        .from("time_entries")
+        .select("*, clients(name)")
+        .eq("user_id", user.id)
+        .in("client_id", activeClientIds)
+        .gte("date", startOfMonth)
+        .lte("date", endOfMonth)
+        .eq("is_running", false)
+        .order("date", { ascending: false })
+        .limit(10)
+    : { data: [] }
 
   return NextResponse.json({
     mrr,

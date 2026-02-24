@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -44,75 +45,85 @@
   --radius-xl: calc(var(--radius) + 4px);
 }
 
-/* Linear-inspired dark theme (default for app) */
+/* ── Base dark theme ─────────────────────────────────────────────────── */
 :root {
   --radius: 0.625rem;
-  --background: #0f0f0f;
-  --foreground: #ffffff;
-  --card: rgba(255, 255, 255, 0.05);
-  --card-foreground: #ffffff;
-  --popover: #18181b;
-  --popover-foreground: #ffffff;
-  --primary: #6366f1;
+
+  /* Unified background — matches landing page */
+  --background: #000000;
+  --foreground: #f0f2f7;
+
+  /* Cards — very slightly elevated from background */
+  --card: rgba(255, 255, 255, 0.04);
+  --card-foreground: #f0f2f7;
+
+  --popover: #12121e;
+  --popover-foreground: #f0f2f7;
+
+  --primary: #3B82F6;
   --primary-foreground: #ffffff;
-  --secondary: rgba(255, 255, 255, 0.08);
-  --secondary-foreground: #ffffff;
-  --muted: rgba(255, 255, 255, 0.08);
-  --muted-foreground: #a3a3a3;
-  --accent: rgba(99, 102, 241, 0.2);
-  --accent-foreground: #e0e7ff;
+
+  --secondary: rgba(255, 255, 255, 0.06);
+  --secondary-foreground: #f0f2f7;
+
+  --muted: rgba(255, 255, 255, 0.06);
+  --muted-foreground: #8b92a8;
+
+  --accent: rgba(59, 130, 246, 0.15);
+  --accent-foreground: #bfdbfe;
+
   --destructive: #ef4444;
   --destructive-foreground: #ffffff;
-  --border: rgba(255, 255, 255, 0.1);
-  --input: rgba(255, 255, 255, 0.1);
-  --ring: #6366f1;
-  --chart-1: #6366f1;
-  --chart-2: #22c55e;
+
+  --border: rgba(255, 255, 255, 0.08);
+  --input: rgba(255, 255, 255, 0.08);
+  --ring: #3B82F6;
+
+  --chart-1: #3B82F6;
+  --chart-2: #34d399;
   --chart-3: #f59e0b;
   --chart-4: #ec4899;
   --chart-5: #14b8a6;
-  --sidebar: #0f0f0f;
-  --sidebar-foreground: #ffffff;
-  --sidebar-primary: #6366f1;
+
+  /* Sidebar — same background, subtle separation via border only */
+  --sidebar: #000000;
+  --sidebar-foreground: #f0f2f7;
+  --sidebar-primary: #3B82F6;
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: rgba(255, 255, 255, 0.08);
-  --sidebar-accent-foreground: #ffffff;
-  --sidebar-border: rgba(255, 255, 255, 0.1);
-  --sidebar-ring: #6366f1;
+  --sidebar-accent: rgba(255, 255, 255, 0.06);
+  --sidebar-accent-foreground: #f0f2f7;
+  --sidebar-border: rgba(255, 255, 255, 0.07);
+  --sidebar-ring: #3B82F6;
 }
 
+/* Dark class override (kept for any components that toggle .dark) */
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  --background: #000000;
+  --foreground: #f0f2f7;
+  --card: rgba(255, 255, 255, 0.04);
+  --card-foreground: #f0f2f7;
+  --popover: #12121e;
+  --popover-foreground: #f0f2f7;
+  --primary: #3B82F6;
+  --primary-foreground: #ffffff;
+  --secondary: rgba(255, 255, 255, 0.06);
+  --secondary-foreground: #f0f2f7;
+  --muted: rgba(255, 255, 255, 0.06);
+  --muted-foreground: #8b92a8;
+  --accent: rgba(59, 130, 246, 0.15);
+  --accent-foreground: #bfdbfe;
+  --destructive: #ef4444;
+  --border: rgba(255, 255, 255, 0.08);
+  --input: rgba(255, 255, 255, 0.08);
+  --ring: #3B82F6;
+  --sidebar: #000000;
+  --sidebar-foreground: #f0f2f7;
+  --sidebar-primary: ##3B82F6;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: rgba(255, 255, 255, 0.06);
+  --sidebar-accent-foreground: #f0f2f7;
+  --sidebar-border: rgba(255, 255, 255, 0.07);
+  --sidebar-ring: #3B82F6;
 }
 
 @layer base {
@@ -125,17 +136,18 @@
   }
 }
 
-/* Landing page - Linear-inspired dark theme */
-.landing-page {
-  --landing-bg: #0f0f0f;
-  --landing-primary: #6366f1;
-  --landing-text: #ffffff;
-  --landing-muted: #a3a3a3;
-  --landing-success: #22c55e;
-  font-family: var(--font-inter), system-ui, sans-serif;
+/* ── Global background texture ──────────────────────────────────────── */
+/* Applied to body so every page gets the subtle grid */
+body {
+  background-color: #000000;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+  background-size: 80px 80px;
+  background-attachment: fixed;
 }
 
-/* Auth & app subtle grid background */
+/* ── Auth & app subtle grid background (legacy, keep for compat) ────── */
 .app-grid-bg {
   background-image:
     linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
@@ -143,63 +155,88 @@
   background-size: 64px 64px;
 }
 
-/* ========================================
-   Driver.js Tour - DARK THEME (FORCED)
-   ======================================== */
+/* ── Scroll-reveal animation ────────────────────────────────────────── */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
+.animate-fade-up {
+  animation: fadeUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Stagger helpers */
+.delay-100 { animation-delay: 100ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-400 { animation-delay: 400ms; }
+
+/* ── Landing page namespace ─────────────────────────────────────────── */
+.landing-page {
+  --landing-bg: #080810;
+  --landing-primary: #3B82F6;
+  --landing-text: #ffffff;
+  --landing-muted: #8b92a8;
+  --landing-success: #34d399;
+  font-family: var(--font-inter), system-ui, sans-serif;
+}
+
+/* ── Driver.js Tour - DARK THEME ────────────────────────────────────── */
 .driver-popover,
 div[class*="driver-popover"],
 [role="dialog"][class*="driver"] {
-  background: #18181b !important;
-  background-color: #18181b !important;
-  color: #ffffff !important;
-  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  background: #12121e !important;
+  background-color: #12121e !important;
+  color: #f0f2f7 !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
   border-radius: 12px !important;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8) !important;
   backdrop-filter: blur(20px) !important;
-  min-width: 360px !important;  /* ← Was 320px */
-  max-width: 480px !important;  /* ← Was 420px */
-  padding: 24px !important;  /* ← Add more internal padding */
+  min-width: 360px !important;
+  max-width: 480px !important;
+  padding: 24px !important;
 }
 
-/* Title - WHITE */
 .driver-popover-title,
 .driver-popover .driver-popover-title,
 div[class*="driver-popover-title"] {
-  font-size: 20px !important;  /* ← Was 19px */
+  font-size: 20px !important;
   font-weight: 700 !important;
   color: #ffffff !important;
-  margin-bottom: 10px !important;  /* ← Was 8px */
+  margin-bottom: 10px !important;
 }
 
-/* Description - remove background box, add spacing */
 .driver-popover-description,
 .driver-popover .driver-popover-description,
 div[class*="driver-popover-description"] {
   font-size: 16px !important;
   line-height: 1.6 !important;
-  color: #a3a3a3 !important;
-  background: none !important;  /* ← Remove box */
-  border: none !important;  /* ← Remove border */
-  border-radius: 0 !important;  /* ← Remove rounded corners */
-  padding: 0 !important;  /* ← Remove padding */
-  margin-top: 8px !important;  /* ← Add spacing from title */
+  color: #8b92a8 !important;
+  background: none !important;
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  margin-top: 8px !important;
 }
 
-/* Progress text */
 .driver-popover-progress-text,
 div[class*="driver-popover-progress"] {
-  color: #737373 !important;
+  color: #545c73 !important;
   font-size: 12px !important;
   font-weight: 500 !important;
 }
 
-/* Next button - PURPLE */
 .driver-popover-next-btn,
 .driver-popover button[aria-label*="Next"],
 button[class*="driver-popover-next"] {
-  background: #6366f1 !important;
-  background-color: #6366f1 !important;
+  background: #3B82F6 !important;
+  background-color: #3B82F6 !important;
   color: #ffffff !important;
   border: none !important;
   padding: 10px 20px !important;
@@ -218,14 +255,13 @@ button[class*="driver-popover-next"]:hover {
   box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4) !important;
 }
 
-/* Previous button */
 .driver-popover-prev-btn,
 .driver-popover button[aria-label*="Previous"],
 button[class*="driver-popover-prev"] {
-  color: #ffffff !important;
+  color: #f0f2f7 !important;
   background: rgba(255, 255, 255, 0.05) !important;
   background-color: rgba(255, 255, 255, 0.05) !important;
-  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
   padding: 10px 20px !important;
   border-radius: 8px !important;
   font-size: 14px !important;
@@ -238,14 +274,13 @@ button[class*="driver-popover-prev"] {
 button[class*="driver-popover-prev"]:hover {
   background: rgba(255, 255, 255, 0.1) !important;
   background-color: rgba(255, 255, 255, 0.1) !important;
-  border-color: rgba(255, 255, 255, 0.25) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
 }
 
-/* Close button */
 .driver-popover-close-btn,
 button[class*="driver-popover-close"],
 .driver-popover button[aria-label*="Close"] {
-  color: #737373 !important;
+  color: #545c73 !important;
   transition: color 0.2s ease !important;
   font-size: 24px !important;
   width: 32px !important;
@@ -262,9 +297,9 @@ button[class*="driver-popover-close"],
 .driver-popover-close-btn:hover,
 button[class*="driver-popover-close"]:hover {
   color: #ffffff !important;
-  background: rgba(255, 255, 255, 0.1) !important;
+  background: rgba(255, 255, 255, 0.08) !important;
 }
-/* Hide the arrow completely */
+
 .driver-popover-arrow,
 .driver-popover .driver-popover-arrow,
 div[class*="driver-popover-arrow"],
@@ -277,30 +312,6 @@ div[class*="driver-popover-arrow"],
   opacity: 0 !important;
 }
 
-/* Arrow */
-.driver-popover-arrow,
-.driver-popover .driver-popover-arrow,
-div[class*="driver-popover-arrow"] {
-  border-color: #18181b !important;
-}
-
-.driver-popover-arrow-side-left {
-  border-left-color: #18181b !important;
-}
-
-.driver-popover-arrow-side-right {
-  border-right-color: #18181b !important;
-}
-
-.driver-popover-arrow-side-top {
-  border-top-color: #18181b !important;
-}
-
-.driver-popover-arrow-side-bottom {
-  border-bottom-color: #18181b !important;
-}
-
-/* Smooth fade-in animation */
 .driver-popover {
   animation: driverSlideIn 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
@@ -316,15 +327,13 @@ div[class*="driver-popover-arrow"] {
   }
 }
 
-/* Overlay - light blur */
 .driver-overlay,
 div[class*="driver-overlay"] {
-  background: rgba(0, 0, 0, 0.4) !important;
+  background: rgba(0, 0, 0, 0.5) !important;
   backdrop-filter: blur(0.5px) !important;
   transition: all 0.3s ease !important;
 }
 
-/* Highlighted element - purple glow */
 .driver-highlighted-element,
 [class*="driver-highlighted"] {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
@@ -332,20 +341,14 @@ div[class*="driver-overlay"] {
   border-radius: 8px !important;
 }
 
-/* Pulsing glow on highlighted elements */
 .driver-highlighted-element {
   animation: driverPulse 2s ease-in-out infinite !important;
 }
 
 @keyframes driverPulse {
-  0%, 100% {
-    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.3) !important;
-  }
-  50% {
-    box-shadow: 0 0 0 6px rgba(99, 102, 241, 0.5) !important;
-  }
+  0%, 100% { box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.3) !important; }
+  50% { box-shadow: 0 0 0 6px rgba(99, 102, 241, 0.5) !important; }
 }
-
 
 /* Hide Next.js error overlay portal */
 nextjs-portal {

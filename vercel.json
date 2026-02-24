@@ -1,4 +1,8 @@
 {
   "buildCommand": "next build",
-  "outputDirectory": ".next"
+  "outputDirectory": ".next",
+  "crons": [{
+    "path": "/api/cron/generate-invoices",
+    "schedule": "0 9 * * *"
+  }]
 }

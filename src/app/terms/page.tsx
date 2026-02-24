@@ -1,308 +1,168 @@
+import Link from "next/link"
+import Image from "next/image"
+
+const GRAIN = `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`
+
+const LAST_UPDATED = "February 2025"
+
+const sections = [
+  {
+    title: "Who we are and what these terms cover",
+    body: `Retallio is a retainer management tool for freelancers and agencies. These Terms of Service govern your use of retallio.app and any related services. By creating an account, you agree to these terms. If you don't agree, please don't use Retallio.
+
+"You" means the freelancer or agency using Retallio to manage client retainers. "Your clients" means the people who access client portals you create through Retallio.`,
+  },
+  {
+    title: "Your account",
+    body: `You must be at least 16 years old to use Retallio. You're responsible for keeping your account credentials secure. If you suspect unauthorised access to your account, contact us immediately at support@retallio.app.
+
+You may only create one free account. Creating multiple free accounts to circumvent plan limits is a violation of these terms and may result in account termination.`,
+  },
+  {
+    title: "What you can and can't do",
+    body: `You can use Retallio to manage your legitimate client retainer relationships, log your time, generate invoices, and share client portals. You can invite your own clients to view their portal.
+
+You may not: use Retallio for any unlawful purpose; attempt to access other users' accounts or data; reverse engineer, copy, or resell Retallio; upload malicious content; or use automated scripts to scrape or abuse the service. We reserve the right to terminate accounts that violate these terms.`,
+  },
+  {
+    title: "Free plan and paid plans",
+    body: `The Free plan allows you to manage one active client retainer. Paid plans (Pro and Business) unlock additional clients and features, as described on our pricing page.
+
+Plan limits are enforced per account. If you're on the Free plan and need more than one client, you'll need to upgrade. We'll always show you your current usage and what you'd get on a higher plan.`,
+  },
+  {
+    title: "Payments and refunds",
+    body: `Paid plans are billed monthly or annually, as selected at checkout. Payments are processed by Stripe. By subscribing, you authorise recurring charges to your payment method.
+
+You can cancel anytime from Settings. Cancellation takes effect at the end of your current billing period — you retain access until then. We don't offer refunds for partial billing periods, but if you believe you've been incorrectly charged, contact us and we'll make it right.`,
+  },
+  {
+    title: "Your data",
+    body: `You own your data. The time entries, clients, invoices, and other content you create in Retallio belong to you. We don't claim any rights to it beyond what's necessary to provide the service.
+
+If you delete your account, we'll delete your data within 30 days, except where we're legally required to retain records (e.g. for accounting purposes). You can export your data at any time — contact us at support@retallio.app if you need an export in a specific format.`,
+  },
+  {
+    title: "Client portals",
+    body: `When you create a client portal, you take responsibility for what's shared there. Don't share portals containing confidential information you don't have the right to share. Your clients' use of the portal is subject to your own client relationship, not these terms.
+
+We're not a party to your agreements with your clients. Any disputes between you and your clients are your responsibility to resolve.`,
+  },
+  {
+    title: "Availability and changes",
+    body: `We aim to keep Retallio available 24/7, but we can't guarantee uninterrupted access. We perform maintenance, fix bugs, and occasionally have unexpected outages. We'll notify you of planned downtime where possible.
+
+We may change or discontinue features at any time. For material changes that affect paid functionality, we'll give you at least 30 days' notice. If we discontinue Retallio entirely, we'll give you at least 90 days' notice and a way to export your data.`,
+  },
+  {
+    title: "Limitation of liability",
+    body: `Retallio is provided "as is." To the fullest extent permitted by law, we're not liable for indirect, incidental, or consequential damages arising from your use of the service — including lost revenue, lost clients, or data loss. Our total liability to you for any claim will not exceed the amount you've paid us in the 12 months before the claim.
+
+This doesn't affect any rights you have that can't be limited by contract under applicable law.`,
+  },
+  {
+    title: "Governing law",
+    body: `These terms are governed by the laws of the jurisdiction in which Retallio is registered. Any disputes that can't be resolved informally will be handled through binding arbitration or the courts of that jurisdiction, at our election.`,
+  },
+  {
+    title: "Contact",
+    body: `Questions about these terms? Email us at support@retallio.app. We're real people and will respond personally.`,
+  },
+]
+
 export default function TermsPage() {
-    return (
-      <div className="min-h-screen bg-background px-4 py-16">
-        <div className="container mx-auto max-w-4xl">
-          <h1 className="text-4xl font-bold mb-8">Terms of Service</h1>
-          <p className="text-sm text-muted-foreground mb-8">Last updated: February 19, 2026</p>
-  
-          <div className="space-y-8 text-foreground">
-            <section>
-              <h2 className="text-2xl font-semibold mb-4">Agreement to Terms</h2>
-              <p className="text-muted-foreground leading-relaxed">
-                By accessing or using Retallio (&quot;Service&quot;), you agree to be bound by these Terms of Service 
-                (&quot;Terms&quot;). If you disagree with any part of these Terms, you may not access the Service.
-              </p>
-            </section>
-  
-            <section>
-              <h2 className="text-2xl font-semibold mb-4">Description of Service</h2>
-              <p className="text-muted-foreground leading-relaxed">
-                Retallio is a retainer management platform that provides time tracking, invoicing, client portals, 
-                and related features for freelancers and service providers managing retainer-based clients.
-              </p>
-            </section>
-  
-            <section>
-              <h2 className="text-2xl font-semibold mb-4">Account Registration</h2>
-              
-              <h3 className="text-xl font-medium mt-6 mb-3">Eligibility</h3>
-              <p className="text-muted-foreground leading-relaxed mb-4">
-                You must be at least 18 years old to use this Service. By registering, you represent that you meet this requirement.
-              </p>
-  
-              <h3 className="text-xl font-medium mt-6 mb-3">Account Security</h3>
-              <p className="text-muted-foreground leading-relaxed mb-4">You are responsible for:</p>
-              <ul className="list-disc list-inside text-muted-foreground space-y-2 ml-4">
-                <li>Maintaining the confidentiality of your account credentials</li>
-                <li>All activities that occur under your account</li>
-                <li>Notifying us immediately of any unauthorized access</li>
-              </ul>
-  
-              <h3 className="text-xl font-medium mt-6 mb-3">Accurate Information</h3>
-              <p className="text-muted-foreground leading-relaxed">
-                You agree to provide accurate, current, and complete information during registration and to update 
-                it as necessary to maintain its accuracy.
-              </p>
-            </section>
-  
-            <section>
-              <h2 className="text-2xl font-semibold mb-4">Subscription Plans and Billing</h2>
-              
-              <h3 className="text-xl font-medium mt-6 mb-3">Free Plan</h3>
-              <p className="text-muted-foreground leading-relaxed mb-4">
-                The Free plan allows management of 1 client with basic features. No credit card is required.
-              </p>
-  
-              <h3 className="text-xl font-medium mt-6 mb-3">Paid Plans</h3>
-              <p className="text-muted-foreground leading-relaxed mb-4">
-                Pro ($19/month) and Business ($39/month) plans provide additional features and client limits. 
-                Paid subscriptions are billed monthly in advance.
-              </p>
-  
-              <h3 className="text-xl font-medium mt-6 mb-3">Payment Processing</h3>
-              <p className="text-muted-foreground leading-relaxed mb-4">
-                Payments are processed securely through Stripe. By subscribing, you authorize us to charge your 
-                payment method on a recurring basis.
-              </p>
-  
-              <h3 className="text-xl font-medium mt-6 mb-3">Cancellation and Refunds</h3>
-              <ul className="list-disc list-inside text-muted-foreground space-y-2 ml-4">
-                <li>You may cancel your subscription at any time from your account settings</li>
-                <li>Cancellations take effect at the end of the current billing period</li>
-                <li>No refunds are provided for partial months</li>
-                <li>You retain access to paid features until the end of your billing period</li>
-              </ul>
-  
-              <h3 className="text-xl font-medium mt-6 mb-3">Price Changes</h3>
-              <p className="text-muted-foreground leading-relaxed mt-4">
-                We reserve the right to change subscription prices with 30 days&apos; notice. Continued use of the 
-                Service after a price change constitutes acceptance of the new price.
-              </p>
-            </section>
-  
-            <section>
-              <h2 className="text-2xl font-semibold mb-4">Acceptable Use</h2>
-              
-              <h3 className="text-xl font-medium mt-6 mb-3">You May:</h3>
-              <ul className="list-disc list-inside text-muted-foreground space-y-2 ml-4">
-                <li>Use the Service for lawful business purposes</li>
-                <li>Create and manage client retainer relationships</li>
-                <li>Track time and generate invoices</li>
-                <li>Share client portal links with your clients</li>
-              </ul>
-  
-              <h3 className="text-xl font-medium mt-6 mb-3">You May NOT:</h3>
-              <ul className="list-disc list-inside text-muted-foreground space-y-2 ml-4">
-                <li>Violate any laws or regulations</li>
-                <li>Infringe on intellectual property rights</li>
-                <li>Upload malicious code or viruses</li>
-                <li>Attempt to gain unauthorized access to our systems</li>
-                <li>Use the Service to send spam or unsolicited communications</li>
-                <li>Resell or redistribute the Service without permission</li>
-                <li>Reverse engineer or attempt to extract source code</li>
-                <li>Use automated systems to access the Service excessively</li>
-              </ul>
-            </section>
-  
-            <section>
-              <h2 className="text-2xl font-semibold mb-4">User Content</h2>
-              
-              <h3 className="text-xl font-medium mt-6 mb-3">Your Content</h3>
-              <p className="text-muted-foreground leading-relaxed mb-4">
-                You retain ownership of all data you input into the Service (client names, time entries, invoices, etc.). 
-                By using the Service, you grant us a license to use, store, and process your content solely to provide 
-                the Service to you.
-              </p>
-  
-              <h3 className="text-xl font-medium mt-6 mb-3">Responsibility</h3>
-              <p className="text-muted-foreground leading-relaxed mb-4">
-                You are solely responsible for:
-              </p>
-              <ul className="list-disc list-inside text-muted-foreground space-y-2 ml-4">
-                <li>The accuracy of data you enter</li>
-                <li>Compliance with tax and accounting regulations</li>
-                <li>Client agreements and invoicing terms</li>
-                <li>Backup of critical business data</li>
-              </ul>
-  
-              <h3 className="text-xl font-medium mt-6 mb-3">Data Export</h3>
-              <p className="text-muted-foreground leading-relaxed">
-                You may export your data at any time through your account settings.
-              </p>
-            </section>
-  
-            <section>
-              <h2 className="text-2xl font-semibold mb-4">Intellectual Property</h2>
-              <p className="text-muted-foreground leading-relaxed mb-4">
-                The Service, including its design, features, code, and content (excluding user content), is owned by 
-                Retallio and protected by copyright, trademark, and other intellectual property laws.
-              </p>
-              <p className="text-muted-foreground leading-relaxed">
-                You may not copy, modify, distribute, sell, or lease any part of the Service without our express written permission.
-              </p>
-            </section>
-  
-            <section>
-              <h2 className="text-2xl font-semibold mb-4">Service Availability</h2>
-              
-              <h3 className="text-xl font-medium mt-6 mb-3">Uptime</h3>
-              <p className="text-muted-foreground leading-relaxed mb-4">
-                We strive to maintain high availability but do not guarantee uninterrupted access. The Service may be 
-                unavailable due to maintenance, updates, or factors beyond our control.
-              </p>
-  
-              <h3 className="text-xl font-medium mt-6 mb-3">Modifications</h3>
-              <p className="text-muted-foreground leading-relaxed mb-4">
-                We reserve the right to modify, suspend, or discontinue any part of the Service at any time with or 
-                without notice. We are not liable for any such changes.
-              </p>
-  
-              <h3 className="text-xl font-medium mt-6 mb-3">Beta Features</h3>
-              <p className="text-muted-foreground leading-relaxed">
-                We may offer beta or experimental features. These are provided &quot;as is&quot; without warranties 
-                and may be changed or removed at any time.
-              </p>
-            </section>
-  
-            <section>
-              <h2 className="text-2xl font-semibold mb-4">Termination</h2>
-              
-              <h3 className="text-xl font-medium mt-6 mb-3">By You</h3>
-              <p className="text-muted-foreground leading-relaxed mb-4">
-                You may terminate your account at any time by deleting it through your account settings or contacting us.
-              </p>
-  
-              <h3 className="text-xl font-medium mt-6 mb-3">By Us</h3>
-              <p className="text-muted-foreground leading-relaxed mb-4">
-                We may suspend or terminate your account if you:
-              </p>
-              <ul className="list-disc list-inside text-muted-foreground space-y-2 ml-4">
-                <li>Violate these Terms</li>
-                <li>Use the Service fraudulently or illegally</li>
-                <li>Fail to pay subscription fees</li>
-                <li>Pose a security risk</li>
-              </ul>
-  
-              <h3 className="text-xl font-medium mt-6 mb-3">Effect of Termination</h3>
-              <p className="text-muted-foreground leading-relaxed">
-                Upon termination, your access to the Service will cease immediately. We will retain your data for 
-                30 days before permanent deletion, unless required by law to retain it longer.
-              </p>
-            </section>
-  
-            <section>
-              <h2 className="text-2xl font-semibold mb-4">Disclaimers</h2>
-              <p className="text-muted-foreground leading-relaxed mb-4">
-                THE SERVICE IS PROVIDED &quot;AS IS&quot; AND &quot;AS AVAILABLE&quot; WITHOUT WARRANTIES OF ANY KIND, 
-                EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO:
-              </p>
-              <ul className="list-disc list-inside text-muted-foreground space-y-2 ml-4">
-                <li>Warranties of merchantability, fitness for a particular purpose, or non-infringement</li>
-                <li>Guarantees of accuracy, reliability, or availability</li>
-                <li>Warranties that the Service will be error-free or secure</li>
-              </ul>
-              <p className="text-muted-foreground leading-relaxed mt-4">
-                We are not responsible for:
-              </p>
-              <ul className="list-disc list-inside text-muted-foreground space-y-2 ml-4 mt-2">
-                <li>Errors in your data or invoicing</li>
-                <li>Tax compliance or accounting accuracy</li>
-                <li>Client disputes or non-payment</li>
-                <li>Third-party service failures (Stripe, Supabase, etc.)</li>
-              </ul>
-            </section>
-  
-            <section>
-              <h2 className="text-2xl font-semibold mb-4">Limitation of Liability</h2>
-              <p className="text-muted-foreground leading-relaxed mb-4">
-                TO THE MAXIMUM EXTENT PERMITTED BY LAW, RETALLIO SHALL NOT BE LIABLE FOR:
-              </p>
-              <ul className="list-disc list-inside text-muted-foreground space-y-2 ml-4">
-                <li>Indirect, incidental, special, consequential, or punitive damages</li>
-                <li>Loss of profits, revenue, data, or business opportunities</li>
-                <li>Damages resulting from use or inability to use the Service</li>
-              </ul>
-              <p className="text-muted-foreground leading-relaxed mt-4">
-                Our total liability for any claim arising from these Terms or the Service shall not exceed the amount 
-                you paid us in the 12 months preceding the claim, or $100, whichever is greater.
-              </p>
-            </section>
-  
-            <section>
-              <h2 className="text-2xl font-semibold mb-4">Indemnification</h2>
-              <p className="text-muted-foreground leading-relaxed">
-                You agree to indemnify and hold harmless Retallio from any claims, damages, losses, or expenses 
-                (including legal fees) arising from your use of the Service, violation of these Terms, or infringement 
-                of any rights of others.
-              </p>
-            </section>
-  
-            <section>
-              <h2 className="text-2xl font-semibold mb-4">Dispute Resolution</h2>
-              
-              <h3 className="text-xl font-medium mt-6 mb-3">Governing Law</h3>
-              <p className="text-muted-foreground leading-relaxed mb-4">
-                These Terms are governed by the laws of [Your Country/State], without regard to conflict of law principles.
-              </p>
-  
-              <h3 className="text-xl font-medium mt-6 mb-3">Arbitration</h3>
-              <p className="text-muted-foreground leading-relaxed mb-4">
-                Any disputes arising from these Terms or the Service shall be resolved through binding arbitration, 
-                except that either party may seek injunctive relief in court for intellectual property violations.
-              </p>
-  
-              <h3 className="text-xl font-medium mt-6 mb-3">Class Action Waiver</h3>
-              <p className="text-muted-foreground leading-relaxed">
-                You agree to resolve disputes on an individual basis and waive the right to participate in class actions 
-                or class-wide arbitration.
-              </p>
-            </section>
-  
-            <section>
-              <h2 className="text-2xl font-semibold mb-4">General Provisions</h2>
-              
-              <h3 className="text-xl font-medium mt-6 mb-3">Entire Agreement</h3>
-              <p className="text-muted-foreground leading-relaxed mb-4">
-                These Terms, together with our Privacy Policy, constitute the entire agreement between you and Retallio.
-              </p>
-  
-              <h3 className="text-xl font-medium mt-6 mb-3">Severability</h3>
-              <p className="text-muted-foreground leading-relaxed mb-4">
-                If any provision of these Terms is found invalid, the remaining provisions remain in effect.
-              </p>
-  
-              <h3 className="text-xl font-medium mt-6 mb-3">Waiver</h3>
-              <p className="text-muted-foreground leading-relaxed mb-4">
-                Failure to enforce any provision does not constitute a waiver of that provision.
-              </p>
-  
-              <h3 className="text-xl font-medium mt-6 mb-3">Assignment</h3>
-              <p className="text-muted-foreground leading-relaxed">
-                You may not assign these Terms without our consent. We may assign these Terms without restriction.
-              </p>
-            </section>
-  
-            <section>
-              <h2 className="text-2xl font-semibold mb-4">Changes to Terms</h2>
-              <p className="text-muted-foreground leading-relaxed">
-                We may update these Terms from time to time. We will notify you of material changes by email or through 
-                a notice on our Service at least 30 days before they take effect. Your continued use after changes 
-                constitutes acceptance of the updated Terms.
-              </p>
-            </section>
-  
-            <section>
-              <h2 className="text-2xl font-semibold mb-4">Contact Us</h2>
-              <p className="text-muted-foreground leading-relaxed mb-4">
-                If you have questions about these Terms, contact us:
-              </p>
-              <ul className="list-none text-muted-foreground space-y-2">
-                <li><strong>Email:</strong> legal@retallio.app</li>
-                <li><strong>Website:</strong> https://retallio.app</li>
-              </ul>
-            </section>
+  return (
+    <div
+      className="min-h-screen bg-black text-white"
+      style={{ fontFamily: "'Geist', 'Inter', system-ui, sans-serif" }}
+    >
+      {/* Grain */}
+      <div
+        className="fixed inset-0 pointer-events-none opacity-[0.028] mix-blend-screen"
+        style={{ backgroundImage: GRAIN, backgroundSize: "200px 200px" }}
+        aria-hidden
+      />
+
+      {/* Top bloom */}
+      <div
+        className="fixed top-0 left-1/2 -translate-x-1/2 w-[700px] h-[320px] pointer-events-none"
+        style={{
+          background: "radial-gradient(ellipse 70% 60% at 50% 0%, rgba(109,40,217,0.18) 0%, transparent 75%)",
+        }}
+        aria-hidden
+      />
+
+      {/* Nav */}
+      <header className="sticky top-0 z-50 border-b border-white/[0.06] bg-black/80 backdrop-blur-xl">
+        <div className="max-w-3xl mx-auto px-6 h-14 flex items-center justify-between">
+          <Link href="/" className="inline-flex items-center gap-2 hover:opacity-70 transition-opacity">
+            <Image src="/logo.png" alt="Retallio" width={22} height={22} className="object-contain" />
+            <span className="text-[14px] font-semibold tracking-tight">Retallio</span>
+          </Link>
+          <Link
+            href="/privacy"
+            className="text-[13px] text-white/35 hover:text-white/70 transition-colors"
+          >
+            Privacy Policy
+          </Link>
+        </div>
+      </header>
+
+      {/* Content */}
+      <main className="relative z-10 max-w-3xl mx-auto px-6 py-16">
+        {/* Header */}
+        <div className="mb-12">
+          <p className="text-[11px] font-semibold text-violet-400/70 uppercase tracking-[0.2em] mb-3">
+            Legal
+          </p>
+          <h1 className="text-[36px] font-bold tracking-tight text-white mb-3">Terms of Service</h1>
+          <p className="text-[14px] text-white/35">Last updated: {LAST_UPDATED}</p>
+          <p className="text-[15px] text-white/50 leading-relaxed mt-4 max-w-xl">
+            Plain English, as much as possible. These terms explain what you can do with Retallio, what we're responsible for, and what happens if things go wrong.
+          </p>
+        </div>
+
+        {/* Sections */}
+        <div className="space-y-10">
+          {sections.map((section, i) => (
+            <div key={i}>
+              <div className="flex items-start gap-4">
+                <span className="flex-shrink-0 mt-1 text-[11px] font-semibold text-white/15 tabular-nums w-5">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <div className="flex-1 min-w-0">
+                  <h2 className="text-[16px] font-semibold text-white mb-2 leading-snug">
+                    {section.title}
+                  </h2>
+                  <div className="space-y-3">
+                    {section.body.split("\n\n").map((para, j) => (
+                      <p key={j} className="text-[14px] text-white/45 leading-[1.75]">
+                        {para}
+                      </p>
+                    ))}
+                  </div>
+                </div>
+              </div>
+              {i < sections.length - 1 && (
+                <div className="mt-10 ml-9 h-px bg-white/[0.04]" />
+              )}
+            </div>
+          ))}
+        </div>
+
+        {/* Footer */}
+        <div className="mt-16 pt-8 border-t border-white/[0.06] flex items-center justify-between flex-wrap gap-4">
+          <p className="text-[12px] text-white/20">© {new Date().getFullYear()} Retallio. All rights reserved.</p>
+          <div className="flex items-center gap-4">
+            <Link href="/privacy" className="text-[12px] text-white/25 hover:text-white/50 transition-colors">
+              Privacy Policy
+            </Link>
+            <Link href="/" className="text-[12px] text-white/25 hover:text-white/50 transition-colors">
+              Back to home
+            </Link>
           </div>
         </div>
-      </div>
-    )
-  }
+      </main>
+    </div>
+  )
+}

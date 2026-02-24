@@ -3,12 +3,9 @@
 import { useState } from "react"
 import { createClient } from "@/lib/supabase/client"
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { AlertCircle, CheckCircle } from "lucide-react"
-import Image from "next/image"
+import { CheckCircle } from "lucide-react"
+import { motion } from "framer-motion"
+import { AuthShell, AuthHeader, AuthBody, AuthFooter, InputField, AuthButton, AuthError } from "@/components/auth-shell"
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("")
@@ -19,94 +16,73 @@ export default function ForgotPasswordPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setLoading(true)
-    setError("")
+    setLoading(true); setError("")
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
       redirectTo: `${window.location.origin}/reset-password`,
     })
     if (error) { setError(error.message); setLoading(false); return }
-    setSent(true)
-    setLoading(false)
+    setSent(true); setLoading(false)
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 relative overflow-hidden">
-      <div
-        className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] pointer-events-none"
-        style={{ background: "radial-gradient(ellipse at 50% 0%, rgba(99,102,241,0.2) 0%, transparent 70%)" }}
-      />
+    <AuthShell>
+      <AuthHeader title="Reset your password" subtitle="Enter your email and we'll send a link" />
 
-      <Card className="w-full max-w-md relative z-10" style={{
-        background: "rgba(255,255,255,0.03)",
-        borderColor: "rgba(255,255,255,0.08)",
-        boxShadow: "0 24px 64px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.05)",
-        backdropFilter: "blur(16px)",
-      }}>
-        <CardHeader className="text-center space-y-2 pb-6">
-          <Link href="/" className="flex items-center justify-center gap-2.5 mb-3 hover:opacity-80 transition-opacity">
-            <Image src="/logo.png" alt="Retallio" width={28} height={28} className="w-7 h-7 object-contain" />
-            <span className="text-xl font-bold tracking-tight text-white">Retallio</span>
-          </Link>
-          <CardTitle className="text-2xl font-bold text-white">Reset password</CardTitle>
-          <CardDescription className="text-white/40">
-            Enter your email and we&apos;ll send you a reset link.
-          </CardDescription>
-        </CardHeader>
-
-        <CardContent>
-          {sent ? (
-            <div className="flex flex-col items-center gap-4 py-6 text-center">
-              <div className="flex h-14 w-14 items-center justify-center rounded-full bg-emerald-500/10 border border-emerald-500/20">
-                <CheckCircle className="h-7 w-7 text-emerald-400" />
-              </div>
-              <div>
-                <p className="text-sm text-white/60 leading-relaxed">
-                  Check your inbox for <strong className="text-white">{email}</strong>.<br />
-                  Click the link to set a new password.
-                </p>
-              </div>
-              <p className="text-xs text-white/25">
-                Didn&apos;t get it? Check spam or{" "}
-                <button type="button" onClick={() => { setSent(false); setError("") }} className="text-indigo-400 hover:text-indigo-300">
-                  try again
-                </button>
+      <AuthBody>
+        {sent ? (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.97 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+            className="flex flex-col items-center gap-5 py-4 text-center"
+          >
+            <div className="w-14 h-14 rounded-2xl bg-emerald-400/10 border border-emerald-400/20 flex items-center justify-center">
+              <CheckCircle className="w-7 h-7 text-emerald-400" />
+            </div>
+            <div>
+              <p className="text-[15px] font-semibold text-white mb-1">Check your inbox</p>
+              <p className="text-[13px] text-white/40 leading-relaxed">
+                We sent a reset link to{" "}
+                <span className="text-white/70 font-medium">{email}</span>.
               </p>
             </div>
-          ) : (
-            <form onSubmit={handleSubmit} className="space-y-4">
-              {error && (
-                <div className="flex items-center gap-2 text-sm text-red-400 bg-red-500/10 border border-red-500/20 p-3 rounded-xl">
-                  <AlertCircle className="h-4 w-4 shrink-0" />
-                  {error}
-                </div>
-              )}
-              <div className="space-y-1.5">
-                <Label htmlFor="email" className="text-white/60 text-sm">Email</Label>
-                <Input
-                  id="email" type="email" placeholder="you@example.com"
-                  value={email} onChange={(e) => setEmail(e.target.value)}
-                  className="h-11 border-white/10 bg-white/[0.04] text-white placeholder:text-white/20 focus-visible:ring-indigo-500"
-                  required
-                />
-              </div>
-              <Button
-                type="submit"
-                className="w-full h-11 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold"
-                style={{ boxShadow: "0 0 24px rgba(99,102,241,0.3)" }}
-                disabled={loading}
+            <div className="w-full rounded-xl border border-white/[0.06] bg-white/[0.02] px-4 py-3 text-left space-y-1.5">
+              <p className="text-[11px] font-semibold text-white/25 uppercase tracking-[0.12em]">Didn't receive it?</p>
+              <p className="text-[12px] text-white/35">
+                Check spam — comes from <span className="text-white/50">noreply@retallio.app</span>
+              </p>
+              <button
+                type="button"
+                onClick={() => { setSent(false); setError("") }}
+                className="text-[12px] text-violet-400 hover:text-violet-300 transition-colors"
               >
-                {loading ? "Sending..." : "Send reset link"}
-              </Button>
-            </form>
-          )}
-        </CardContent>
+                Try a different address →
+              </button>
+            </div>
+          </motion.div>
+        ) : (
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <AuthError message={error} />
+            <InputField
+              id="email"
+              label="Email"
+              type="email"
+              placeholder="you@example.com"
+              value={email}
+              onChange={setEmail}
+            />
+            <AuthButton loading={loading}>
+              {loading ? "Sending link…" : "Send reset link"}
+            </AuthButton>
+          </form>
+        )}
+      </AuthBody>
 
-        <CardFooter className="justify-center border-t border-white/[0.06] pt-4">
-          <Link href="/login" className="text-sm text-white/30 hover:text-white/60 transition-colors">
-            Back to sign in
-          </Link>
-        </CardFooter>
-      </Card>
-    </div>
+      <AuthFooter>
+        <Link href="/login" className="text-[12px] text-white/30 hover:text-white/60 transition-colors">
+          ← Back to sign in
+        </Link>
+      </AuthFooter>
+    </AuthShell>
   )
 }

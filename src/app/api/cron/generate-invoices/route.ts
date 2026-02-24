@@ -12,11 +12,10 @@ export async function GET(request: NextRequest) {
   if (!secret) {
     return NextResponse.json({ error: "Cron not configured" }, { status: 500 })
   }
+  
   const authHeader = request.headers.get("authorization")
-  const querySecret = request.nextUrl.searchParams.get("secret")
-  const valid = authHeader === `Bearer ${secret}` || querySecret === secret
-  if (!valid) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+  if (authHeader !== `Bearer ${secret}`) {
+  return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
   }
 
   const supabase = createAdminClient()

@@ -1,66 +1,67 @@
+"use client"
+
+import Link from "next/link"
+import { motion } from "framer-motion"
+import { AuthShell, AuthHeader, AuthBody, AuthFooter } from "@/components/auth-shell"
+
 export default function VerifyEmailPage() {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-background px-4 relative">
-        <div className="absolute inset-0 app-grid-bg pointer-events-none" />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#6366f1]/10 via-transparent to-transparent pointer-events-none" />
-  
-        <div className="w-full max-w-md relative">
-          <div className="text-center space-y-6 p-8 rounded-lg border border-white/10 bg-white/5 shadow-xl backdrop-blur-sm">
-            <div className="flex justify-center">
-              <div className="h-16 w-16 rounded-full bg-primary/10 flex items-center justify-center">
-                <svg
-                  className="h-8 w-8 text-primary"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                  />
-                </svg>
-              </div>
-            </div>
-  
-            <div>
-              <h1 className="text-2xl font-bold">Check your email</h1>
-              <p className="mt-3 text-muted-foreground">
-                We sent a verification link to your email address.
-              </p>
-            </div>
-  
-            <div className="space-y-4">
-              <div className="p-4 bg-muted/50 rounded-lg text-left">
-                <p className="text-sm font-medium mb-2">📬 What to do next:</p>
-                <ol className="text-sm text-muted-foreground space-y-2 list-decimal list-inside">
-                  <li>Open your email inbox</li>
-                  <li>Click the verification link</li>
-                  <li>You will be redirected to your dashboard</li>
-                </ol>
-              </div>
-  
-              <div className="p-4 border border-yellow-500/20 bg-yellow-500/5 rounded-lg">
-                <p className="text-sm text-yellow-600 dark:text-yellow-500">
-                  💡 <strong>Did not receive it?</strong>
-                </p>
-                <p className="text-xs text-muted-foreground mt-2">
-                  Check your spam folder. The email comes from noreply@retallio.app
-                </p>
-              </div>
-            </div>
-  
-            <div className="pt-4 border-t border-white/10">
-              <a 
-                href="/login" 
-                className="text-sm text-primary hover:underline"
-              >
-                Already verified? Sign in →
-              </a>
+  return (
+    <AuthShell>
+      <AuthHeader
+        title="Check your email"
+        subtitle="We sent a verification link to your address"
+      />
+
+      <AuthBody>
+        <motion.div
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          className="space-y-3"
+        >
+          {/* Icon */}
+          <div className="flex justify-center pb-2">
+            <div className="w-14 h-14 rounded-2xl bg-violet-500/10 border border-violet-500/20 flex items-center justify-center">
+              <svg className="w-7 h-7 text-violet-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                <path strokeLinecap="round" strokeLinejoin="round"
+                  d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
+              </svg>
             </div>
           </div>
-        </div>
-      </div>
-    )
-  }
+
+          {/* Steps */}
+          <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] px-4 py-3.5 space-y-2.5">
+            <p className="text-[11px] font-semibold text-white/25 uppercase tracking-[0.12em]">What to do next</p>
+            {[
+              "Open your email inbox",
+              "Click the verification link",
+              "You'll land straight in your dashboard",
+            ].map((step, i) => (
+              <div key={i} className="flex items-start gap-3">
+                <span className="flex-shrink-0 w-4 h-4 mt-0.5 rounded-full bg-white/[0.05] border border-white/[0.08] flex items-center justify-center text-[10px] font-semibold text-white/30">
+                  {i + 1}
+                </span>
+                <span className="text-[13px] text-white/50">{step}</span>
+              </div>
+            ))}
+          </div>
+
+          {/* Spam note */}
+          <div className="rounded-xl border border-white/[0.05] bg-white/[0.015] px-4 py-3 space-y-1">
+            <p className="text-[11px] font-semibold text-white/25 uppercase tracking-[0.12em]">Didn't receive it?</p>
+            <p className="text-[12px] text-white/35 leading-relaxed">
+              Check your spam folder — email comes from{" "}
+              <span className="text-white/50">support@retallio.app</span>
+            </p>
+          </div>
+        </motion.div>
+      </AuthBody>
+
+      <AuthFooter>
+        <Link href="/login" className="text-[12px] text-violet-400 hover:text-violet-300 transition-colors font-medium">
+          Already verified? Sign in →
+        </Link>
+      </AuthFooter>
+    </AuthShell>
+  )
+}

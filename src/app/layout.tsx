@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Inter } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
+import { Toaster } from "sonner";
 import { VisualEditsMessenger } from "orchids-visual-edits"; 
 
 const geistSans = Geist({
@@ -51,6 +52,19 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} antialiased`}
       >
         {children}
+        <Toaster
+          theme="dark"
+          position="bottom-right"
+          toastOptions={{
+            style: {
+              background: "#0c0c0c",
+              border: "1px solid rgba(255,255,255,0.09)",
+              color: "#fff",
+              fontFamily: "var(--font-geist-sans), system-ui, sans-serif",
+              fontSize: "13px",
+            },
+          }}
+        />
         <Analytics />
         <VisualEditsMessenger />
       </body>

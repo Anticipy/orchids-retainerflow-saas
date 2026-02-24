@@ -3,28 +3,25 @@ import { NextRequest, NextResponse } from "next/server"
 
 /**
  * Cron endpoint: generate invoices for all clients whose billing day is today.
- * Call from Vercel Cron, GitHub Actions, or any scheduler with CRON_SECRET.
- * Example: GET /api/cron/generate-invoices with header Authorization: Bearer <CRON_SECRET>
- * Set CRON_SECRET and SUPABASE_SERVICE_ROLE_KEY in your env.
+ * Call from Vercel Cron with Authorization: Bearer <CRON_SECRET>
  */
 export async function GET(request: NextRequest) {
   const secret = process.env.CRON_SECRET
   if (!secret) {
     return NextResponse.json({ error: "Cron not configured" }, { status: 500 })
   }
-  
+
   const authHeader = request.headers.get("authorization")
   if (authHeader !== `Bearer ${secret}`) {
-  return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
   }
 
   const supabase = createAdminClient()
   const today = new Date()
   const dayOfMonth = today.getDate()
 
-  // Only run on days 1-28 (billing_day is 1-28)
   if (dayOfMonth > 28) {
-    return NextResponse.json({ message: "No billing days on 29th or 30th", generated: 0 })
+    return NextResponse.json({ message: "No billing days on 29th or later", generated: 0 })
   }
 
   const billingPeriod = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}`
@@ -64,17 +61,17 @@ export async function GET(request: NextRequest) {
       .lte("date", endDate)
       .eq("is_running", false)
 
-    const totalHours = (entries || []).reduce((sum, e) => sum + parseFloat(e.hours), 0)
-    const overageHours = Math.max(0, totalHours - parseFloat(client.monthly_hours))
-    const overageAmount = overageHours * parseFloat(client.overage_rate)
-    const totalAmount = parseFloat(client.monthly_fee) + overageAmount
+    const totalHours = (entries || []).reduce((sum, e) => sum + (parseFloat(e.hours) || 0), 0)
+    const overageHours = Math.max(0, totalHours - (parseFloat(client.monthly_hours) || 0))
+    const overageAmount = overageHours * (parseFloat(client.overage_rate) || 0)
+    const totalAmount = (parseFloat(client.monthly_fee) || 0) + overageAmount
 
     const { data: invoice, error } = await supabase
       .from("invoices")
       .insert({
         client_id: client.id,
         user_id: client.user_id,
-        billing_period,
+        billing_period: billingPeriod,  // ✅ was incorrectly `billing_period` as a bare variable
         base_fee: client.monthly_fee,
         overage_hours: overageHours,
         overage_amount: overageAmount,

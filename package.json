@@ -48,8 +48,10 @@
     "driver.js": "^1.4.0",
     "embla-carousel-react": "^8.6.0",
     "framer-motion": "^12.23.24",
+    "gray-matter": "^4.0.3",
     "input-otp": "^1.4.2",
     "lucide-react": "^0.554.0",
+    "marked": "^17.0.3",
     "next": "^16.1.6",
     "next-themes": "^0.4.6",
     "orchids-visual-edits": "^1.0.12",
@@ -69,6 +71,7 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.3",
     "@tailwindcss/postcss": "^4",
+    "@types/marked": "^5.0.2",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",

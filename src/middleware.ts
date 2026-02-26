@@ -34,9 +34,10 @@ export async function middleware(request: NextRequest) {
   } = await supabase.auth.getUser()
 
   // Allow public routes
-  const publicPaths = ['/', '/login', '/signup', '/forgot-password', '/verify-email', '/reset-password', '/privacy', '/terms', '/auth/callback', '/portal', '/api/stripe/webhook', '/api/cron/generate-invoices']
+  const publicPaths = ['/', '/login', '/signup', '/forgot-password', '/verify-email', '/reset-password', '/privacy', '/terms', '/auth/callback', '/portal', '/api/stripe/webhook', '/api/cron/generate-invoices','/api/portal']
   const isPublicPath = publicPaths.some(path =>
-    request.nextUrl.pathname === path || request.nextUrl.pathname.startsWith('/portal/')
+    request.nextUrl.pathname === path || request.nextUrl.pathname.startsWith('/portal/') ||
+    request.nextUrl.pathname.startsWith('/api/portal/')
   )
 
   if (!user && !isPublicPath) {

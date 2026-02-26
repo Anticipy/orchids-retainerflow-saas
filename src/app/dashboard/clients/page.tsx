@@ -302,8 +302,13 @@ export default function ClientsPage() {
     const method = editingClient ? "PATCH" : "POST"
     const res = await fetch(url, { method, headers: { "Content-Type": "application/json" }, body: JSON.stringify(form) })
     if (!res.ok) { const err = await res.json(); toast.error(err.error || "Failed to save"); return }
+    const newClient = await res.json() // make sure your API returns the created client
+    if (!editingClient) {
+      setClients(prev => [{ ...newClient, hoursUsed: 0, percentUsed: 0 }, ...prev])
+    } 
     toast.success(editingClient ? "Client updated" : "Client created")
-    setDialogOpen(false); setEditingClient(null); setForm(emptyForm); fetchClients()
+    setDialogOpen(false); setEditingClient(null); setForm(emptyForm)
+    fetchClients()
   }
 
   const handleArchive = async (client: Client) => {

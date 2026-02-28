@@ -44,27 +44,60 @@ export default async function BlogPage() {
         </div>
       </header>
 
-      <main className="relative z-10 max-w-5xl mx-auto px-6 py-20">
-        {/* Header */}
-        <div className="mb-16 max-w-2xl">
-          <p className="text-[11px] font-semibold text-violet-400/70 uppercase tracking-[0.15em] mb-4">
-            Blog
-          </p>
+      {/* Hero — full width with background, matches BlogPostClient */}
+      <div
+        className="w-full border-b border-white/[0.05]"
+        style={{
+          background:
+            "radial-gradient(ellipse 80% 100% at 50% 0%, rgba(109,40,217,0.13) 0%, transparent 70%)",
+        }}
+      >
+        <div className="max-w-4xl mx-auto px-6 pt-16 pb-14 text-center">
+          {/* Label row */}
+          <div className="flex items-center justify-center gap-3 mb-6">
+            <span
+              className="text-[11px] font-semibold text-violet-400/90 uppercase tracking-[0.18em] px-3 py-1 rounded-full border border-violet-400/20"
+              style={{ background: "rgba(109,40,217,0.1)" }}
+            >
+              Blog
+            </span>
+          </div>
+
+          {/* Big centered title */}
           <h1
-            className="text-[44px] font-bold tracking-tight text-white leading-[1.1] mb-4"
-            style={{ letterSpacing: "-0.03em" }}
+            className="font-bold text-white leading-[1.08] mb-6"
+            style={{
+              fontSize: "clamp(36px, 5vw, 52px)",
+              letterSpacing: "-0.03em",
+            }}
           >
             Thoughts on freelancing
             <br />
             and client relationships.
           </h1>
-          <p className="text-[16px] text-white/35 leading-relaxed">
+
+          {/* Excerpt */}
+          <p
+            className="text-white/45 leading-relaxed max-w-2xl mx-auto mb-8"
+            style={{ fontSize: "18px", lineHeight: "1.75" }}
+          >
             Real talk about running a freelance business, managing retainer
             clients, and getting paid without the awkward conversations.
           </p>
-        </div>
 
-        {/* Featured post — first one, bigger */}
+          {/* Author row */}
+          <div className="flex items-center justify-center gap-2">
+            <div className="w-7 h-7 rounded-full bg-violet-500/30 border border-violet-400/30 flex items-center justify-center text-[11px] font-bold text-violet-300">
+              I
+            </div>
+            <span className="text-[13px] text-white/35">By Ionut M. Diaconu</span>
+          </div>
+        </div>
+      </div>
+
+      <main className="relative z-10 max-w-5xl mx-auto px-6 py-16">
+
+        {/* Featured post */}
         {posts.length > 0 && (
           <Link
             href={`/blog/${posts[0].slug}`}
@@ -81,12 +114,15 @@ export default async function BlogPage() {
               </span>
             </div>
             <h2
-              className="text-[26px] sm:text-[30px] font-bold text-white/85 group-hover:text-white transition-colors leading-tight mb-4"
-              style={{ letterSpacing: "-0.02em" }}
+              className="font-bold text-white/85 group-hover:text-white transition-colors leading-tight mb-4"
+              style={{ fontSize: "clamp(22px, 3vw, 30px)", letterSpacing: "-0.02em" }}
             >
               {posts[0].title}
             </h2>
-            <p className="text-[15px] text-white/40 leading-relaxed mb-6 max-w-2xl">
+            <p
+              className="text-white/40 leading-relaxed mb-6 max-w-2xl"
+              style={{ fontSize: "16px", lineHeight: "1.75" }}
+            >
               {posts[0].excerpt}
             </p>
             <span className="text-[13px] font-medium text-violet-400/70 group-hover:text-violet-400 transition-colors">
@@ -106,21 +142,20 @@ export default async function BlogPage() {
               >
                 <div className="pr-8 max-w-2xl">
                   <div className="flex items-center gap-2.5 mb-2">
-                    <span className="text-[11px] text-white/25">
-                      {post.date}
-                    </span>
+                    <span className="text-[11px] text-white/25">{post.date}</span>
                     <span className="text-white/15">·</span>
-                    <span className="text-[11px] text-white/25">
-                      {post.readTime}
-                    </span>
+                    <span className="text-[11px] text-white/25">{post.readTime}</span>
                   </div>
                   <h2
-                    className="text-[18px] font-semibold text-white/75 group-hover:text-white transition-colors leading-snug mb-2"
-                    style={{ letterSpacing: "-0.01em" }}
+                    className="font-semibold text-white/75 group-hover:text-white transition-colors leading-snug mb-2"
+                    style={{ fontSize: "19px", letterSpacing: "-0.015em", lineHeight: "1.4" }}
                   >
                     {post.title}
                   </h2>
-                  <p className="text-[13px] text-white/30 leading-relaxed">
+                  <p
+                    className="text-white/30 leading-relaxed"
+                    style={{ fontSize: "14px", lineHeight: "1.7" }}
+                  >
                     {post.excerpt}
                   </p>
                 </div>
@@ -134,12 +169,10 @@ export default async function BlogPage() {
 
         {posts.length === 0 && (
           <div className="text-center py-20">
-            <p className="text-[14px] text-white/25">
-              First post coming soon.
-            </p>
+            <p className="text-[14px] text-white/25">First post coming soon.</p>
           </div>
         )}
-      </main>
+        </main>
     </div>
   )
 }

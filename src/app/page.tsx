@@ -1107,6 +1107,7 @@ export default function LandingPage() {
             <span className="text-[13px] text-white/22">© {new Date().getFullYear()} Retallio</span>
           </div>
           <div className="flex items-center gap-6">
+            <Link href="/blog" className="text-[13px] text-white/22 hover:text-white/55 transition-colors">Blog</Link>
             <Link href="/privacy" className="text-[13px] text-white/22 hover:text-white/55 transition-colors">Privacy</Link>
             <Link href="/terms" className="text-[13px] text-white/22 hover:text-white/55 transition-colors">Terms</Link>
           </div>

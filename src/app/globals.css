@@ -361,27 +361,27 @@ nextjs-portal {
 ═══════════════════════════════════════════════════════════════════ */
 
 .prose-retallio {
-  color: rgba(255, 255, 255, 0.62);
-  font-size: 17px;
-  line-height: 1.85;
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 21px;
+  line-height: 2.0;
   font-family: 'Geist', 'Inter', system-ui, sans-serif;
 }
 
 /* ── First paragraph larger ── */
 .prose-retallio > p:first-child {
-  font-size: 19px;
+  font-size: 21px;
   color: rgba(255, 255, 255, 0.72);
   line-height: 1.75;
 }
 
 .prose-retallio p {
   margin-top: 0;
-  margin-bottom: 1.6rem;
+  margin-bottom: 2rem;
 }
 
 /* ── Headings ── */
 .prose-retallio h2 {
-  font-size: 26px;
+  font-size: 28px;
   font-weight: 700;
   color: rgba(255, 255, 255, 0.95);
   margin-top: 3.5rem;
@@ -393,7 +393,7 @@ nextjs-portal {
 }
 
 .prose-retallio h3 {
-  font-size: 19px;
+  font-size: 21px;
   font-weight: 600;
   color: rgba(255, 255, 255, 0.85);
   margin-top: 2.5rem;
@@ -433,7 +433,7 @@ nextjs-portal {
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 5px;
   padding: 0.15rem 0.45rem;
-  font-size: 13px;
+  font-size: 15px;
   color: #a78bfa;
   font-family: 'Geist Mono', monospace;
 }
@@ -445,9 +445,9 @@ nextjs-portal {
   border-radius: 12px;
   padding: 1.25rem 1.5rem;
   overflow-x: auto;
-  margin-bottom: 1.6rem;
-  font-size: 13px;
-  line-height: 1.7;
+  margin-bottom: 2rem;
+  font-size: 15px;
+  line-height: 1.85;
   color: rgba(255, 255, 255, 0.5);
   font-family: 'Geist Mono', monospace;
 }
@@ -462,7 +462,7 @@ nextjs-portal {
 
 /* ── Unordered list ── */
 .prose-retallio ul {
-  margin-bottom: 1.6rem;
+  margin-bottom: 2rem;
   padding-left: 0;
   list-style: none;
 }
@@ -472,7 +472,7 @@ nextjs-portal {
   padding-left: 1.4rem;
   margin-bottom: 0.65rem;
   color: rgba(255, 255, 255, 0.58);
-  line-height: 1.7;
+  line-height: 1.85;
 }
 
 .prose-retallio ul li::before {
@@ -484,7 +484,7 @@ nextjs-portal {
 
 /* ── Ordered list — numbered steps, big and clear ── */
 .prose-retallio ol {
-  margin-bottom: 1.6rem;
+  margin-bottom: 2rem;
   padding-left: 0;
   list-style: none;
   counter-reset: step-counter;
@@ -494,8 +494,8 @@ nextjs-portal {
   position: relative;
   padding-left: 2.75rem;
   margin-bottom: 0.85rem;
-  color: rgba(255, 255, 255, 0.62);
-  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.68);
+  line-height: 1.85;
   counter-increment: step-counter;
 }
 
@@ -529,7 +529,7 @@ nextjs-portal {
   border-radius: 16px;
   background: rgba(109, 40, 217, 0.07);
   border: 1px solid rgba(167, 139, 250, 0.12);
-  font-size: 18px;
+  font-size: 20px;
   font-style: normal;
   color: rgba(255, 255, 255, 0.75);
   line-height: 1.65;
@@ -559,7 +559,7 @@ nextjs-portal {
 .prose-retallio table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 13px;
+  font-size: 15px;
 }
 
 .prose-retallio thead {
@@ -600,3 +600,58 @@ nextjs-portal {
   font-weight: 500;
 }
 
+/* ── Callout boxes ── */
+.prose-retallio .callout {
+  padding: 1rem 1.25rem;
+  border-radius: 12px;
+  margin: 2rem 0;
+  border: 1px solid transparent;
+}
+
+.prose-retallio .callout-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.4rem !important;
+}
+
+.prose-retallio .callout p:last-child {
+  margin-bottom: 0;
+}
+
+/* Insight — violet */
+.prose-retallio .callout-insight {
+  background: rgba(109, 40, 217, 0.07);
+  border-color: rgba(167, 139, 250, 0.15);
+}
+.prose-retallio .callout-insight .callout-label {
+  color: rgba(167, 139, 250, 0.8);
+}
+.prose-retallio .callout-insight p {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+/* Warning — amber */
+.prose-retallio .callout-warning {
+  background: rgba(245, 158, 11, 0.06);
+  border-color: rgba(245, 158, 11, 0.18);
+}
+.prose-retallio .callout-warning .callout-label {
+  color: rgba(251, 191, 36, 0.8);
+}
+.prose-retallio .callout-warning p {
+  color: rgba(255, 255, 255, 0.68);
+}
+
+/* Result — green */
+.prose-retallio .callout-result {
+  background: rgba(16, 185, 129, 0.06);
+  border-color: rgba(16, 185, 129, 0.15);
+}
+.prose-retallio .callout-result .callout-label {
+  color: rgba(52, 211, 153, 0.8);
+}
+.prose-retallio .callout-result p {
+  color: rgba(255, 255, 255, 0.68);
+}

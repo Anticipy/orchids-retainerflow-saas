@@ -25,6 +25,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       type: "article",
       publishedTime: post.date,
     },
+    alternates: {
+      canonical: `https://www.retallio.app/blog/${slug}`,
+    },
   }
 }
 
@@ -114,14 +117,16 @@ export default async function BlogPostPage({ params }: Props) {
         </div>
 
         {/* Opening hook — big pull quote style */}
+        {post.hook && (
         <div className="max-w-3xl mx-auto px-6 pt-12 pb-4">
           <p
             className="text-[26px] sm:text-[30px] font-semibold text-white/85 leading-tight"
             style={{ letterSpacing: "-0.02em" }}
           >
-            Every freelancer has had this conversation.
+            {post.hook}
           </p>
         </div>
+        )}
 
         {/* Visual break — iMessage mockup */}
         <div className="max-w-3xl mx-auto px-6 py-8">

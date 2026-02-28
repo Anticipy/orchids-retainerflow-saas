@@ -10,6 +10,7 @@ export interface Post {
   title: string
   date: string
   excerpt: string
+  hook?: string
   readTime: string
   contentHtml: string
 }
@@ -68,6 +69,7 @@ export async function getPostBySlug(slug: string): Promise<Post | null> {
     title: data.title,
     date: data.date,
     excerpt: data.excerpt,
+    hook: data.hook || null,
     readTime: calculateReadTime(content),
     contentHtml,
   }

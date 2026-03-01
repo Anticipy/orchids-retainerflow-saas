@@ -68,15 +68,17 @@ export default function LoginPage() {
     setError("")
     const { error } = await supabase.auth.signInWithPassword({ email, password })
     if (error) { setError(error.message); setLoading(false); return }
-    router.push("/dashboard")
+    const next = new URLSearchParams(window.location.search).get("next")
+    router.push(next ?? "/dashboard")
     router.refresh()
   }
 
   const handleGoogleLogin = async () => {
+    const next = new URLSearchParams(window.location.search).get("next") ?? "/dashboard"
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: `${window.location.origin}/auth/callback`,
+        redirectTo: `${window.location.origin}/auth/callback?next=${next}`,
         queryParams: {
           prompt: 'select_account',
         },

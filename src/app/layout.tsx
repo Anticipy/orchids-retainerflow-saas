@@ -4,6 +4,8 @@ import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import { Toaster } from "sonner";
 import { VisualEditsMessenger } from "orchids-visual-edits";
+import Script from "next/script"
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -161,8 +163,15 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
+        
         {/* Explicit canonical for www */}
         <link rel="canonical" href="https://www.retallio.app" />
+        <Script
+          defer
+          src="https://cloud.umami.is/script.js"
+          data-website-id="19489113-e01e-45cd-a034-81e625e472f4"
+        />
+
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} antialiased`}

@@ -1024,7 +1024,7 @@ export default function LandingPage() {
                     </li>
                   ))}
                 </ul>
-                <Link href="/signup">
+                <Link href={plan.name === "Free" ? "/signup" : `/signup?next=/dashboard/settings`}>
                   <motion.span
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.97 }}

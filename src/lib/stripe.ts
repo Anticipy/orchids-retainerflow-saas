@@ -9,15 +9,15 @@ export const stripe: Stripe | null = process.env.STRIPE_SECRET_KEY
 
 export const PLANS = {
   pro: {
-    name: "RetainerFlow Pro",
+    name: "Retallio Pro",
     price: 1900,
-    lookup_key: "retainerflow_pro_monthly",
+    lookup_key: "retallio_pro_monthly",
     description: "Up to 10 clients, client portal, auto-invoicing",
   },
   business: {
-    name: "RetainerFlow Business",
+    name: "Retallio Business",
     price: 3900,
-    lookup_key: "retainerflow_business_monthly",
+    lookup_key: "retallio_business_monthly",
     description: "Unlimited clients, Stripe auto-charge, priority support",
   },
 } as const

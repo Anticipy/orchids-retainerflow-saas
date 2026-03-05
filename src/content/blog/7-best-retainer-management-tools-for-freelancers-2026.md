@@ -19,13 +19,13 @@ This is an honest comparison of the tools available in 2026 — what they're goo
 
 Before getting into the list, here's what actually matters if you're a freelancer managing retainers:
 
-**Client visibility.** Can your client see their hours in real time, or do they only find out when the invoice arrives? This single feature prevents more invoice disputes than anything else.
+**Client visibility.** Can your client see their hours in real time, or do they only find out when the invoice arrives? This single feature prevents more invoice disputes than anything else. Read more about [what a client portal actually does](/blog/what-is-a-client-portal) and why it matters.
 
 **Time tracking built in.** Switching between a time tracker and a billing tool adds friction and introduces errors. The best tools do both.
 
-**Simple invoicing.** You shouldn't need an accountant to generate a monthly invoice. It should be automatic, or close to it.
+**Simple invoicing.** You shouldn't need an accountant to generate a monthly invoice. It should be automatic, or close to it. See our guide on [best freelance invoicing practices](/blog/freelance-invoice-best-practices) for what good invoicing looks like.
 
-**Price that makes sense.** If you're billing $2,000/month in retainers, paying $150/month for billing software is a bad deal.
+**Price that makes sense.** If you're billing $2,000/month in retainers, paying $150/month for billing software is a bad deal. Make sure you've also read [how to price a retainer](/blog/how-to-price-a-retainer) so you know what you should be billing in the first place.
 
 With that in mind — here's the list.
 
@@ -33,7 +33,7 @@ With that in mind — here's the list.
 
 ## 1. Retallio — Best for solo freelancers who want client transparency
 
-![Retallio dashboard](/blog/retallio-dashboard.png)
+![Retallio](/blog/retallio-homepage.jpg)
 
 **Price:** Free for 1 client, $19/month for up to 10 clients
 
@@ -86,7 +86,7 @@ Where it falls short is time tracking. Retainable focuses more on task managemen
 
 ## 3. Harvest — Best for straightforward time tracking and invoicing
 
-![Harvest](/blog/harvest-homepage.png)
+![Harvest](/blog/harvest-homepage.jpg)
 
 **Price:** Free for 1 seat and 2 projects, $12/month per seat after that
 
@@ -94,7 +94,7 @@ Where it falls short is time tracking. Retainable focuses more on task managemen
 
 Harvest has been around since 2006 and it shows — in a good way. It's reliable, well-designed, and does exactly what it says. You track time, you invoice clients, you get paid.
 
-The gap with Harvest is the client experience. Clients don't get a portal. They get an invoice at the end of the month. There's no live view of hours, no way for them to check in mid-month. For clients who are budget-conscious or who've been burned by surprise invoices before, this can be a problem.
+The gap with Harvest is the client experience. Clients don't get a portal. They get an invoice at the end of the month. There's no live view of hours, no way for them to check in mid-month. For clients who are budget-conscious or who've been burned by surprise invoices before, this can be a problem. This is exactly why [clients question invoices](/blog/why-freelancers-lose-clients-over-invoices) — they have no visibility until the end of the month.
 
 **What it does well:**
 - Clean, fast time tracking
@@ -111,7 +111,7 @@ The gap with Harvest is the client experience. Clients don't get a portal. They 
 
 ## 4. Toggl Track — Best pure time tracker, but you'll need other tools
 
-![Toggl Track](/blog/toggl-homepage.png)
+![Toggl Track](/blog/toggl-homepage.jpg)
 
 **Price:** Free for basic, $9/month per user for Pro
 
@@ -119,7 +119,7 @@ The gap with Harvest is the client experience. Clients don't get a portal. They 
 
 Toggl is the most popular time tracker in the freelance world for a reason. It's fast, it works on everything, and the free tier is genuinely useful. If you just need to track time accurately, Toggl is hard to beat.
 
-The problem is it stops there. No invoicing, no client portal, no retainer management. You'll need to pair it with something else to handle billing — typically FreshBooks, Wave, or a spreadsheet — and that's where the friction and errors creep in.
+The problem is it stops there. No invoicing, no client portal, no retainer management. You'll need to pair it with something else to handle billing — typically FreshBooks, Wave, or a spreadsheet — and that's where the friction and errors creep in. For a full breakdown of better options, see [5 best Toggl alternatives for freelancers](/blog/toggl-alternatives-freelancers).
 
 **What it does well:**
 - The best pure time tracking experience available
@@ -161,7 +161,7 @@ For solo freelancers, it's complete overkill. The minimum is 5 users, so you're 
 
 ## 6. ManyRequests — Best for productised services and client portals
 
-![ManyRequests](/blog/manyrequests-homepage.png)
+![ManyRequests](/blog/manyrequests-homepage.jpg)
 
 **Price:** Starts at $99/month
 
@@ -185,7 +185,7 @@ It's less suited to time-based retainers. If you're billing by the hour, ManyReq
 
 ## 7. Bonsai — Best all-in-one for freelancers who want contracts too
 
-![Bonsai](/blog/bonsai-homepage.png)
+![Bonsai](/blog/bonsai-homepage.jpg)
 
 **Price:** Starts at $21/month
 
@@ -193,7 +193,7 @@ It's less suited to time-based retainers. If you're billing by the hour, ManyReq
 
 Bonsai is the most well-rounded all-in-one tool for freelancers. It handles contracts, proposals, time tracking, invoicing, and expenses. If you're starting out and want one tool to handle everything, Bonsai is a strong option.
 
-The retainer-specific features are decent but not deep. There's no live client portal. Clients get invoices, not visibility. For freelancers who have recurring issues with invoice disputes, Bonsai doesn't solve the root problem.
+The retainer-specific features are decent but not deep. There's no live client portal. Clients get invoices, not visibility. For freelancers who have recurring issues with invoice disputes, Bonsai doesn't solve the root problem. If contracts are important to you, also read our [retainer agreement template](/blog/freelance-retainer-agreement) which covers what you actually need.
 
 **What it does well:**
 - Strong contracts and proposals
@@ -231,6 +231,6 @@ If you want an **all-in-one** tool and client transparency isn't your main conce
 
 If you're running an **agency with a team** — Scoro or Accelo are worth evaluating seriously.
 
-The worst thing you can do is pay for a complex agency tool when all you need is something simple that keeps your clients informed.
+The worst thing you can do is pay for a complex agency tool when all you need is something simple that keeps your clients informed. Start by understanding [retainer vs project billing](/blog/retainer-vs-project-billing) — knowing which model fits your business makes picking the right tool much easier.
 
 [Try Retallio free — first client free, no credit card required](https://www.retallio.app)

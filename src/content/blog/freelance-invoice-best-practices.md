@@ -1,11 +1,11 @@
 ---
-title: "Best Freelance Invoicing Practices That Actually Get You Paid Faster"
+title: "Best Freelance Invoicing Practices to Get Paid Faster"
 date: "March 10, 2026"
 excerpt: "Most freelancers treat invoicing as an afterthought. The ones who get paid fastest treat it as a system. Here's what that system looks like."
 hook: "Late payments are rarely about clients not having the money. They're almost always about friction in your invoicing process — friction you can eliminate."
 ---
 
-The average freelancer invoice takes 30+ days to get paid. Some take much longer. And the frustrating part is that most of the delay isn't the client being difficult — it's friction in the process.
+**For simple invoicing:** Wave is free and handles basic invoicing beautifully. FreshBooks and Bonsai are more complete but cost money. For a full comparison see [best freelance billing software](/blog/best-freelance-billing-software). Some take much longer. And the frustrating part is that most of the delay isn't the client being difficult — it's friction in the process.
 
 Here's what the freelancers who get paid fastest do differently.
 
@@ -65,7 +65,7 @@ The most common reason invoices get questioned — and delayed — is surprise. 
 
 <div class="callout callout-insight">
 <p class="callout-label">💡 The real fix</p>
-<p>When clients can see their projected invoice building throughout the month, the decision to pay is already made before the invoice arrives. Approval is instant because there's nothing new to evaluate.</p>
+<p>When clients can see their projected invoice building throughout the month, the decision to pay is already made before the invoice arrives. This is what a [client portal](/blog/what-is-a-client-portal) does automatically.</p>
 </div>
 
 This is why client portal visibility is one of the most practical things you can do to speed up payment. It's not about trust — it's about eliminating the cognitive step of evaluating an unexpected number.
@@ -84,6 +84,6 @@ At each stage, make it easy to resolve. Most late payments resolve at step 1 or 
 
 ---
 
-Retallio handles retainer invoicing automatically and gives clients a portal so they see their invoice building throughout the month. Fewer surprises, fewer questions, faster payment.
+Also read [how to invoice as a freelancer](/blog/how-to-invoice-as-a-freelancer) for the complete guide to what every invoice needs. Fewer surprises, fewer questions, faster payment.
 
 [retallio.app](https://www.retallio.app)

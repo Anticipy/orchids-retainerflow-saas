@@ -1,7 +1,8 @@
 ---
-title: "Why freelancers lose clients over invoices (and it's not about the money)"
+title: "Why Freelancers Lose Clients Over Invoices"
 date: "February 26, 2026"
 excerpt: "Every freelancer has had this conversation. The invoice lands and suddenly the client has questions. The amount didn't change. So what actually happened?"
+hook: "Every freelancer has had this conversation."
 ---
 
 You send the invoice. The number is exactly what you agreed on at the start of the month. Maybe it's even a little lower than usual because you had a slow week.
@@ -28,7 +29,7 @@ It's not that they don't trust you. It's that they have no visibility. And when 
 
 ## Why this keeps happening
 
-Most freelancers track their time in tools like Toggl or Clockify or just a spreadsheet. These tools are built for the freelancer. There's no client-facing view. There's no way to give your client a window into what's happening.
+Most freelancers track their time in tools like Toggl or Clockify or just a spreadsheet. If you're looking for something better, see our [Toggl alternatives for freelancers](/blog/toggl-alternatives-freelancers). These tools are built for the freelancer. There's no client-facing view. There's no way to give your client a window into what's happening.
 
 So every month ends the same way. You do the work, you track the hours, you send the invoice, and then you have the conversation.
 
@@ -44,7 +45,7 @@ The fix is transparency, not better explanations.
 
 When a client can see your hours in real time, throughout the month, the invoice stops being a surprise. They've been watching it build. They saw the 4 hour session on Tuesday. They saw the work you logged on Thursday. When the invoice arrives, they've already done the math themselves.
 
-That's what a live client portal does. Not a PDF summary. Not a weekly email. A live view that updates every time you log time, so your client always knows exactly where things stand.
+That's what a live [client portal](/blog/what-is-a-client-portal) does. Not a PDF summary. Not a weekly email. A live view that updates every time you log time, so your client always knows exactly where things stand.
 
 The invoice conversation stops happening not because you explained yourself better, but because there's nothing left to explain.
 
@@ -60,7 +61,7 @@ Transparency fixes this before it starts. When a client can see exactly what you
 
 ## The simple version
 
-You do good work. Your clients should be able to see that work happening, not just receive a summary of it after the fact.
+You do good work. Your clients should be able to see that work happening, not just receive a summary of it after the fact. Learn more about [best freelance invoicing practices](/blog/freelance-invoice-best-practices) to make this process smoother.
 
 That's the whole idea behind Retallio. When you add a retainer client, they automatically get a portal where they can see your hours, your work logs, and their invoice building in real time. You track your time the same way you always have. They just get to watch it happen.
 

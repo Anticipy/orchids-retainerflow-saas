@@ -1,5 +1,5 @@
 ---
-title: "How to Stop Scope Creep on Retainer Clients (Before It Costs You)"
+title: "How to Stop Scope Creep on Retainer Clients"
 date: "March 6, 2026"
 excerpt: "Scope creep on retainers is slower and harder to see than on projects. By the time you notice it, you've already been working for free for months."
 hook: "Scope creep on a project is obvious. You agreed to five pages and now they want eight. Scope creep on a retainer is invisible — until it's costing you serious money."
@@ -30,7 +30,7 @@ This is the trap.
 
 ## The fix starts before the work does
 
-The best protection against scope creep is a retainer agreement that's specific about what's included.
+The best protection against scope creep is a [retainer agreement](/blog/freelance-retainer-agreement) that's specific about what's included.
 
 Not vague — specific. Not "marketing support" but "up to 20 hours per month of social media management, including content creation, scheduling, and monthly reporting. Additional services billed at €X/hour."
 
@@ -56,7 +56,7 @@ Clients respond completely differently to these two conversations. One feels lik
 
 ## What to do when scope has already crept
 
-If you're already in a retainer where scope has grown beyond what you're billing, you have two options.
+If you're already in a retainer where scope has grown beyond what you're billing, pull your actual hour logs and read [how to raise your retainer rate](/blog/how-to-raise-retainer-rates) before having the conversation.
 
 **Option 1:** Pull your actual hour logs, show the client what the work has involved over the past few months, and propose a retainer that reflects the real scope. Most clients, when shown the data, understand.
 
@@ -64,7 +64,7 @@ If you're already in a retainer where scope has grown beyond what you're billing
 
 <div class="callout callout-result">
 <p class="callout-label">✓ One rule</p>
-<p>Scope creep doesn't fix itself. It compounds. The longer you wait, the harder the conversation becomes and the more money you've left on the table.</p>
+<p>Make sure you know [how to price your retainer correctly](/blog/how-to-price-a-retainer) before you start — underpriced retainers are the number one reason scope conversations get difficult.</p>
 </div>
 
 ---

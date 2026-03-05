@@ -1,11 +1,11 @@
 ---
-title: "How to Raise Your Freelance Retainer Rate (Without Losing the Client)"
+title: "How to Raise Your Freelance Retainer Rate"
 date: "March 4, 2026"
 excerpt: "Most freelancers avoid raising rates because they're afraid of losing the client. The ones who do it well follow a specific approach — here's exactly what they do."
 hook: "The worst thing about undercharging a client for a year is that raising your rate suddenly feels like you're doing something wrong. You're not. Here's how to do it right."
 ---
 
-At some point, every freelancer with a long-term retainer faces the same moment.
+Make sure your [retainer is priced correctly](/blog/how-to-price-a-retainer) first — raising a rate that was already fair is a much easier conversation than fixing a deeply underpriced one.
 
 The rate you agreed on a year ago made sense then. Your skills have improved. Your understanding of the client's business is deeper. The work is more valuable than it was. But the rate is the same.
 
@@ -32,7 +32,7 @@ The clients who leave over a rate increase are usually ones who were already loo
 
 **At contract renewal** is the easiest moment. It's expected. Both sides are already reviewing the terms.
 
-**After a win** — when you've just solved a big problem or created clear value — you're at your highest perceived worth. Use that moment.
+**After a win** — when you've just solved a big problem or created clear value — you're at your highest perceived worth. Use that moment. This is also a good time to review your [retainer agreement](/blog/freelance-retainer-agreement) and update the scope.
 
 **When scope has grown** — this isn't a rate increase, it's a correction. That's an easier conversation.
 
@@ -58,7 +58,7 @@ What you shouldn't do is immediately back down. If you've done the work to know 
 
 ## The transparency advantage
 
-Clients who have visibility into your hours throughout the month are easier to have rate conversations with.
+Clients who have visibility into your hours throughout the month are easier to have rate conversations with. That's why a [client portal](/blog/what-is-a-client-portal) changes the dynamic of every billing conversation.
 
 When a client has been watching your hours build, seeing the work logged, understanding what goes into the engagement — the conversation about value is already happening. They're not learning about your contribution for the first time when you raise rates. They already know.
 

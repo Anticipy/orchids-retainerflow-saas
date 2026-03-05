@@ -5,6 +5,22 @@ import { getAllPosts } from "@/lib/blog"
 export const metadata = {
   title: "Blog – Retallio",
   description: "Real talk about freelancing, retainer clients, and getting paid without the awkward conversations.",
+  alternates: {
+    canonical: "https://www.retallio.app/blog",
+  },
+  openGraph: {
+    title: "The Retallio Blog",
+    description: "Real talk about freelancing, retainer clients, and getting paid without the awkward conversations.",
+    url: "https://www.retallio.app/blog",
+    siteName: "Retallio",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "The Retallio Blog",
+    description: "Real talk about freelancing, retainer clients, and getting paid without the awkward conversations.",
+    site: "@retallioapp",
+  },
 }
 
 export default async function BlogPage() {

@@ -1,5 +1,5 @@
 ---
-title: "How to Invoice as a Freelancer (and Actually Get Paid on Time)"
+title: "How to Invoice as a Freelancer (Get Paid Faster)"
 excerpt: "Most freelancers lose money not because they charge too little, but because they invoice badly. Here's everything you need to know to get paid faster and stop chasing clients."
 date: "March 5, 2026"
 readTime: "9 min read"
@@ -99,7 +99,7 @@ Beyond the mechanics of invoicing, a few things make a real difference in how qu
 
 ![Client questioning invoice in iMessage — the conversation every freelancer dreads](/blog/invoice-imessage.png)
 
-The most effective thing you can do is make the invoice unsurprising. Track your hours transparently, let clients see where you are during the month, and communicate about overages before they become invoice line items. When clients know what's coming before the invoice arrives, they almost always pay faster.
+The most effective thing you can do is make the invoice unsurprising. A [client portal](/blog/what-is-a-client-portal) does this automatically — clients watch hours build all month. When clients know what's coming before the invoice arrives, they almost always pay faster.
 
 **Get a deposit.** For project work especially, asking for 30-50% upfront before you start changes the dynamic entirely. You're not waiting on a client to pay for work you've already done. You're working with money already in hand. Many experienced freelancers won't start a project without it.
 
@@ -115,13 +115,13 @@ You don't need anything fancy to invoice well. Some options:
 
 **For time tracking:** If you bill by the hour, you need a time tracker. Toggl and Clockify are both free and work well. The limitation is that your tracking data stays on your side — clients can't see it.
 
-**For retainer clients specifically:** If you manage clients on monthly retainers, the invoice conversation gets complicated fast. Clients don't see your hours building during the month, so when the invoice arrives it can feel like a surprise even when it isn't.
+**For retainer clients specifically:** If you manage clients on monthly retainers, the invoice conversation gets complicated fast. For a full comparison of tools, see [best freelance billing software](/blog/best-freelance-billing-software). Clients don't see your hours building during the month, so when the invoice arrives it can feel like a surprise even when it isn't.
 
 This is the problem I built Retallio to solve. Your clients get a portal where they can see your hours logged in real time, what you worked on, and what the invoice is tracking toward — before it arrives. By the time you actually send the invoice, it's already familiar. The questions stop.
 
 It's free for your first client at retallio.app if you want to try it.
 
-![Retallio client portal showing hours logged in real time and invoice total building](/blog/retallio-dashboard.png)
+![Retallio client portal showing hours logged in real time and invoice total building](/blog/retallio-homepage.jpg)
 
 ---
 
@@ -129,6 +129,6 @@ It's free for your first client at retallio.app if you want to try it.
 
 Invoicing well isn't complicated, it's just consistent. Send invoices immediately when work is done. Make them detailed enough that there's nothing to question. Follow up early and without apology. And do whatever you can to make the invoice unsurprising before it lands.
 
-The freelancers who get paid fastest aren't the ones who are most aggressive about chasing payment. They're the ones who make it easy to pay and remove every reason to delay.
+Also follow [best freelance invoicing practices](/blog/freelance-invoice-best-practices) to build a consistent system that gets you paid faster every month.
 
 That's the whole game.

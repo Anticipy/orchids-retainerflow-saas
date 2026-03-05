@@ -150,11 +150,10 @@ export default function BlogPostClient({ post }: { post: Post }) {
               {/* Hook */}
               {post.hook && (
                 <p
-                  className="text-[24px] sm:text-[28px] font-semibold text-black/80 leading-tight mb-8"
+                  className="text-[24px] sm:text-[28px] font-semibold text-black/80 leading-tight mb-8 [&_a]:text-violet-600 [&_a]:underline [&_a:hover]:text-violet-800"
                   style={{ letterSpacing: "-0.02em" }}
-                >
-                  {post.hook}
-                </p>
+                  dangerouslySetInnerHTML={{ __html: post.hook }}
+                />
               )}
 
               {/* iMessage visual — only for first post */}

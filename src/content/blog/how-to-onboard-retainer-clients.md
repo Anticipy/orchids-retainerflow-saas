@@ -1,5 +1,5 @@
 ---
-title: "How to Onboard a Retainer Client (The First Month Template That Works)"
+title: "How to Onboard a Retainer Client (First Month Template)"
 date: "March 12, 2026"
 excerpt: "The first month of a retainer sets the tone for everything that follows. Here's the exact process for making it count."
 hook: "The way you start a retainer is the way it continues. A good first month builds a relationship that lasts years. A bad one creates problems that compound."
@@ -15,7 +15,7 @@ Get it right and the retainer runs smoothly for years. Get it wrong and you spen
 
 ## Before the work starts — the onboarding document
 
-Send the client a brief onboarding document before the first session. One or two pages covering:
+Send the client a brief onboarding document before the first session. If you haven't signed one yet, use a solid [retainer agreement template](/blog/freelance-retainer-agreement) as your starting point.
 
 | What to include | Why |
 |----------------|-----|
@@ -65,7 +65,7 @@ Around the midpoint of the first month, send a brief check-in. How are things go
 
 ## The first invoice
 
-If you've been transparent about hours throughout the month, the first invoice should be anti-climactic.
+If you've been transparent about hours throughout the month using a [client portal](/blog/what-is-a-client-portal), the first invoice should be anti-climactic.
 
 The client has seen the hours build in the portal. The invoice is just confirmation of what they already knew.
 
@@ -82,7 +82,7 @@ Include a brief note: *"Here's your first monthly invoice. You can see the full 
 
 After the first two or three months, have an explicit review conversation. Is the retainer covering the right scope? Is communication working? Is there anything that isn't working as expected?
 
-Retainers that last for years don't just happen. They're maintained through regular, honest conversations about whether the relationship is working for both sides.
+You landed them — here's [how to get more retainer clients](/blog/how-to-get-retainer-clients) using the same approach.
 
 ---
 

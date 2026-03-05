@@ -1,5 +1,5 @@
 ---
-title: "Retainer vs Project Billing: Which Makes More Money for Freelancers"
+title: "Retainer vs Project Billing: Which Makes More Money"
 date: "March 2, 2026"
 excerpt: "Project billing feels safer. Retainers feel risky. Most freelancers have it completely backwards — here's the math."
 hook: "Project billing feels safe. You scope it, price it, do it, get paid. Retainers feel like a gamble. Most freelancers have this completely backwards."
@@ -49,9 +49,9 @@ The retainer client pays less per month — and generates 4.5x more revenue annu
 
 ## The risks of retainers (and how to handle them)
 
-**Scope creep** is the main risk. If a client on a 20-hour retainer starts treating you like a full-time employee, you need clear boundaries. Fix: a retainer agreement that specifies what's included and what's billed separately.
+The main risk is scope creep. If a client on a 20-hour retainer starts treating you like a full-time employee, you need clear boundaries. Fix: a [retainer agreement](/blog/freelance-retainer-agreement) that specifies what's included and what's billed separately.
 
-**Undercharging** is common. Freelancers estimate hours optimistically and consistently deliver more. Fix: track hours accurately every month and review the retainer price quarterly.
+**Undercharging** is common. Freelancers estimate hours optimistically and consistently deliver more. Fix: track hours accurately every month and review the retainer price quarterly. See [how to price a retainer](/blog/how-to-price-a-retainer) for the full formula.
 
 **Dependency** is real. One client at 60% of your income means losing them is catastrophic. Fix: build a portfolio of retainer clients, not reliance on one.
 
@@ -70,7 +70,7 @@ They have a **clear agreement upfront** — what's included, overage rate, billi
 
 They **track time for every session**, even 15-minute email exchanges. This protects them when questions arise and gives them data to price future retainers accurately.
 
-They **give clients visibility** into their hours. When clients can see where they are mid-month, they make better scope decisions themselves.
+They **give clients visibility** into their hours. When clients can see where they are mid-month, they make better scope decisions. A [client portal](/blog/what-is-a-client-portal) makes this automatic.
 
 They **review the retainer regularly**. If you're consistently going over included hours, you're undercharging. Have the conversation.
 

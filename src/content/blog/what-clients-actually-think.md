@@ -1,5 +1,5 @@
 ---
-title: "Why Clients Question Your Invoices (And How to Stop It For Good)"
+title: "Why Clients Question Your Invoices (How to Stop It)"
 date: "March 1, 2026"
 excerpt: "Most freelancers assume clients question invoices because they don't trust them. The real reason is different — and it's fixable."
 hook: "Your client isn't questioning your invoice because they think you're lying. They're questioning it because they're surprised."
@@ -54,7 +54,7 @@ When a client gets an invoice they weren't expecting, a few things happen in seq
 
 If you've ever had a client who just pays every invoice without comment, you've probably noticed they tend to be closely involved in the work. They're in Slack, they see your updates, they know what you've been working on.
 
-They don't question invoices because there's no information gap. The invoice isn't news — it's confirmation of something they already knew was coming.
+They don't question invoices because there's no information gap. Compare this to [retainer vs project billing](/blog/retainer-vs-project-billing) — retainer clients need more visibility, not less.
 
 That's the dynamic you want with every client. Not because it makes you look better, but because it makes the relationship healthier. Clients who understand where their money is going trust the engagement more. They're less likely to scope-creep, less likely to push back on rate increases, less likely to leave.
 
@@ -66,7 +66,7 @@ Most advice on this topic tells you to communicate better. Send weekly updates. 
 
 That advice isn't wrong, but it treats the symptom, not the cause. You're adding work to your plate to compensate for an information gap that shouldn't exist.
 
-> The actual fix is giving clients a window into the work as it happens. Not a weekly email. Not a PDF at month end. A live view of their hours and their invoice, always available, always current.
+> The actual fix is giving clients a window into the work as it happens. Not a weekly email. Not a PDF at month end. A live [client portal](/blog/what-is-a-client-portal) — always available, always current.
 
 When clients can check and see "14 hours used, 6 remaining, projected invoice €1,330" — the mental calculation they do when the invoice arrives is already done. They've been watching it happen. There's nothing to reconcile.
 
@@ -82,7 +82,7 @@ By the time the invoice actually arrives, it's already processed. The client saw
 
 <div class="callout callout-result">
 <p class="callout-label">✓ The result</p>
-<p>Fewer questions. Faster payment. A client relationship built on transparency instead of monthly explanation cycles.</p>
+<p>Follow [best freelance invoicing practices](/blog/freelance-invoice-best-practices) and the invoice conversation stops before it starts.</p>
 </div>
 
 ---

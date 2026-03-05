@@ -1,11 +1,11 @@
 ---
-title: "Best Retainer Setup for Freelance Designers (Pricing, Scope and Client Management)"
+title: "Best Retainer Setup for Freelance Designers (2026)"
 date: "March 11, 2026"
 excerpt: "Design retainers are the trickiest to manage because design work is variable. Here's how to structure, price and manage them so they actually work long-term."
 hook: "Design work is hard to scope on a retainer. How long does a logo revision take? Depends. How many feedback rounds? Unclear. Here's how to make it work anyway."
 ---
 
-Design retainers are one of the trickiest types of retainer to manage because design work is inherently variable. A brand refresh can take 2 hours or 20 hours depending on feedback, revisions, and how well the brief was written.
+Start with [how to price a retainer](/blog/how-to-price-a-retainer) — design retainers are especially prone to underpricing because revision cycles are hard to estimate. A brand refresh can take 2 hours or 20 hours depending on feedback, revisions, and how well the brief was written.
 
 This doesn't mean design retainers don't work — plenty of freelance designers build their entire business on them. It means you need to structure them differently.
 
@@ -59,7 +59,7 @@ These add up to more than most designers expect — and tracking them protects y
 
 The biggest source of scope creep on design retainers is unlimited revisions.
 
-> Round limits work better than time limits for design. Clients understand "3 rounds of revisions" better than "2 hours of revisions." Creative work doesn't map neatly to time estimates.
+> Protect yourself with a [retainer agreement](/blog/freelance-retainer-agreement) that specifies revision rounds explicitly — this one clause prevents most design retainer disputes. Creative work doesn't map neatly to time estimates.
 
 When a client exhausts their revision rounds: *"We've completed the 3 revision rounds included in the retainer. Additional rounds are €X/hour. Would you like to continue?"*
 
@@ -76,7 +76,7 @@ Design clients are particularly prone to wondering whether they're getting value
 <p>A visible work log changes this. When clients can see "2.5hrs — Instagram story templates (4 designs), 1.5hrs — brand guidelines update, 45mins — review call" laid out clearly, they understand exactly what they're getting.</p>
 </div>
 
-The most common reason design retainers get cancelled isn't price — it's the client feeling like they're not seeing enough visible value. Transparency is the easiest fix.
+Give clients a [portal to see your work](/blog/what-is-a-client-portal) — design clients especially benefit from seeing the work log, not just receiving an invoice.
 
 ---
 

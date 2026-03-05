@@ -79,7 +79,7 @@ export const metadata: Metadata = {
       "Give every retainer client a live portal. They watch your hours build in real time. By the time the invoice lands, there are no questions.",
     images: [
       {
-        url: "/og-image.png", // create a 1200x630 image and put it in /public
+        url: "/og-image.jpg", // create a 1200x630 image and put it in /public
         width: 1200,
         height: 630,
         alt: "Retallio – Live client portal for retainer management",
@@ -96,7 +96,7 @@ export const metadata: Metadata = {
     title: "Retallio – Retainer Management for Freelancers & Consultants",
     description:
       "Give every retainer client a live portal. They watch your hours build in real time. By the time the invoice lands, there are no questions.",
-    images: ["/og-image.png"],
+    images: ["/og-image.jpg"],
   },
 
   // ── Icons / favicon ─────────────────────────────────────────────────

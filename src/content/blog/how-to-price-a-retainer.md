@@ -1,5 +1,5 @@
 ---
-title: "How to Price a Retainer (The Formula That Stops You Undercharging)"
+title: "How to Price a Retainer (Stop Undercharging)"
 date: "March 3, 2026"
 excerpt: "Most freelancers price retainers by guessing hours and multiplying by rate. That's why they end up working for free. Here's the formula that actually works."
 hook: "If you've looked at your hours at the end of a retainer month and realised you worked more than you billed for — you priced it wrong. Here's how to fix that."
@@ -33,7 +33,7 @@ There are specific forces working against you when you estimate hours.
 
 <div class="callout callout-warning">
 <p class="callout-label">⚠ The real cost</p>
-<p>A freelancer billing €95/hr who consistently works 5 extra hours per month is giving away €475/month — €5,700/year — in unpaid work. Per client.</p>
+<p>A freelancer billing €95/hr who consistently works 5 extra hours per month is giving away €475/month — €5,700/year — in unpaid work. Per client. This is also why [stopping scope creep](/blog/how-to-stop-scope-creep) matters so much on retainers.</p>
 </div>
 
 ---
@@ -63,7 +63,7 @@ There are specific forces working against you when you estimate hours.
 
 > The longer you wait to fix an underpriced retainer, the harder the conversation becomes. Pull your actual hour logs and have it now.
 
-The conversation doesn't need to be awkward. Pull your hours from the last three months. Show the client what the work has actually involved. Propose a new amount that reflects the real scope.
+The conversation doesn't need to be awkward. Pull your hours from the last three months. Show the client what the work has actually involved. And when the time comes, see [how to raise your retainer rate](/blog/how-to-raise-retainer-rates) without losing the client.
 
 Frame it as making the engagement sustainable — not as a rate increase. Most clients who value the work will understand. The ones who don't were already a risk to the relationship.
 
@@ -79,7 +79,7 @@ No surprises. No defensiveness. Just a simple business conversation.
 
 <div class="callout callout-result">
 <p class="callout-label">✓ The goal</p>
-<p>A retainer price that reflects the real work, with an overage rate that handles the exceptions. Both agreed in writing before month one begins.</p>
+<p>Once priced correctly, protect it with a solid [retainer agreement](/blog/freelance-retainer-agreement) before you start working.</p>
 </div>
 
 ---

@@ -2,7 +2,7 @@
 title: "How to manage retainer clients without spreadsheets"
 date: "February 27, 2026"
 excerpt: "Most freelancers manage their retainer clients with a mix of spreadsheets, notes apps, and memory. It works until it doesn't. Here's what actually works."
-hook: "It's the 28th of the month. Three clients. Three different rates. One spreadsheet you haven't touched since Tuesday."
+hook: "before you [price your retainer](/blog/how-to-price-a-retainer), make sure you understand what the work actually costs you in time."
 ---
 
 You open your laptop and try to figure out who's close to their limit, who needs an invoice this week, and whether that 2.5 hour session you logged on Tuesday was for the right client.
@@ -19,9 +19,15 @@ Let's be real about what the current setup actually looks like for most people.
 
 **Toggl Track** is the most popular time tracker in the freelance world and it's genuinely good at what it does — starting a timer, logging hours, generating reports. The problem is it's built for you, not your client. There's no way to give a client a live view of their hours. You can export a PDF at the end of the month, but that's a static document, not a window into what's happening.
 
+![Toggl Track](/blog/toggl-homepage.jpg)
+
 **Harvest** takes it a step further with invoicing built in, which helps. But the client experience is identical — they get an invoice at the end of the month and see the total for the first time. No visibility during the month.
 
+![Harvest](/blog/harvest-homepage.jpg)
+
 **Clockify** is the free option most people land on. Same problem. Built for tracking, not transparency.
+
+![Clockify](/blog/clockify-homepage.jpg)
 
 **Google Sheets** is where most freelancers end up when they want something simple. And it works. For about two clients.
 
@@ -62,13 +68,13 @@ Steps 3 through 10 are all manual, all error-prone, and completely invisible to 
 
 ## The transparency gap nobody is solving
 
-Every time tracking tool on the market — Toggl, Harvest, Clockify, even the big ones like Monday.com and Asana — treats the client as a recipient, not a participant.
+Every time tracking tool on the market — Toggl, Harvest, Clockify, even the big ones — treats the client as a recipient, not a participant. For a detailed comparison, see [best Toggl alternatives for freelancers](/blog/toggl-alternatives-freelancers).
 
 You do the work. You track the time. You send the invoice. The client receives it and reacts.
 
 There is no tool that gives the client a live window into the retainer as it's happening. No way for them to log in and see "14 hours used, 6 remaining, projected invoice $1,330." Without emailing you. Without waiting for a report.
 
-That gap is what Retallio is built to fill.
+That gap is what Retallio is built to fill. You can also read about [what a client portal actually is](/blog/what-is-a-client-portal) and why it matters for solo freelancers.
 
 ## What a live portal actually changes
 

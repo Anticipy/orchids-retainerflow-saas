@@ -48,7 +48,8 @@ renderer.table = function ({ header, rows }: any) {
 
 // Pull quotes
 renderer.blockquote = function ({ text }: any) {
-  return `<blockquote class="pull-quote">${text}</blockquote>`
+  const parsed = marked.parseInline(text)
+  return `<blockquote class="pull-quote">${parsed}</blockquote>`
 }
 
 marked.use({ renderer, gfm: true, breaks: false })
@@ -118,7 +119,7 @@ export async function getPostBySlug(slug: string): Promise<Post | null> {
     title: data.title,
     date: data.date,
     excerpt: data.excerpt,
-    hook: data.hook || null,
+    hook: data.hook ? marked.parseInline(data.hook) as string : undefined,
     readTime: calculateReadTime(content),
     contentHtml,
   }

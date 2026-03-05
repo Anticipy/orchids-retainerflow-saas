@@ -1,11 +1,11 @@
 ---
-title: "Best Freelance Retainer Agreement Template (What to Include in 2026)"
+title: "Best Freelance Retainer Agreement Template (2026)"
 date: "March 7, 2026"
 excerpt: "A retainer agreement doesn't need to be a legal document. It needs to be clear enough that both sides know exactly what they agreed to — here's what that looks like."
 hook: "Most retainer disputes don't happen because of bad faith. They happen because the agreement wasn't specific enough and both sides had different expectations from day one."
 ---
 
-A retainer agreement is a document that sets out the terms of your ongoing relationship with a client. It doesn't need to be formal or reviewed by a lawyer. But it does need to cover the specific things that cause problems when they're left vague.
+After signing, [onboard your client properly](/blog/how-to-onboard-retainer-clients) — the first month sets the tone for everything that follows. It doesn't need to be formal or reviewed by a lawyer. But it does need to cover the specific things that cause problems when they're left vague.
 
 Here's what that looks like in practice.
 
@@ -24,7 +24,7 @@ This is where most freelancers get it wrong.
 - "Up to 20 hours/month of social media management, including content creation (4 posts/week on Instagram and LinkedIn), community management, and monthly performance reporting"
 - "Up to 15 hours/month of front-end development, including bug fixes, feature updates, and code reviews"
 
-The more specific you are, the harder it is for either party to misread the agreement.
+Make sure your rate reflects the real work — read [how to price a retainer](/blog/how-to-price-a-retainer) before you sign anything.
 
 ---
 
@@ -87,6 +87,6 @@ A quick email saying *"as discussed, I'm updating our retainer to reflect X star
 
 ---
 
-Retallio tracks your hours against your retainer so both you and your client always know exactly where you stand.
+Use a [client portal](/blog/what-is-a-client-portal) during the engagement so clients always know where they stand against the agreed hours.
 
 [retallio.app](https://www.retallio.app)

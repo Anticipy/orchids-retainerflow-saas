@@ -1,5 +1,5 @@
 ---
-title: "How to Get Your First Retainer Client (Even With No Existing Audience)"
+title: "How to Get Your First Retainer Client"
 date: "March 9, 2026"
 excerpt: "Retainer clients don't fall out of the sky. But they're much closer than most freelancers think — especially if you already have project clients."
 hook: "Your first retainer client is probably already in your contact list. You just haven't asked the right question yet."
@@ -32,6 +32,8 @@ Don't go in with a vague offer. Come with something specific.
 <p>Web developer → maintenance and improvement retainer. Copywriter → ongoing content creation. Designer → monthly creative support. Consultant → monthly strategy and advisory.</p>
 </div>
 
+Before you pitch, know your number. [How to price a retainer](/blog/how-to-price-a-retainer) walks through the math — most freelancers underprice their first retainer because they forget to account for availability, not just hours worked.
+
 *"I'll be available for 10 hours of development support per month — bug fixes, small feature updates, technical questions — for €900/month"* is much easier to evaluate than *"I could do some ongoing work for you."*
 
 ---
@@ -46,18 +48,22 @@ Clients benefit from retainers too. Make sure they know this.
 
 **Speed.** Because you already know their brand, their code, their preferences — work that takes a new person days takes you hours.
 
+If they're still unsure whether a retainer makes sense for them, [retainer vs project billing](/blog/retainer-vs-project-billing) lays out the tradeoffs from the client's perspective — useful to send as a follow-up.
+
 ---
 
 ## The first month matters most
 
 When a client agrees to a retainer, the first month sets the tone for everything that follows.
 
-Over-communicate in month one. Set up your portal access on day one. Send a mid-month check-in. Make the first invoice the most unsurprising invoice they've ever received.
+Over-communicate in month one. Set up your portal access on day one. Send a mid-month check-in. Make the first invoice the most unsurprising invoice they've ever received. A proper [client onboarding process](/blog/how-to-onboard-retainer-clients) makes this repeatable — not something you figure out fresh each time.
 
 <div class="callout callout-result">
 <p class="callout-label">✓ The goal</p>
 <p>By the end of month one, the client should feel more informed about their engagement with you than they've ever felt with any freelancer they've worked with.</p>
 </div>
+
+Once they're onboarded, protect the relationship with a solid [retainer agreement](/blog/freelance-retainer-agreement) — scope, revision rounds, payment terms, what happens if either side wants to end it.
 
 ---
 

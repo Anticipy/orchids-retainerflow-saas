@@ -14,7 +14,7 @@ const sections = [
   },
   {
     title: "Your account",
-    body: `You must be at least 16 years old to use Retallio. You're responsible for keeping your account credentials secure. If you suspect unauthorised access to your account, contact us immediately at support@retallio.app.
+    body: `You must be at least 16 years old to use Retallio. You're responsible for keeping your account credentials secure. If you suspect unauthorised access to your account, reach me on X at x.com/nemo30ss or LinkedIn at linkedin.com/in/diaconu-ionut
 
 You may only create one free account. Creating multiple free accounts to circumvent plan limits is a violation of these terms and may result in account termination.`,
   },
@@ -40,7 +40,7 @@ You can cancel anytime from Settings. Cancellation takes effect at the end of yo
     title: "Your data",
     body: `You own your data. The time entries, clients, invoices, and other content you create in Retallio belong to you. We don't claim any rights to it beyond what's necessary to provide the service.
 
-If you delete your account, we'll delete your data within 30 days, except where we're legally required to retain records (e.g. for accounting purposes). You can export your data at any time — contact us at support@retallio.app if you need an export in a specific format.`,
+If you delete your account, we'll delete your data within 30 days, except where we're legally required to retain records (e.g. for accounting purposes). You can export your data at any time — DM me on X at x.com/nemo30ss if you need an export in a specific format.`,
   },
   {
     title: "Client portals",
@@ -66,7 +66,7 @@ This doesn't affect any rights you have that can't be limited by contract under 
   },
   {
     title: "Contact",
-    body: `Questions about these terms? Email us at support@retallio.app. We're real people and will respond personally.`,
+    body: `Questions about these terms? DM me on X at x.com/nemo30ss or LinkedIn at linkedin.com/in/diaconu-ionut`,
   },
 ]
 

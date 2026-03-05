@@ -175,7 +175,7 @@ export default function SettingsPage() {
   }
 
   const handleUpgrade = async (tier: string) => {
-    if (tier === "free") { toast.info("To downgrade to Free, please contact support."); return }
+    if (tier === "free") { toast.info("To downgrade to Free, DM me on X — x.com/nemo30ss"); return }
     setUpgradingTier(tier)
     try {
       const res = await fetch("/api/stripe/checkout", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ tier }) })
@@ -387,7 +387,7 @@ export default function SettingsPage() {
                   const url = URL.createObjectURL(blob)
                   const a = document.createElement("a"); a.href = url; a.download = "retallio-data-export.json"; a.click()
                   URL.revokeObjectURL(url); toast.success("Data exported!")
-                } catch { toast.error("Export failed — contact hello@retallio.app") }
+                } catch { toast.error("Export failed — DM me on X: x.com/nemo30ss") }
                 finally { setExportingData(false) }
               }}
               disabled={exportingData}
@@ -438,7 +438,7 @@ export default function SettingsPage() {
                         toast.success("Account deleted. Goodbye.")
                         await supabase.auth.signOut()
                         window.location.href = "/"
-                      } catch { toast.error("Deletion failed — contact hello@retallio.app"); setDeletingAccount(false) }
+                      } catch { toast.error("Deletion failed — DM me on X: x.com/nemo30ss"); setDeletingAccount(false) }
                     }}
                     disabled={deletingAccount || deleteConfirmText !== "delete my account"}
                     whileHover={deletingAccount ? {} : { scale: 1.02 }}

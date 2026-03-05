@@ -105,5 +105,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'monthly',
       priority: 0.7,
     },
+    {
+      url: 'https://www.retallio.app/blog/how-to-invoice-as-a-freelancer',
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.8, // higher priority — targets high volume keyword
+    },
+    {
+      url: 'https://www.retallio.app/blog/best-freelance-billing-software',
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.8, // higher priority — targets high volume keyword
+    },
   ]
 }

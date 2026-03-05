@@ -97,7 +97,7 @@ Beyond the mechanics of invoicing, a few things make a real difference in how qu
 
 **Be specific about amounts before you invoice.** Invoice surprises are the number one reason for disputes and delays. If a client expects to pay €1,500 and the invoice says €1,850 because of overages they didn't know about, they're not going to pay it immediately. They're going to ask questions, loop in other people, and take time.
 
-![Client questioning invoice in iMessage — the conversation every freelancer dreads](/blog/invoice-imessage.png)
+![Client questioning invoice in iMessage — the conversation every freelancer dreads](/blog/message-chat.png)
 
 The most effective thing you can do is make the invoice unsurprising. A [client portal](/blog/what-is-a-client-portal) does this automatically — clients watch hours build all month. When clients know what's coming before the invoice arrives, they almost always pay faster.
 

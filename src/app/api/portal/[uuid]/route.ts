@@ -24,22 +24,23 @@ export async function GET(
     .eq("id", client.user_id)
     .single()
 
-  const monthParam = request.nextUrl.searchParams.get("month") // YYYY-MM
+  const monthParam = request.nextUrl.searchParams.get("month")
   let year: number
   let month: number
+
   if (/^\d{4}-\d{2}$/.test(monthParam || "")) {
     const [y, m] = monthParam!.split("-").map(Number)
     year = y
-    month = m - 1 // 0-indexed
+    month = m - 1
   } else {
     const now = new Date()
     year = now.getFullYear()
     month = now.getMonth()
   }
+
   const startOfMonth = new Date(year, month, 1).toISOString().split("T")[0]
   const endOfMonth = new Date(year, month + 1, 0).toISOString().split("T")[0]
 
-  // Get time entries for current month (only date, description, hours - no sensitive data)
   const { data: entries } = await supabase
     .from("time_entries")
     .select("id, date, hours, description")
@@ -48,6 +49,14 @@ export async function GET(
     .lte("date", endOfMonth)
     .eq("is_running", false)
     .order("date", { ascending: false })
+
+  // ── Active timer ──────────────────────────────────────────────────
+  const { data: activeTimer } = await supabase
+    .from("time_entries")
+    .select("id, description, started_at")
+    .eq("client_id", client.id)
+    .eq("is_running", true)
+    .single()
 
   const totalHoursUsed = Math.round(
     (entries || []).reduce((sum, e) => sum + parseFloat(String(e.hours)), 0) * 100
@@ -58,12 +67,10 @@ export async function GET(
   const overageRate = parseFloat(client.overage_rate as unknown as string)
   const hoursRemaining = Math.max(0, monthlyHours - totalHoursUsed)
   const overageHours = Math.max(0, totalHoursUsed - monthlyHours)
-
   const projectedBase = monthlyFee
   const projectedOverage = overageHours * overageRate
   const projectedTotal = projectedBase + projectedOverage
 
-  // Get invoices
   const { data: invoices } = await supabase
     .from("invoices")
     .select("id, billing_period, total_amount, status, created_at")
@@ -90,5 +97,9 @@ export async function GET(
     },
     entries: entries || [],
     invoices: invoices || [],
+    // null if no active timer, otherwise { description, started_at }
+    activeTimer: activeTimer
+      ? { description: activeTimer.description, startedAt: activeTimer.started_at }
+      : null,
   })
 }

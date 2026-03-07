@@ -1,41 +1,17 @@
 "use client"
 
-import { useEffect, useState, use } from "react"
+import { useState, use } from "react"
 import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
 import { FileText, Calendar, ChevronLeft, ChevronRight, Download, Clock, TrendingUp } from "lucide-react"
 import { format } from "date-fns"
-
-interface PortalData {
-  month: string
-  client: { name: string; monthlyHours: number; monthlyFee: number; overageRate: number; billingDay: number }
-  hoursUsed: number
-  hoursRemaining: number
-  freelancerName: string | null
-  freelancerLogoUrl: string | null
-  projectedInvoice: { base: number; overage: number; total: number }
-  entries: Array<{ id: string; date: string; hours: number; description: string }>
-  invoices: Array<{ id: string; billing_period: string; total_amount: number; status: string; created_at: string }>
-}
+import { usePortalData, PortalData } from "@/hooks/usePortalData"
+import { useEffect } from "react"
 
 function toMonthKey(d: Date) {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`
 }
 
-function ordinal(n: number) {
-  const s = ["th", "st", "nd", "rd"], v = n % 100
-  return n + (s[(v - 20) % 10] || s[v] || s[0])
-}
-
-/* ── Human-readable hours ───────────────────────────────────────────
-   Used everywhere hours appear in the portal.
-   0     → "0 hours"
-   0.01  → "< 1 minute"
-   0.5   → "30 minutes"
-   1.0   → "1 hour"
-   1.75  → "1 hour 45 min"
-   25    → "25 hours"
-──────────────────────────────────────────────────────────────────── */
 function fmtHours(h: number, short = false): string {
   if (h === 0) return short ? "0h" : "0 hours"
   const totalMins = Math.round(h * 60)
@@ -48,7 +24,6 @@ function fmtHours(h: number, short = false): string {
   return mins === 0 ? hLabel : `${hLabel} ${mins} min`
 }
 
-/* ── Panel ──────────────────────────────────────────────────────────── */
 function Panel({ title, icon: Icon, children, delay = 0 }: {
   title: string; icon?: React.ElementType; children: React.ReactNode; delay?: number
 }) {
@@ -68,14 +43,63 @@ function Panel({ title, icon: Icon, children, delay = 0 }: {
   )
 }
 
-/* ── Status ─────────────────────────────────────────────────────────── */
 function statusColors(pct: number) {
   if (pct >= 100) return { bar: "#f87171", badge: "text-red-400 bg-red-400/10 border-red-400/20", label: "Over limit" }
   if (pct >= 80)  return { bar: "#fb923c", badge: "text-orange-400 bg-orange-400/10 border-orange-400/20", label: "Near limit" }
   return { bar: "#a78bfa", badge: "text-violet-400 bg-violet-400/10 border-violet-400/20", label: "On track" }
 }
 
-/* ── Skeleton ───────────────────────────────────────────────────────── */
+function ActiveTimerBanner({ timer, freelancerName }: {
+  timer: { description: string | null; startedAt: string }
+  freelancerName: string | null
+}) {
+  const [elapsed, setElapsed] = useState("")
+
+  useEffect(() => {
+    const tick = () => {
+      const seconds = Math.floor((Date.now() - new Date(timer.startedAt).getTime()) / 1000)
+      const h = Math.floor(seconds / 3600)
+      const m = Math.floor((seconds % 3600) / 60)
+      const s = seconds % 60
+      setElapsed(
+        h > 0
+          ? `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`
+          : `${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`
+      )
+    }
+    tick()
+    const interval = setInterval(tick, 1000)
+    return () => clearInterval(interval)
+  }, [timer.startedAt])
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: -8 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4 }}
+      className="rounded-2xl border overflow-hidden"
+      style={{ borderColor: "rgba(52,211,153,0.25)", background: "rgba(52,211,153,0.04)" }}
+    >
+      <div className="px-5 py-4 flex items-center justify-between gap-4">
+        <div className="flex items-center gap-3 min-w-0">
+          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse flex-shrink-0" />
+          <div className="min-w-0">
+            <p className="text-[13px] font-semibold text-emerald-400">
+              {freelancerName ? `${freelancerName} is working now` : "Currently working"}
+            </p>
+            {timer.description && (
+              <p className="text-[12px] text-white/40 truncate mt-0.5">{timer.description}</p>
+            )}
+          </div>
+        </div>
+        <span className="text-[15px] font-bold text-emerald-400 tabular-nums flex-shrink-0">
+          {elapsed}
+        </span>
+      </div>
+    </motion.div>
+  )
+}
+
 function Skeleton() {
   return (
     <div className="max-w-2xl mx-auto px-4 py-10 space-y-4">
@@ -91,17 +115,8 @@ export default function ClientPortalPage({ params }: { params: Promise<{ uuid: s
   const { uuid } = use(params)
   const now = new Date()
   const [selectedMonth, setSelectedMonth] = useState(toMonthKey(now))
-  const [data, setData] = useState<PortalData | null>(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(false)
 
-  useEffect(() => {
-    setLoading(true)
-    fetch(`/api/portal/${uuid}?month=${selectedMonth}`)
-      .then((r) => { if (!r.ok) throw new Error(); return r.json() })
-      .then((d) => { setData(d); setLoading(false) })
-      .catch(() => { setError(true); setLoading(false) })
-  }, [uuid, selectedMonth])
+  const { data, loading, error, lastUpdated } = usePortalData(uuid, selectedMonth)
 
   const prevMonth = () => {
     const [y, m] = selectedMonth.split("-").map(Number)
@@ -143,19 +158,16 @@ export default function ClientPortalPage({ params }: { params: Promise<{ uuid: s
     return format(next, "MMMM d, yyyy")
   }
 
-  // Overage in human terms for the "what to expect" blurb
   const overageHours = Math.max(0, data.hoursUsed - data.client.monthlyHours)
 
   return (
     <div className="min-h-screen bg-black text-white" style={{ fontFamily: "'Geist', 'Inter', system-ui, sans-serif" }}>
-      {/* Bloom */}
       <div
         className="fixed top-0 left-1/2 -translate-x-1/2 w-[700px] h-[350px] pointer-events-none z-0"
         style={{ background: "radial-gradient(ellipse 70% 55% at 50% 0%, rgba(109,40,217,0.16) 0%, transparent 72%)" }}
         aria-hidden
       />
 
-      {/* Header */}
       <header className="sticky top-0 z-50 border-b border-white/[0.06] bg-black/80 backdrop-blur-xl">
         <div className="max-w-2xl mx-auto px-4 sm:px-6 h-14 flex items-center gap-3">
           <div className="w-7 h-7 rounded-lg overflow-hidden flex-shrink-0 bg-white/[0.04] border border-white/[0.07] flex items-center justify-center">
@@ -173,7 +185,6 @@ export default function ClientPortalPage({ params }: { params: Promise<{ uuid: s
 
       <main className="relative z-10 max-w-2xl mx-auto px-4 sm:px-6 py-10 space-y-4">
 
-        {/* Title + month nav */}
         <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
           {data.freelancerName && (
             <p className="text-[11px] font-semibold text-white/25 uppercase tracking-[0.15em] mb-1">
@@ -193,13 +204,25 @@ export default function ClientPortalPage({ params }: { params: Promise<{ uuid: s
                 <ChevronRight className="w-3.5 h-3.5" />
               </button>
               {isCurrentMonth && (
-                <span className="text-[10px] font-semibold text-violet-400 bg-violet-400/10 border border-violet-400/20 px-2 py-0.5 rounded-full">Live</span>
+                <span className="flex items-center gap-1.5 text-[10px] font-semibold text-violet-400 bg-violet-400/10 border border-violet-400/20 px-2 py-0.5 rounded-full">
+                  <span className="w-1.5 h-1.5 rounded-full bg-violet-400 animate-pulse" />
+                  Live
+                </span>
               )}
             </div>
           </div>
+          {lastUpdated && isCurrentMonth && (
+            <p className="text-[11px] text-white/20 mt-1.5">
+              Updated {format(lastUpdated, "h:mm:ss a")}
+            </p>
+          )}
         </motion.div>
 
-        {/* ── Hours hero card ── */}
+        {/* ── Active timer banner ── */}
+        {isCurrentMonth && data.activeTimer && (
+          <ActiveTimerBanner timer={data.activeTimer} freelancerName={data.freelancerName} />
+        )}
+
         <motion.div
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
@@ -213,7 +236,6 @@ export default function ClientPortalPage({ params }: { params: Promise<{ uuid: s
           <div className="p-5">
             <div className="flex items-end justify-between gap-4 mb-4">
               <div>
-                {/* Big readable number — e.g. "25 hours" or "1 hour 45 min" */}
                 <div className="flex items-baseline gap-2 flex-wrap">
                   <span className="text-[42px] font-bold tracking-tight text-white leading-none tabular-nums">
                     {fmtHours(data.hoursUsed, true)}
@@ -222,7 +244,6 @@ export default function ClientPortalPage({ params }: { params: Promise<{ uuid: s
                     of {fmtHours(data.client.monthlyHours, true)}
                   </span>
                 </div>
-                {/* Remaining in plain English */}
                 <p className="text-[13px] text-white/35 mt-1">
                   {data.hoursRemaining > 0
                     ? <>{fmtHours(data.hoursRemaining)} remaining</>
@@ -235,7 +256,6 @@ export default function ClientPortalPage({ params }: { params: Promise<{ uuid: s
               </span>
             </div>
 
-            {/* Progress bar */}
             <div className="h-2 rounded-full bg-white/[0.06] overflow-hidden mb-4">
               <motion.div
                 className="h-full rounded-full"
@@ -253,7 +273,6 @@ export default function ClientPortalPage({ params }: { params: Promise<{ uuid: s
           </div>
         </motion.div>
 
-        {/* ── Projected invoice ── */}
         <Panel title="What to expect" icon={TrendingUp} delay={0.12}>
           <div className="space-y-3">
             <p className="text-[12px] text-white/30 leading-relaxed">
@@ -286,7 +305,6 @@ export default function ClientPortalPage({ params }: { params: Promise<{ uuid: s
           </div>
         </Panel>
 
-        {/* ── Time entries ── */}
         <Panel title="Work logged" icon={Clock} delay={0.18}>
           {data.entries.length === 0 ? (
             <div className="text-center py-8">
@@ -310,14 +328,12 @@ export default function ClientPortalPage({ params }: { params: Promise<{ uuid: s
                       <p className="text-[13px] text-white/75 truncate">{entry.description || "No description"}</p>
                       <p className="text-[11px] text-white/30 mt-0.5">{format(new Date(entry.date), "MMM d, yyyy")}</p>
                     </div>
-                    {/* Short format in the list — "2h 30m" not "2.50h" */}
                     <span className="text-[13px] font-medium text-white/55 tabular-nums flex-shrink-0">
                       {fmtHours(entry.hours, true)}
                     </span>
                   </motion.div>
                 ))}
               </AnimatePresence>
-              {/* Total row — short format */}
               <div className="flex items-center justify-between pt-3 mt-1">
                 <span className="text-[12px] font-semibold text-white/25 uppercase tracking-[0.12em]">Total logged</span>
                 <span className="text-[14px] font-bold text-white tabular-nums">{fmtHours(data.hoursUsed, true)}</span>
@@ -326,7 +342,6 @@ export default function ClientPortalPage({ params }: { params: Promise<{ uuid: s
           )}
         </Panel>
 
-        {/* ── Invoices ── */}
         <Panel title="Invoices" icon={FileText} delay={0.24}>
           {data.invoices.length === 0 ? (
             <div className="text-center py-8">
@@ -374,7 +389,6 @@ export default function ClientPortalPage({ params }: { params: Promise<{ uuid: s
           )}
         </Panel>
 
-        {/* Footer */}
         <p className="text-[11px] text-center text-white/15 pb-4 pt-2">
           Powered by{" "}
           <a href="https://retallio.app" className="hover:text-white/35 transition-colors">Retallio</a>

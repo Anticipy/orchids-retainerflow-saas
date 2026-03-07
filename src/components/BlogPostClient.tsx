@@ -135,7 +135,7 @@ export default function BlogPostClient({ post }: { post: Post }) {
               <div className="w-7 h-7 rounded-full bg-violet-100 border border-violet-200 flex items-center justify-center text-[11px] font-bold text-violet-600">
                 I
               </div>
-              <span className="text-[13px] text-black/40">By Ionut Diaconu</span>
+              <span className="text-[13px] text-black/40">By Ionut M. Diaconu</span>
             </div>
           </div>
         </div>

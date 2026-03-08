@@ -7,6 +7,8 @@ import { toast } from "sonner"
 import { format } from "date-fns"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { AnimatePresence as AP } from "framer-motion"
+import { useSearchParams } from "next/navigation"
+
 
 interface Invoice {
   id: string; client_id: string; billing_period: string
@@ -197,7 +199,8 @@ export default function InvoicesPage() {
   const [loading, setLoading] = useState(true)
   const [dialogOpen, setDialogOpen] = useState(false)
   const [filterStatus, setFilterStatus] = useState("all")
-  const [filterClientId, setFilterClientId] = useState("all")
+  const searchParams = useSearchParams()
+  const [filterClientId, setFilterClientId] = useState(searchParams.get("client") || "all")
   const [sendingId, setSendingId] = useState<string | null>(null)
 
   const fetchInvoices = async () => {

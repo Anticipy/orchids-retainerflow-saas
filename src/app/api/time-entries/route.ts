@@ -8,6 +8,7 @@ export async function GET(request: NextRequest) {
 
   const { searchParams } = new URL(request.url)
   const clientId = searchParams.get("client_id")
+  const month = searchParams.get("month") // YYYY-MM
 
   let query = supabase
     .from("time_entries")
@@ -16,8 +17,13 @@ export async function GET(request: NextRequest) {
     .order("date", { ascending: false })
     .order("created_at", { ascending: false })
 
-  if (clientId) {
-    query = query.eq("client_id", clientId)
+  if (clientId) query = query.eq("client_id", clientId)
+
+  if (month && /^\d{4}-\d{2}$/.test(month)) {
+    const [y, m] = month.split("-").map(Number)
+    const start = new Date(y, m - 1, 1).toISOString().split("T")[0]
+    const end = new Date(y, m, 0).toISOString().split("T")[0]
+    query = query.gte("date", start).lte("date", end)
   }
 
   const { data, error } = await query

@@ -100,6 +100,76 @@ function ActiveTimerBanner({ timer, freelancerName }: {
   )
 }
 
+function ApprovalBanner({ uuid, month, onApproved }: {
+  uuid: string
+  month: string
+  onApproved: () => void
+}) {
+  const [loading, setLoading] = useState(false)
+  const [done, setDone] = useState(false)
+
+  const handleApprove = async () => {
+    setLoading(true)
+    try {
+      const res = await fetch(`/api/portal/${uuid}/approve`, { method: "POST" })
+      if (!res.ok) throw new Error()
+      setDone(true)
+    // Wait 3 seconds before refetching so user sees the confirmation
+      setTimeout(() => onApproved(), 3000)
+    } catch {
+      setLoading(false)
+    }
+  }
+
+  const periodLabel = new Date(month + "-01").toLocaleDateString("en-US", { month: "long", year: "numeric" })
+
+  if (done) return (
+    <motion.div
+      initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }}
+      className="rounded-2xl border overflow-hidden"
+      style={{ borderColor: "rgba(52,211,153,0.25)", background: "rgba(52,211,153,0.04)" }}
+    >
+      <div className="px-5 py-4 flex items-center gap-3">
+        <span className="w-2 h-2 rounded-full bg-emerald-400 flex-shrink-0" />
+        <p className="text-[13px] font-semibold text-emerald-400">
+          Approved — your invoice is on its way ✓
+        </p>
+      </div>
+    </motion.div>
+  )
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }}
+      className="rounded-2xl border overflow-hidden"
+      style={{ borderColor: "rgba(167,139,250,0.30)", background: "rgba(109,40,217,0.06)" }}
+    >
+      <div className="px-5 py-4 flex items-center justify-between gap-4 flex-wrap">
+        <div>
+          <p className="text-[13px] font-semibold text-violet-300">
+            Does the {periodLabel} summary look good?
+          </p>
+          <p className="text-[12px] text-white/35 mt-0.5">
+            Approving will generate and send your invoice automatically.
+          </p>
+        </div>
+        <button
+          onClick={handleApprove}
+          disabled={loading}
+          className="flex items-center gap-2 h-9 px-5 rounded-xl bg-white text-black text-[13px] font-semibold hover:bg-white/90 transition-colors disabled:opacity-50 flex-shrink-0"
+        >
+          {loading ? (
+            <svg className="w-3.5 h-3.5 animate-spin" viewBox="0 0 24 24" fill="none">
+              <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" strokeOpacity="0.25"/>
+              <path d="M12 2a10 10 0 0 1 10 10" stroke="currentColor" strokeWidth="3" strokeLinecap="round"/>
+            </svg>
+          ) : "Looks good ✓"}
+        </button>
+      </div>
+    </motion.div>
+  )
+}
+
 function Skeleton() {
   return (
     <div className="max-w-2xl mx-auto px-4 py-10 space-y-4">
@@ -116,7 +186,7 @@ export default function ClientPortalPage({ params }: { params: Promise<{ uuid: s
   const now = new Date()
   const [selectedMonth, setSelectedMonth] = useState(toMonthKey(now))
 
-  const { data, loading, error, lastUpdated } = usePortalData(uuid, selectedMonth)
+  const { data, loading, error, lastUpdated, fetchData } = usePortalData(uuid, selectedMonth)
 
   const prevMonth = () => {
     const [y, m] = selectedMonth.split("-").map(Number)
@@ -221,6 +291,15 @@ export default function ClientPortalPage({ params }: { params: Promise<{ uuid: s
         {/* ── Active timer banner ── */}
         {isCurrentMonth && data.activeTimer && (
           <ActiveTimerBanner timer={data.activeTimer} freelancerName={data.freelancerName} />
+        )}
+
+        {/* ── Approval banner ── */}
+        {data.pendingApproval && data.approvalMonth && (
+          <ApprovalBanner
+            uuid={uuid}
+            month={data.approvalMonth}
+            onApproved={fetchData}
+          />
         )}
 
         <motion.div

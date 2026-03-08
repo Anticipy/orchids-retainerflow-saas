@@ -42,12 +42,13 @@ function ordinal(n: number) {
 }
 
 /* ── Client card ───────────────────────────────────────────────────── */
-function ClientCard({ client, onEdit, onArchive, onDelete, onCopyLink, index }: {
+function ClientCard({ client, onEdit, onArchive, onDelete, onCopyLink, onNavigate, index }: {
   client: ClientWithHours
   onEdit: () => void
   onArchive: () => void
   onDelete: () => void
   onCopyLink: () => void
+  onNavigate: () => void
   index: number
 }) {
   const pct = Math.min(client.percentUsed, 100)
@@ -59,7 +60,8 @@ function ClientCard({ client, onEdit, onArchive, onDelete, onCopyLink, index }: 
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.97 }}
       transition={{ duration: 0.4, delay: index * 0.06, ease: [0.22, 1, 0.36, 1] }}
-      className="rounded-2xl border border-white/[0.07] bg-white/[0.025] overflow-hidden"
+      onClick={onNavigate}
+      className="rounded-2xl border border-white/[0.07] bg-white/[0.025] overflow-hidden cursor-pointer"
     >
       {/* Card header */}
       <div className="flex items-start justify-between px-5 pt-5 pb-4 border-b border-white/[0.05]">
@@ -398,6 +400,7 @@ export default function ClientsPage() {
                 key={client.id}
                 client={client}
                 index={i}
+                onNavigate={() => router.push(`/dashboard/clients/${client.id}`)} 
                 onEdit={() => {
                   setEditingClient(client)
                   setForm({ name: client.name, email: client.email, monthly_hours: String(client.monthly_hours), monthly_fee: String(client.monthly_fee), overage_rate: String(client.overage_rate), billing_day: String(client.billing_day) })
@@ -409,6 +412,7 @@ export default function ClientsPage() {
                   navigator.clipboard.writeText(`${window.location.origin}/portal/${client.portal_uuid}`)
                   toast.success("Portal link copied")
                 }}
+                
               />
             ))}
           </AnimatePresence>

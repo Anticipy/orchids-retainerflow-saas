@@ -10,7 +10,7 @@ export async function GET(
 
   const { data: client, error } = await supabase
     .from("clients")
-    .select("id, name, monthly_hours, monthly_fee, overage_rate, billing_day, status, portal_uuid, user_id")
+    .select("id, name, monthly_hours, monthly_fee, overage_rate, billing_day, status, portal_uuid, user_id, pending_approval, approval_month")
     .eq("portal_uuid", uuid)
     .single()
 
@@ -97,9 +97,10 @@ export async function GET(
     },
     entries: entries || [],
     invoices: invoices || [],
-    // null if no active timer, otherwise { description, started_at }
     activeTimer: activeTimer
       ? { description: activeTimer.description, startedAt: activeTimer.started_at }
       : null,
+    pendingApproval: client.pending_approval ?? false,
+    approvalMonth: client.approval_month ?? null,
   })
 }

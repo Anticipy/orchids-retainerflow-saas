@@ -19,6 +19,8 @@ export interface PortalData {
   entries: Array<{ id: string; date: string; hours: number; description: string }>
   invoices: Array<{ id: string; billing_period: string; total_amount: number; status: string; created_at: string }>
   activeTimer: { description: string | null; startedAt: string } | null
+  pendingApproval: boolean
+  approvalMonth: string | null
 }
 
 export function usePortalData(uuid: string, selectedMonth: string) {
@@ -77,5 +79,5 @@ export function usePortalData(uuid: string, selectedMonth: string) {
     }
   }, [uuid, selectedMonth, fetchData])
 
-  return { data, loading, error, lastUpdated }
+  return { data, loading, error, lastUpdated, fetchData }
 }

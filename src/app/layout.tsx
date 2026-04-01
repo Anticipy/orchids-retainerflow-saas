@@ -22,6 +22,13 @@ const inter = Inter({
   subsets: ["latin"],
 });
 
+const websiteJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "Retallio",
+  url: "https://www.retallio.app",
+};
+
 export const metadata: Metadata = {
   // ── Core ────────────────────────────────────────────────────────────
   title: {
@@ -163,7 +170,10 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+        />
         {/* Explicit canonical for www */}
         <link rel="canonical" href="https://www.retallio.app" />
         <Script
